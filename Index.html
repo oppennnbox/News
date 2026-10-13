@@ -30,7 +30,7 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 .fb[data-font="1.1"]{font-size:13px}
 .fb[data-font="1.3"]{font-size:15px}
 .hd{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.logo-wrap{width:52px;height:52px;border-radius:15px;position:relative;flex-shrink:0;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 0 18px rgba(34,211,238,.55)) drop-shadow(0 0 32px rgba(168,85,247,.35));animation:logoPulse 4s ease-in-out infinite}
+.logo-wrap{width:56px;height:56px;border-radius:16px;position:relative;flex-shrink:0;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 0 20px rgba(34,211,238,.55)) drop-shadow(0 0 36px rgba(168,85,247,.4));animation:logoPulse 4s ease-in-out infinite}
 .logo-wrap svg{width:100%;height:100%;display:block}
 .tb{flex:1;min-width:0}
 .ti{font-size:calc(20px*var(--fs));font-weight:900;letter-spacing:.14em;text-transform:uppercase;background:linear-gradient(135deg,#22d3ee 0,#a855f7 50%,#ec4899 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;animation:titleGlow 6s ease-in-out infinite}
@@ -128,11 +128,11 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 .mo{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--obg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:12px;animation:fI .28s ease}
 .mo.active{display:flex}
 .mc{background:var(--mbg);border:1px solid var(--cbd);border-radius:20px;width:100%;max-width:520px;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 25px 60px rgba(0,0,0,.8);overflow:hidden;animation:mI .35s cubic-bezier(.34,1.56,.64,1)}
-.mc.reader{max-width:600px;height:92vh}
-.mh{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--bl);background:var(--sbg);flex-shrink:0}
-.mht{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--tx);min-width:0;flex:1}
+.mc.reader{max-width:640px;height:92vh}
+.mh{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--bl);background:var(--sbg);flex-shrink:0;gap:8px}
+.mht{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--tx);min-width:0;flex:1}
 .mht span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mav{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#22d3ee,#a855f7);display:flex;align-items:center;justify-content:center;color:#020617;font-weight:900;font-size:15px;flex-shrink:0;box-shadow:0 4px 14px rgba(168,85,247,.4)}
+.mav{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#22d3ee,#a855f7);display:flex;align-items:center;justify-content:center;color:#020617;font-weight:900;font-size:14px;flex-shrink:0;box-shadow:0 4px 14px rgba(168,85,247,.4)}
 .mcl{width:36px;height:36px;border-radius:10px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;user-select:none;transition:transform .2s,background .2s,color .2s;flex-shrink:0}
 .mcl:hover{background:var(--ar);color:#fff;border-color:var(--ar);transform:scale(1.05) rotate(90deg)}
 .mby{padding:20px 18px 26px;overflow-y:auto;overflow-x:hidden;color:var(--tx);line-height:1.65;font-size:13px;-webkit-overflow-scrolling:touch}
@@ -149,21 +149,18 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 .info-btn{width:100%;padding:14px;border-radius:12px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px}
 .info-btn:hover{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent;transform:translateY(-1px);box-shadow:0 8px 20px rgba(124,58,237,.35)}
 .info-btn:active{transform:scale(.98)}
-.reader-body{padding:0;overflow-y:auto;overflow-x:hidden;flex:1;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--st) transparent}
-.reader-body::-webkit-scrollbar{width:6px}
-.reader-body::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#22d3ee,#a855f7);border-radius:3px}
-.reader-inner{padding:22px 22px 40px}
-.reader-img{width:100%;border-radius:14px;margin-bottom:18px;display:block;max-height:320px;object-fit:cover}
-.reader-title{font-size:calc(20px*var(--fs));font-weight:800;line-height:1.3;color:var(--tx);margin:0 0 12px}
-.reader-meta{font-size:11.5px;color:var(--txm);margin-bottom:20px;display:flex;flex-wrap:wrap;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--bl)}
-.reader-content{font-size:calc(14.5px*var(--fs));line-height:1.85;color:var(--tx2);letter-spacing:.005em}
-.reader-content p{margin:0 0 16px}
-.reader-content p:first-child{font-size:calc(15.5px*var(--fs));color:var(--tx);font-weight:500}
-.reader-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:var(--tx2);gap:16px}
+.reader-body{padding:0;overflow:hidden;flex:1;display:flex;flex-direction:column;background:var(--mbg);position:relative}
+.reader-frame{width:100%;height:100%;border:0;background:#fff;display:block;flex:1}
+.reader-topbar{padding:8px 12px;background:var(--sbg);border-bottom:1px solid var(--bl);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.reader-url{flex:1;font-size:11px;color:var(--txm);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--sibg);padding:6px 10px;border-radius:8px;border:1px solid var(--bl)}
+.reader-actions{display:flex;gap:6px;flex-shrink:0}
+.reader-abtn{padding:7px 10px;border-radius:8px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.reader-abtn:hover{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent}
+.reader-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:var(--tx2);gap:16px;flex:1}
 .spinner{width:44px;height:44px;border:3px solid rgba(34,211,238,.2);border-top-color:#22d3ee;border-radius:50%;animation:spin 1s linear infinite}
-.reader-fallback{text-align:center;padding:30px 20px;color:var(--tx2)}
-.reader-fallback p{margin:0 0 16px;font-size:13.5px;line-height:1.6}
-.reader-fallback button{padding:12px 22px;border-radius:12px;border:0;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .2s;margin-bottom:8px}
+.reader-fallback{text-align:center;padding:30px 20px;color:var(--tx2);flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.reader-fallback p{margin:0 0 16px;font-size:13.5px;line-height:1.6;max-width:340px}
+.reader-fallback button{padding:12px 22px;border-radius:12px;border:0;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .2s;margin-bottom:8px;min-width:220px}
 .reader-fallback button:active{transform:scale(.96)}
 .pb{text-align:center;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--bl)}
 .pbt{font-size:20px;font-weight:900;letter-spacing:.14em;background:linear-gradient(135deg,#22d3ee,#a855f7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
@@ -183,11 +180,12 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 @keyframes cA{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes p{0%,100%{opacity:.5}50%{opacity:1}}
 @keyframes bgS{0%{background:var(--bg1)}50%{background:var(--bg2)}100%{background:var(--bg3)}}
-@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 14px rgba(34,211,238,.5)) drop-shadow(0 0 28px rgba(168,85,247,.3))}50%{filter:drop-shadow(0 0 22px rgba(34,211,238,.85)) drop-shadow(0 0 44px rgba(168,85,247,.6))}}
+@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 14px rgba(34,211,238,.5)) drop-shadow(0 0 28px rgba(168,85,247,.3))}50%{filter:drop-shadow(0 0 24px rgba(34,211,238,.9)) drop-shadow(0 0 48px rgba(168,85,247,.65))}}
 @keyframes titleGlow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.2)}}
 @keyframes iconPulse{0%,100%{box-shadow:0 6px 18px rgba(168,85,247,.35)}50%{box-shadow:0 6px 24px rgba(34,211,238,.65)}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:480px){body{padding:0;align-items:stretch}.card{padding:calc(12px + var(--stp)) 13px calc(112px + var(--sbt));border-radius:0;width:100%;max-width:100%}.ti{font-size:calc(18px*var(--fs))}.cvr{flex-wrap:wrap}.cvi{min-width:110px}.mc{max-height:94vh;border-radius:16px}.mc.reader{height:94vh}.mby{padding:16px 14px 22px}.reader-inner{padding:18px 16px 32px}.nn{height:72px}.nic{width:40px;height:40px}.nci{padding:12px}.ni{max-height:320px}.logo-wrap{width:46px;height:46px}}
+@keyframes pulseDot{0%,100%{opacity:1;r:2.5}50%{opacity:.4;r:3.5}}
+@media(max-width:480px){body{padding:0;align-items:stretch}.card{padding:calc(12px + var(--stp)) 13px calc(112px + var(--sbt));border-radius:0;width:100%;max-width:100%}.ti{font-size:calc(18px*var(--fs))}.cvr{flex-wrap:wrap}.cvi{min-width:110px}.mc{max-height:94vh;border-radius:16px}.mc.reader{height:94vh}.mby{padding:16px 14px 22px}.nn{height:72px}.nic{width:40px;height:40px}.nci{padding:12px}.ni{max-height:320px}.logo-wrap{width:48px;height:48px}}
 @media(max-width:360px){.ti{font-size:calc(16px*var(--fs))}.stk{min-width:46px;font-size:11px}.stp{min-width:66px;font-size:11px}.stc{min-width:54px;font-size:10px}}
 @media(min-width:700px){.card{margin:20px 0;height:auto;max-height:calc(100vh - 40px);border-radius:24px}.nn{max-width:480px}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}body{animation:none;background:var(--bg2)}}
@@ -210,18 +208,47 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 <defs>
 <linearGradient id="vgrad" x1="0" y1="0" x2="1" y2="1">
 <stop offset="0" stop-color="#22d3ee"/>
-<stop offset=".55" stop-color="#a855f7"/>
+<stop offset=".35" stop-color="#60a5fa"/>
+<stop offset=".7" stop-color="#a855f7"/>
 <stop offset="1" stop-color="#ec4899"/>
 </linearGradient>
 <linearGradient id="vbg" x1="0" y1="0" x2="1" y2="1">
 <stop offset="0" stop-color="#0b1220"/>
-<stop offset="1" stop-color="#111827"/>
+<stop offset=".5" stop-color="#111827"/>
+<stop offset="1" stop-color="#1e1b4b"/>
 </linearGradient>
+<linearGradient id="vshine" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#ffffff" stop-opacity=".9"/>
+<stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+</linearGradient>
+<radialGradient id="vglow" cx="50%" cy="30%" r="60%">
+<stop offset="0" stop-color="#22d3ee" stop-opacity=".35"/>
+<stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+</radialGradient>
 </defs>
-<rect x="2" y="2" width="60" height="60" rx="16" fill="url(#vbg)" stroke="url(#vgrad)" stroke-width="1.5"/>
-<path d="M16 18 L32 46 L48 18" stroke="url(#vgrad)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M24 46 L32 54 L40 46" stroke="url(#vgrad)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
-<circle cx="32" cy="12" r="2.5" fill="#22d3ee"/>
+<!-- outer shield -->
+<rect x="1.5" y="1.5" width="61" height="61" rx="17" fill="url(#vbg)" stroke="url(#vgrad)" stroke-width="2"/>
+<!-- inner glow -->
+<rect x="4" y="4" width="56" height="56" rx="14" fill="url(#vglow)"/>
+<!-- corner accents -->
+<path d="M8 18 L8 12 Q8 8 12 8 L18 8" stroke="url(#vgrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+<path d="M56 18 L56 12 Q56 8 52 8 L46 8" stroke="url(#vgrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+<path d="M8 46 L8 52 Q8 56 12 56 L18 56" stroke="url(#vgrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+<path d="M56 46 L56 52 Q56 56 52 56 L46 56" stroke="url(#vgrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+<!-- V letter -->
+<path d="M17 20 L32 44 L47 20" stroke="url(#vgrad)" stroke-width="5.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17 20 L32 44" stroke="url(#vshine)" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".85"/>
+<!-- underline swipe -->
+<path d="M22 47 Q32 54 42 47" stroke="url(#vgrad)" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".85"/>
+<!-- top dot -->
+<circle cx="32" cy="11" r="2.5" fill="#22d3ee">
+<animate attributeName="r" values="2.5;3.4;2.5" dur="2.4s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="1;.5;1" dur="2.4s" repeatCount="indefinite"/>
+</circle>
+<circle cx="32" cy="11" r="4.5" fill="none" stroke="#22d3ee" stroke-width=".8" opacity=".35">
+<animate attributeName="r" values="4.5;7;4.5" dur="2.4s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/>
+</circle>
 </svg>
 </div>
 <div class="tb">
@@ -318,10 +345,6 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 <div class="currl" id="currencyRubResult">— ₽</div>
 </div>
 
-<div class="sd"></div>
-<div class="st"><div class="si">✈️</div><span>Канал VDAILY NEWS</span></div>
-<div class="ns" id="devChannelSection"><div class="nld">⏳ Загрузка...</div></div>
-
 <div class="mb">
 <div class="mbt">VDAILY · SYSTEM</div>
 <div class="mbl">
@@ -347,7 +370,7 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 <button class="mcl" onclick="closeReader()">✕</button>
 </div>
 <div class="reader-body" id="readerBody">
-<div class="reader-loading"><div class="spinner"></div><div>Загрузка статьи...</div></div>
+<div class="reader-loading"><div class="spinner"></div><div>Загрузка...</div></div>
 </div>
 </div>
 </div>
@@ -362,16 +385,26 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 <div class="info-hero">
 <div class="info-logo">
 <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-<defs><linearGradient id="igrad" x1="0" y1="0" x2="1" y2="1">
+<defs>
+<linearGradient id="igrad" x1="0" y1="0" x2="1" y2="1">
 <stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a855f7"/><stop offset="1" stop-color="#ec4899"/>
-</linearGradient></defs>
-<rect x="2" y="2" width="60" height="60" rx="16" fill="#0b1220" stroke="url(#igrad)" stroke-width="1.5"/>
-<path d="M16 18 L32 46 L48 18" stroke="url(#igrad)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="32" cy="12" r="2.5" fill="#22d3ee"/>
+</linearGradient>
+<linearGradient id="ibg2" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0b1220"/><stop offset="1" stop-color="#1e1b4b"/>
+</linearGradient>
+</defs>
+<rect x="1.5" y="1.5" width="61" height="61" rx="17" fill="url(#ibg2)" stroke="url(#igrad)" stroke-width="2"/>
+<path d="M8 18 L8 12 Q8 8 12 8 L18 8" stroke="url(#igrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+<path d="M56 18 L56 12 Q56 8 52 8 L46 8" stroke="url(#igrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+<path d="M8 46 L8 52 Q8 56 12 56 L18 56" stroke="url(#igrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+<path d="M56 46 L56 52 Q56 56 52 56 L46 56" stroke="url(#igrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+<path d="M17 20 L32 44 L47 20" stroke="url(#igrad)" stroke-width="5.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22 47 Q32 54 42 47" stroke="url(#igrad)" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".85"/>
+<circle cx="32" cy="11" r="2.5" fill="#22d3ee"/>
 </svg>
 </div>
 <div class="info-title">VDAILY NEWS</div>
-<div class="info-ver">VERSION 2.0 · TELEGRAM MINI APP</div>
+<div class="info-ver">VERSION 2.1 · TELEGRAM MINI APP</div>
 </div>
 
 <div class="info-card">
@@ -396,10 +429,9 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 
 <button class="info-btn" onclick="closeInfo();openPrivacy()">📄 Политика конфиденциальности</button>
 <button class="info-btn" onclick="openInApp('https://t.me/genuis_neo_bot')">💬 Связь с разработчиком</button>
-<button class="info-btn" onclick="openInApp('https://t.me/genuis_neo_bot')">📢 Канал обновлений</button>
 
 <div class="pf">
-<strong>VDAILY NEWS · v2.0</strong><br>
+<strong>VDAILY NEWS · v2.1</strong><br>
 Сделано с ❤️ для Telegram<br>
 <a onclick="openInApp('https://t.me/genuis_neo_bot')">@genuis_neo_bot</a>
 </div>
@@ -488,7 +520,7 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 <p class="pp">10.1. Администратор вправе в одностороннем порядке вносить изменения в настоящую Политику.</p>
 <p class="pp">10.2. Обновленная редакция Политики вступает в силу с момента ее размещения.</p>
 
-<div class="pf"><strong>VDAILY NEWS · Telegram-бот</strong><br>Политика конфиденциальности · версия 2.0<br><a onclick="openInApp('https://t.me/genuis_neo_bot')">Официальный Telegram-канал</a></div>
+<div class="pf"><strong>VDAILY NEWS · Telegram-бот</strong><br>Политика конфиденциальности · версия 2.1<br><a onclick="openInApp('https://t.me/genuis_neo_bot')">Официальный Telegram-канал</a></div>
 </div>
 </div>
 </div>
@@ -578,11 +610,6 @@ function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)},
 function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u)},
 function(u){return 'https://api.allorigins.win/get?url='+encodeURIComponent(u)}
 ];
-var ARTICLE_PROXIES=[
-function(u){return 'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},
-function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)},
-function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u)}
-];
 
 var usdToRubRate=80.44;
 var cryptoChart=null,currencyChart=null,cryptoConverterChart=null;
@@ -637,7 +664,13 @@ function openPrivacy(){var m=$('privacyModal');if(m){m.classList.add('active');v
 function closePrivacy(){var m=$('privacyModal');if(m)m.classList.remove('active');haptic('light')}
 function openInfo(){var m=$('infoModal');if(m){m.classList.add('active');var b=m.querySelector('.mby');if(b)b.scrollTop=0;}haptic('light')}
 function closeInfo(){var m=$('infoModal');if(m)m.classList.remove('active');haptic('light')}
-function closeReader(){var m=$('readerModal');if(m)m.classList.remove('active');haptic('light')}
+function closeReader(){
+  var m=$('readerModal');
+  if(m)m.classList.remove('active');
+  var body=$('readerBody');
+  if(body)safe(body,'<div class="reader-loading"><div class="spinner"></div><div>Загрузка...</div></div>');
+  haptic('light');
+}
 
 document.addEventListener('keydown',function(e){
 if(e.key==='Escape'){
@@ -793,108 +826,99 @@ if(tg.openTelegramLink&&url.indexOf('t.me')!==-1){tg.openTelegramLink(url);retur
 window.open(url,'_blank');
 }
 
-function parseArticleHtml(html,url){
-var doc=new DOMParser().parseFromString(html,'text/html');
-var titleEl=doc.querySelector('meta[property="og:title"]');
-var twEl=doc.querySelector('meta[name="twitter:title"]');
-var h1=doc.querySelector('h1');
-var title=(titleEl&&titleEl.content)||(twEl&&twEl.content)||(h1&&h1.textContent)||doc.title||'';
-var imgEl=doc.querySelector('meta[property="og:image"]');
-var twImg=doc.querySelector('meta[name="twitter:image"]');
-var image=(imgEl&&imgEl.content)||(twImg&&twImg.content)||'';
-if(image&&image.indexOf('//')===0)image='https:'+image;
-
-var candidates=['article','[itemprop="articleBody"]','.article__text','.article-body','.article-content','.post-content','.entry-content','.news-item__content','main','.content'];
-var contentEl=null;
-for(var i=0;i<candidates.length;i++){
-var el=doc.querySelector(candidates[i]);
-if(el&&(el.textContent||'').trim().length>300){contentEl=el;break}
-}
-if(!contentEl)contentEl=doc.body;
-
-var junk=contentEl.querySelectorAll('script,style,noscript,iframe,form,button,nav,aside,footer,header,.ad,.ads,.advert,.social,.share,.comments,.related,.tags,.breadcrumbs');
-for(var k=0;k<junk.length;k++){try{junk[k].parentNode.removeChild(junk[k])}catch(e){}}
-
-var paragraphs=[];
-var ps=contentEl.querySelectorAll('p,h2,h3');
-if(ps.length>=3){
-for(var p=0;p<ps.length;p++){
-var t=(ps[p].textContent||'').replace(/\s+/g,' ').trim();
-if(t.length>=40&&t.length<2000&&!/^подпис|^читайте|^смотрите|^реклама/i.test(t))paragraphs.push(t);
-}
-}
-if(paragraphs.length<2){
-var raw=(contentEl.textContent||'').replace(/\s+/g,' ').trim();
-var sentences=raw.split(/(?<=[.!?])\s+/);
-var buf='';var out=[];
-for(var s=0;s<sentences.length;s++){
-buf+=(buf?' ':'')+sentences[s];
-if(buf.length>250){out.push(buf);buf=''}
-}
-if(buf)out.push(buf);
-paragraphs=out.slice(0,25);
-}
-return {title:title.trim(),image:image,paragraphs:paragraphs};
-}
+/* ---- READER: iframe-based, Telegram-friendly ---- */
+function getHost(url){try{return new URL(url).hostname.replace(/^www\./,'')}catch(e){return url||''}}
 
 function openArticle(url){
-if(!url||url==='#'){haptic('light');return}
-var m=$('readerModal');if(!m)return;
-m.classList.add('active');
-var body=$('readerBody');
-var titleEl=$('readerTitle');
-if(body)safe(body,'<div class="reader-loading"><div class="spinner"></div><div>Загрузка статьи...</div></div>');
-if(titleEl)titleEl.textContent='Чтение';
-haptic('light');
+  if(!url||url==='#'){haptic('light');return}
+  var m=$('readerModal');if(!m)return;
+  m.classList.add('active');
+  var body=$('readerBody');
+  var titleEl=$('readerTitle');
+  var host=getHost(url);
+  if(titleEl)titleEl.textContent=host||'Чтение';
+  haptic('light');
 
-var attempts=ARTICLE_PROXIES.map(function(fn){
-return fetchT(fn(url),{},12000).then(function(res){
-if(!res||!res.ok)return null;
-return res.text().then(function(t){
-if(!t||t.length<500)return null;
-if(t.indexOf('<html')===-1&&t.indexOf('<body')===-1&&t.indexOf('<article')===-1)return null;
-return t;
-});
-}).catch(function(){return null});
-});
+  // Render topbar + iframe
+  var html='';
+  html+='<div class="reader-topbar">';
+  html+='<div class="reader-url">🔒 '+esc(url)+'</div>';
+  html+='<div class="reader-actions">';
+  html+='<button class="reader-abtn" id="readerIv">Instant View</button>';
+  html+='<button class="reader-abtn" id="readerTg">В TG ↗</button>';
+  html+='</div>';
+  html+='</div>';
+  html+='<iframe class="reader-frame" id="readerFrame" src="'+esc(url)+'" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"></iframe>';
 
-firstOK(attempts).then(function(html){
-if(!html){renderReaderFallback(url);return}
-try{
-var parsed=parseArticleHtml(html,url);
-if(parsed.paragraphs&&parsed.paragraphs.length>0){renderArticle(parsed,url)}
-else{renderReaderFallback(url)}
-}catch(e){renderReaderFallback(url)}
-}).catch(function(){renderReaderFallback(url)});
+  safe(body,html);
+
+  var ivBtn=$('readerIv');
+  if(ivBtn)ivBtn.onclick=function(){
+    // Telegram Instant View
+    var ivUrl='https://t.me/iv?url='+encodeURIComponent(url)+'&rhash=0';
+    try{
+      if(tg.openLink){tg.openLink(ivUrl);return}
+      if(tg.openTelegramLink){tg.openTelegramLink(ivUrl);return}
+    }catch(e){}
+    window.open(ivUrl,'_blank');
+  };
+
+  var tgBtn=$('readerTg');
+  if(tgBtn)tgBtn.onclick=function(){openInApp(url)};
+
+  // Detect iframe failure (X-Frame-Options / CSP) — check via timeout + load event
+  var frame=$('readerFrame');
+  if(frame){
+    var loaded=false;
+    frame.addEventListener('load',function(){
+      loaded=true;
+      // try to check if accessible
+      try{
+        var d=frame.contentDocument;
+        // If blank => likely blocked
+        if(!d||!d.body||(d.body.childElementCount===0&&(!d.body.textContent||d.body.textContent.trim().length<10))){
+          showReaderBlocked(url,host);
+        }
+      }catch(err){
+        // cross-origin is fine (means it actually rendered)
+      }
+    });
+    frame.addEventListener('error',function(){
+      showReaderBlocked(url,host);
+    });
+    // Fallback: if not loaded after 6s — show options but keep iframe
+    setTimeout(function(){
+      if(!loaded){
+        // still allow user; do nothing drastic
+      }
+    },6000);
+  }
 }
 
-function renderReaderFallback(url){
-var body=$('readerBody');if(!body)return;
-var host='';try{host=new URL(url).hostname.replace(/^www\./,'')}catch(e){host=url}
-safe(body,'<div class="reader-fallback"><p>Не удалось загрузить статью во встроенном читателе.<br>Источник: <strong>'+esc(host)+'</strong></p><p>Откройте её в браузере Telegram или скопируйте ссылку.</p><button id="readerOpenExt">Открыть в Telegram</button><br><button id="readerCopy" style="background:var(--sbg);color:var(--tx);border:1px solid var(--bl)">Скопировать ссылку</button></div>');
-var b1=$('readerOpenExt');if(b1)b1.onclick=function(){openInApp(url)};
-var b2=$('readerCopy');if(b2)b2.onclick=function(){
-try{if(navigator.clipboard)navigator.clipboard.writeText(url)}catch(e){}
-b2.textContent='Скопировано ✓';
-};
-}
-
-function renderArticle(p,url){
-var body=$('readerBody');if(!body)return;
-var titleEl=$('readerTitle');if(titleEl&&p.title)titleEl.textContent=p.title;
-var host='';try{host=new URL(url).hostname.replace(/^www\./,'')}catch(e){host=''}
-var html='<div class="reader-inner">';
-if(p.image)html+='<img class="reader-img" src="'+esc(p.image)+'" alt="" onerror="this.style.display=\'none\'">';
-if(p.title)html+='<h1 class="reader-title">'+esc(p.title)+'</h1>';
-html+='<div class="reader-meta"><span>'+esc(host)+'</span><span>'+new Date().toLocaleString('ru-RU',{day:'2-digit',month:'long',hour:'2-digit',minute:'2-digit'})+'</span></div>';
-html+='<div class="reader-content">';
-for(var i=0;i<p.paragraphs.length;i++)html+='<p>'+esc(p.paragraphs[i])+'</p>';
-html+='</div>';
-html+='<div style="margin-top:26px;padding-top:18px;border-top:1px solid var(--bl);text-align:center"><button id="readerOpenExt2" style="padding:12px 22px;border-radius:12px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer">Открыть в Telegram ↗</button></div>';
-html+='</div>';
-safe(body,html);
-body.scrollTop=0;
-var b=$('readerOpenExt2');if(b)b.onclick=function(){openInApp(url)};
+function showReaderBlocked(url,host){
+  // Show fallback ON TOP of iframe area but keep the iframe hidden
+  var body=$('readerBody');if(!body)return;
+  // Only replace once
+  if(body.querySelector('.reader-fallback'))return;
+  var html='';
+  html+='<div class="reader-fallback" style="position:absolute;inset:0;background:var(--mbg);z-index:10">';
+  html+='<p>Сайт <strong>'+esc(host)+'</strong> запрещает встраивание в приложение.</p>';
+  html+='<p>Откройте статью одним из способов ниже.</p>';
+  html+='<button id="rfIv" style="background:linear-gradient(135deg,#22d3ee,#a855f7)">🚀 Instant View в Telegram</button>';
+  html+='<button id="rfOpen" style="background:var(--sbg);color:var(--tx);border:1px solid var(--bl)">🌐 Открыть в браузере Telegram</button>';
+  html+='<button id="rfCopy" style="background:var(--sbg);color:var(--tx);border:1px solid var(--bl)">📋 Скопировать ссылку</button>';
+  html+='</div>';
+  body.insertAdjacentHTML('beforeend',html);
+  var b1=$('rfIv');if(b1)b1.onclick=function(){
+    var ivUrl='https://t.me/iv?url='+encodeURIComponent(url)+'&rhash=0';
+    try{if(tg.openLink){tg.openLink(ivUrl);return}if(tg.openTelegramLink){tg.openTelegramLink(ivUrl);return}}catch(e){}
+    window.open(ivUrl,'_blank');
+  };
+  var b2=$('rfOpen');if(b2)b2.onclick=function(){openInApp(url)};
+  var b3=$('rfCopy');if(b3)b3.onclick=function(){
+    try{if(navigator.clipboard)navigator.clipboard.writeText(url)}catch(e){}
+    b3.textContent='✓ Скопировано';
+  };
 }
 
 function toggleTheme(){
@@ -965,30 +989,6 @@ html+='<div class="nt">'+esc(n.title)+'</div>';
 if(n.desc)html+='<div class="nd">'+formatPost(n.desc)+'</div>';
 html+='<div class="nm"><span>'+esc(n.date||'')+'</span><span class="nl read-more" data-url="'+esc(n.link)+'">Читать →</span></div>';
 html+='</div>';
-});
-safe(c,html);
-try{localStorage.setItem(ck,JSON.stringify({html:html,time:Date.now()}))}catch(e){}
-});
-}
-
-function loadTgChannel(username,cid,label,ck,extractAuthor){
-var c=$(cid);if(!c)return Promise.resolve();
-try{var cached=localStorage.getItem(ck);if(cached){var p=JSON.parse(cached);if(p.html&&p.html.indexOf('nld')===-1&&p.html.indexOf('недоступ')===-1)c.innerHTML=p.html}}catch(e){}
-return fetchTgPosts(username,extractAuthor).then(function(posts){
-if(!posts||posts.length===0){
-if(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1||c.innerHTML.indexOf('недоступ')===-1)safe(c,'<div class="ne">Источник временно недоступен</div>');
-return;
-}
-var html='';
-posts.forEach(function(p){
-html+='<div class="nci">';
-if(p.image)html+='<div class="niw"><img class="ni" src="'+esc(p.image)+'" alt="" loading="lazy" onerror="this.parentNode.style.display=\'none\'"></div>';
-html+='<div class="nsl">'+esc(label)+' · @'+username+'</div>';
-if(p.author)html+='<div class="na">Автор: '+esc(p.author)+'</div>';
-html+='<div class="nd">'+formatPost(p.text)+'</div>';
-html+='<div class="nm"><span>'+esc(p.time)+'</span>';
-if(p.link)html+='<span class="nl" onclick="openInApp(\''+p.link.replace(/'/g,"\\'")+'\')">Открыть →</span>';
-html+='</div></div>';
 });
 safe(c,html);
 try{localStorage.setItem(ck,JSON.stringify({html:html,time:Date.now()}))}catch(e){}
@@ -1094,8 +1094,6 @@ all.push({title:t,link:it.link||'#',desc:stripTags(it.description||''),source:d.
 return all.slice(0,maxTotal);
 });
 }
-
-function loadDevChannel(){return loadTgChannel(TELEGRAM_CHANNEL,'devChannelSection','VDAILY NEWS','nc_dev',false)}
 
 function loadSport(){
 var c=$('sportSection');if(!c)return Promise.resolve();
@@ -1331,7 +1329,6 @@ options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:fals
 });
 }
 
-/* Event delegation for read-more buttons */
 document.addEventListener('click',function(e){
 var t=e.target;
 while(t&&t!==document.body){
@@ -1345,7 +1342,6 @@ t=t.parentNode;
 }
 });
 
-/* Bottom nav */
 function bindNav(){
 document.querySelectorAll('.nit').forEach(function(item){
 item.addEventListener('click',function(){
@@ -1360,14 +1356,12 @@ else if(page==='info'){openInfo()}
 });
 }
 
-/* Crypto chips */
 function bindCoins(){
 document.querySelectorAll('.coin-chip').forEach(function(chip){
 chip.addEventListener('click',function(){setCryptoCoin(chip.dataset.coin)});
 });
 }
 
-/* Scroll progress */
 function bindScrollProgress(){
 var card=$('mainCard');var bar=$('spBar');
 if(!card||!bar)return;
@@ -1399,13 +1393,11 @@ bindNav();
 bindCoins();
 bindScrollProgress();
 
-/* Section loaders — run independently, don't block */
 try{loadRssGroup(MAIN_FEEDS,'newsSection',2,8)}catch(e){}
 try{loadRssGroup(SHOWBIZ_FEEDS,'showbizSection',2,8)}catch(e){}
 try{loadIbNews()}catch(e){}
 try{loadGadgetsNews()}catch(e){}
 try{loadBlocksNews()}catch(e){}
-try{loadDevChannel()}catch(e){}
 try{loadSport()}catch(e){}
 try{loadStocks()}catch(e){}
 try{loadCBR()}catch(e){}
@@ -1425,7 +1417,6 @@ try{loadRssGroup(SHOWBIZ_FEEDS,'showbizSection',2,8)}catch(e){}
 try{loadIbNews()}catch(e){}
 try{loadGadgetsNews()}catch(e){}
 try{loadBlocksNews()}catch(e){}
-try{loadDevChannel()}catch(e){}
 try{loadSport()}catch(e){}
 },300000);
 }
