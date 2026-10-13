@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>NeuroCore</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--fs:1;--bg1:radial-gradient(circle at top,#0ea5e9 0,#020617 50%,#000 100%);--bg2:radial-gradient(circle at top,#6366f1 0,#020617 55%,#000 100%);--bg3:radial-gradient(circle at top,#ec4899 0,#020617 50%,#000 100%);--cbg:rgba(15,23,42,.92);--cbd:rgba(59,130,246,.3);--tx:#e5e7eb;--tx2:#9ca3af;--txm:#6b7280;--ab:#3b82f6;--ag:#10b981;--ar:#ef4444;--ay:#f59e0b;--sbg:rgba(17,24,39,.6);--sibg:rgba(15,23,42,.5);--ibg:radial-gradient(circle at top left,#0f172a 0,#020617 60%);--bl:rgba(75,85,99,.6);--nbg:rgba(10,15,30,.98);--nsh:0 0 30px rgba(59,130,246,.4);--shc:0 20px 50px rgba(0,0,0,.8),0 0 0 1px rgba(59,130,246,.3);--cb:rgba(15,23,42,.8);--st:#3b82f6;--obg:rgba(0,0,0,.75);--mbg:#0f172a;--stp:env(safe-area-inset-top,0px);--sbt:env(safe-area-inset-bottom,0px)}
+[data-theme="light"]{--bg1:radial-gradient(circle at top,#bfdbfe 0,#e0f2fe 40%,#fff 100%);--bg2:radial-gradient(circle at top,#c7d2fe 0,#e0f2fe 45%,#fff 100%);--bg3:radial-gradient(circle at top,#fbcfe8 0,#e0f2fe 40%,#fff 100%);--cbg:rgba(255,255,255,.97);--cbd:rgba(59,130,246,.25);--tx:#0f172a;--tx2:#475569;--txm:#94a3b8;--ab:#2563eb;--ag:#059669;--ar:#dc2626;--ay:#d97706;--sbg:rgba(241,245,249,.85);--sibg:rgba(226,232,240,.7);--ibg:#f8fafc;--bl:rgba(203,213,225,.9);--nbg:rgba(255,255,255,.98);--nsh:0 0 30px rgba(59,130,246,.25);--shc:0 10px 30px rgba(0,0,0,.08),0 0 0 1px rgba(59,130,246,.15);--cb:rgba(241,245,249,.8);--obg:rgba(15,23,42,.5);--mbg:#fff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;width:100%;min-height:100%;font-family:"Roboto",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:calc(14px*var(--fs));overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{display:flex;align-items:flex-start;justify-content:center;background:var(--bg1);color:var(--tx);animation:bgS 18s infinite alternate ease-in-out;min-height:100vh;transition:color .4s;overscroll-behavior-y:none}
+.card{width:100%;max-width:540px;background:var(--cbg);border-radius:20px;box-shadow:var(--shc);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;flex-direction:column;height:100dvh;max-height:100dvh;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--st) transparent;padding:calc(14px + var(--stp)) 16px calc(110px + var(--sbt));transition:background .4s;position:relative;-webkit-overflow-scrolling:touch}
+.card::-webkit-scrollbar{width:6px}
+.card::-webkit-scrollbar-thumb{background-color:var(--st);border-radius:3px}
+.tc{display:flex;justify-content:flex-start;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.tt,.fb{background:var(--sbg);border:1px solid var(--bl);border-radius:10px;padding:8px 10px;cursor:pointer;color:var(--tx);font-size:12px;font-weight:600;transition:transform .2s,border-color .2s,background .3s;outline:none;min-width:38px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;user-select:none;font-family:inherit}
+.tt:hover,.fb:hover{border-color:var(--ab);transform:translateY(-1px)}
+.tt:active,.fb:active{transform:scale(.94)}
+.fb.active{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent}
+.fb[data-font="0.85"]{font-size:11px}
+.fb[data-font="1"]{font-size:12px}
+.fb[data-font="1.2"]{font-size:14px}
+.hd{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.av{width:44px;height:44px;border-radius:13px;background:conic-gradient(from 140deg,#22c55e,#22d3ee,#6366f1,#ec4899,#22c55e);display:flex;align-items:center;justify-content:center;color:#020617;font-weight:700;font-size:18px;text-shadow:0 0 6px rgba(15,23,42,.8);animation:pG 4s infinite ease-in-out;flex-shrink:0}
+.tb{flex:1;min-width:0}
+.ti{font-size:calc(19px*var(--fs));font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--tx);text-shadow:0 0 8px rgba(56,189,248,.9),0 0 16px rgba(59,130,246,.8);animation:tG 5s infinite ease-in-out;line-height:1.1}
+.bd{font-size:11px;padding:4px 8px;border-radius:999px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.6);color:#bfdbfe;text-transform:uppercase;letter-spacing:.08em;flex-shrink:0}
+[data-theme="light"] .bd{color:#1e40af}
+.ag{margin-top:4px}
+.agb{width:100%;padding:14px 16px;border-radius:999px;border:0;cursor:pointer;font-size:14px;font-weight:600;background:linear-gradient(135deg,#f97316,#ec4899);color:#fefce8;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 25px rgba(248,113,113,.5);transition:transform .2s,filter .25s,box-shadow .25s;font-family:inherit;min-height:48px;user-select:none;position:relative;overflow:hidden}
+.agb:hover{filter:brightness(1.05);transform:translateY(-2px)}
+.agb:active{transform:translateY(1px) scale(.98)}
+.sd{height:1px;background:linear-gradient(90deg,transparent,var(--cbd),transparent);margin:22px 0}
+.st{display:flex;align-items:center;gap:12px;font-size:calc(16px*var(--fs));font-weight:600;color:var(--tx);margin-bottom:14px}
+.si{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--sbg);border:1px solid var(--bl);font-size:17px;flex-shrink:0}
+.ns{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
+.nci{background:var(--sibg);border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid var(--bl);overflow:hidden;transition:transform .25s,border-color .25s;animation:cA .4s ease both}
+.nci:hover{transform:translateY(-2px);border-color:var(--ab)}
+.nci:last-child{margin-bottom:0}
+.nsl{font-size:10px;color:var(--ab);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.na{font-size:10px;color:var(--ay);font-weight:600;margin-bottom:6px}
+.nt{font-size:calc(13.5px*var(--fs));font-weight:600;color:var(--tx);margin-bottom:6px;line-height:1.4}
+.nd{font-size:calc(12.5px*var(--fs));color:var(--tx2);line-height:1.65;margin-bottom:8px;word-break:break-word;overflow-wrap:anywhere}
+.nd p{margin:0 0 10px 0}
+.nd p:last-child{margin-bottom:0}
+.nd a{color:var(--ab);text-decoration:none;word-break:break-all}
+.nd strong{color:var(--tx);font-weight:600}
+.nd .bi{display:block;padding-left:4px;margin:3px 0}
+.nm{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--txm);gap:8px;flex-wrap:wrap;margin-top:6px}
+.nl{color:var(--ab);text-decoration:none;font-size:10.5px;font-weight:600;white-space:nowrap;cursor:pointer;padding:4px 8px;border-radius:6px;transition:background .2s;user-select:none}
+.nl:hover{background:rgba(59,130,246,.15)}
+.ne{text-align:center;color:var(--txm);font-size:12px;padding:20px 0;font-style:italic}
+.nld{text-align:center;color:var(--txm);font-size:12px;padding:20px 0;animation:p 1.6s ease-in-out infinite}
+.niw{width:100%;margin-bottom:10px;border-radius:10px;overflow:hidden;background:rgba(0,0,0,.2)}
+.ni{width:100%;height:auto;max-height:400px;object-fit:cover;display:block}
+.sp{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
+.spi{display:flex;flex-direction:column;gap:4px;padding:10px 0;border-bottom:1px solid var(--bl)}
+.spi:last-child{border-bottom:none}
+.sps{font-size:10px;color:var(--ab);font-weight:700;text-transform:uppercase}
+.spt{font-size:calc(12.5px*var(--fs));color:var(--tx);line-height:1.4}
+.spd{font-size:10px;color:var(--txm)}
+.sts{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
+.str{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--bl)}
+.str:last-child{border-bottom:none}
+.stk{font-weight:700;font-size:calc(12px*var(--fs));color:var(--ab);min-width:48px;flex-shrink:0}
+.stn{flex:1;font-size:calc(11px*var(--fs));color:var(--txm);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stp{font-weight:600;font-size:calc(12px*var(--fs));color:var(--tx);text-align:right;min-width:70px;flex-shrink:0}
+.stc{font-size:calc(11px*var(--fs));font-weight:700;text-align:right;min-width:58px;flex-shrink:0}
+.stc.up{color:var(--ag)}
+.stc.dn{color:var(--ar)}
+.stu{font-size:10px;color:var(--txm);text-align:right;margin-top:8px}
+.cbrs{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
+.cbrr{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bl);font-size:calc(12px*var(--fs))}
+.cbrr:last-child{border-bottom:none}
+.cbrc{color:var(--tx2);flex:1;min-width:0}
+.cbrc strong{color:var(--tx);font-weight:600}
+.cbrrt{font-weight:700;color:var(--tx);flex-shrink:0;min-width:70px;text-align:right}
+.cbrch{font-size:calc(10px*var(--fs));font-weight:700;min-width:54px;text-align:right;flex-shrink:0}
+.cbrch.up{color:var(--ar)}
+.cbrch.dn{color:var(--ag)}
+.crs{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
+.crt{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.crp{font-size:calc(18px*var(--fs));font-weight:700;background:linear-gradient(135deg,#10b981,#059669);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.chc{height:120px;position:relative;margin-bottom:12px;background:var(--cb);border-radius:12px;overflow:hidden}
+#cryptoChart{width:100%!important;height:100%!important;display:block}
+.tfr{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.tfb{padding:9px 4px;border-radius:8px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:11px;cursor:pointer;font-family:inherit;min-height:36px;transition:background .25s,border-color .25s;user-select:none}
+.tfb.active,.tfb:hover{background:linear-gradient(135deg,#2563eb,#7c3aed);border-color:#60a5fa;color:#fff}
+.cc{display:flex;gap:8px;margin-top:10px;justify-content:center}
+.cnb{width:50px;height:42px;border-radius:11px;border:2px solid transparent;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit;user-select:none;transition:transform .2s,box-shadow .25s}
+.cnb.active{border-color:var(--ag);box-shadow:0 0 0 2px rgba(16,185,129,.3);transform:scale(1.05)}
+.ton{background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff}
+.btc{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff}
+.not{background:linear-gradient(135deg,#06b6d4,#0891b2);color:#fff}
+.cvr{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.cvi{flex:1;padding:11px 12px;border:1px solid var(--bl);border-radius:10px;background:var(--ibg);color:var(--tx);font-size:15px;outline:none;font-family:inherit;min-width:0;min-height:44px}
+.cvi:focus{border-color:var(--ab)}
+.cvs{padding:11px 12px;border:1px solid var(--bl);border-radius:10px;background:var(--ibg);color:var(--tx);font-size:14px;outline:none;cursor:pointer;font-family:inherit;flex-shrink:0;min-height:44px}
+.cvrl{font-size:calc(16px*var(--fs));font-weight:700;color:var(--ay);text-align:center;padding:12px;background:rgba(249,158,11,.1);border-radius:10px;margin-top:12px}
+.curs{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
+.curc{height:100px;position:relative;margin-bottom:12px;background:var(--cb);border-radius:12px;overflow:hidden}
+.currl{font-size:calc(16px*var(--fs));font-weight:700;color:var(--ag);text-align:center;padding:12px;background:rgba(34,197,94,.1);border-radius:10px}
+.mb{margin-top:24px;padding-top:16px;border-top:1px solid var(--bl);font-size:11px;color:var(--txm);display:flex;flex-direction:column;gap:6px;padding-bottom:10px}
+.mbt{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#a5b4fc;font-weight:700}
+.mbl{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.mlk{color:var(--ab);text-decoration:none;font-size:11.5px;cursor:pointer;padding:6px 10px;border-radius:8px;user-select:none;transition:background .2s}
+.mlk:hover{background:rgba(59,130,246,.1)}
+.nw{position:fixed;bottom:0;left:0;right:0;width:100%;z-index:1000;pointer-events:none;padding:0 8px calc(10px + var(--sbt));background:linear-gradient(to top,var(--cbg) 0,transparent 100%)}
+.nn{pointer-events:auto;display:flex;justify-content:space-evenly;align-items:center;background:var(--nbg);border:1px solid rgba(255,255,255,.12);box-shadow:var(--nsh);border-radius:22px;height:72px;backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);overflow:hidden;margin:0 auto;max-width:460px}
+[data-theme="light"] .nn{border:1px solid rgba(0,0,0,.08)}
+.nit{flex:1;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;color:var(--tx);font-size:10px;font-weight:600;cursor:pointer;transition:color .3s;position:relative;user-select:none}
+.nit.active{color:#00f2fe}
+[data-theme="light"] .nit.active{color:#2563eb}
+.nic{width:38px;height:38px;border-radius:12px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.iem{font-size:17px;position:relative;z-index:2}
+.nit:hover .nic{transform:translateY(-3px) scale(1.1)}
+.nit:active .nic{transform:scale(.92)}
+.hs{background:linear-gradient(45deg,#ff0080,#00f2fe,#ff0080);background-size:400% 400%;animation:hS 5s ease infinite}
+.hp{background:linear-gradient(45deg,#00f2fe,#ff0080,#00f2fe);background-size:300% 300%;animation:hS 6s ease infinite reverse}
+.hh{background:linear-gradient(45deg,#3b82f6,#8b5cf6,#3b82f6);background-size:300% 300%;animation:hS 5s ease infinite}
+.hr{background:linear-gradient(45deg,#ff6b00,#00f2fe,#ff6b00);background-size:400% 400%;animation:hS 4s ease infinite}
+.hw{background:linear-gradient(45deg,#00f2fe,#39ff14,#00f2fe);background-size:350% 350%;animation:hS 5.5s ease infinite reverse}
+.mo{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--obg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:12px;animation:fI .28s ease}
+.mo.active{display:flex}
+.mc{background:var(--mbg);border:1px solid var(--cbd);border-radius:20px;width:100%;max-width:520px;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 25px 60px rgba(0,0,0,.8);overflow:hidden;animation:mI .35s cubic-bezier(.34,1.56,.64,1)}
+.mh{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--bl);background:var(--sbg);flex-shrink:0}
+.mht{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--tx)}
+.mav{width:34px;height:34px;border-radius:10px;background:conic-gradient(from 140deg,#22c55e,#22d3ee,#6366f1,#ec4899,#22c55e);display:flex;align-items:center;justify-content:center;color:#020617;font-weight:700;font-size:13px;flex-shrink:0}
+.mcl{width:36px;height:36px;border-radius:10px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;user-select:none;transition:transform .2s,background .2s,color .2s}
+.mcl:hover{background:var(--ar);color:#fff;border-color:var(--ar);transform:scale(1.05) rotate(90deg)}
+.mby{padding:20px 18px 26px;overflow-y:auto;overflow-x:hidden;color:var(--tx);line-height:1.6;font-size:13px;-webkit-overflow-scrolling:touch}
+.mby::-webkit-scrollbar{width:6px}
+.mby::-webkit-scrollbar-thumb{background-color:var(--st);border-radius:3px}
+.pb{text-align:center;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--bl)}
+.pbt{font-size:20px;font-weight:700;letter-spacing:.14em;color:var(--tx);text-shadow:0 0 8px rgba(56,189,248,.7);margin-bottom:4px}
+.pbm{font-size:11px;color:var(--ab);font-weight:600}
+.pmt{font-size:15px;font-weight:700;color:var(--tx);margin:0 0 6px 0}
+.pin{font-size:12px;color:var(--tx2);margin-bottom:16px;line-height:1.5}
+.ph2{font-size:14px;font-weight:700;color:var(--ab);margin:18px 0 8px 0;padding-bottom:4px;border-bottom:1px solid var(--bl)}
+.pp{font-size:12.5px;color:var(--tx2);margin:0 0 8px 0;line-height:1.55;text-align:justify}
+.pl{margin:6px 0 10px 0;padding-left:20px;font-size:12.5px;color:var(--tx2);line-height:1.55}
+.pl li{margin-bottom:5px}
+.pc{background:var(--sbg);border:1px solid var(--bl);border-radius:10px;padding:12px;margin:12px 0;font-size:12.5px;color:var(--tx2);line-height:1.55}
+.pc a{color:var(--ab);text-decoration:none;font-weight:600;cursor:pointer}
+.pf{text-align:center;margin-top:24px;padding-top:14px;border-top:1px solid var(--bl);font-size:11px;color:var(--txm);line-height:1.6}
+.pf a{color:var(--ab);text-decoration:none;font-weight:600;cursor:pointer}
+@keyframes fI{from{opacity:0}to{opacity:1}}
+@keyframes mI{from{opacity:0;transform:translateY(24px) scale(.94)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes cA{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes p{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes bgS{0%{background:var(--bg1)}50%{background:var(--bg2)}100%{background:var(--bg3)}}
+@keyframes pG{0%,100%{box-shadow:0 0 0 rgba(56,189,248,0)}50%{box-shadow:0 0 20px rgba(56,189,248,.7)}}
+@keyframes tG{0%,100%{text-shadow:0 0 4px rgba(56,189,248,.5),0 0 8px rgba(59,130,246,.4)}50%{text-shadow:0 0 10px rgba(56,189,248,1),0 0 22px rgba(59,130,246,.9)}}
+@keyframes hS{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@media(max-width:480px){body{padding:0;align-items:stretch}.card{padding:calc(12px + var(--stp)) 12px calc(110px + var(--sbt));border-radius:0;width:100%;max-width:100%}.ti{font-size:calc(17px*var(--fs))}.cvr{flex-wrap:wrap}.cvi{min-width:110px}.mc{max-height:94vh;border-radius:16px}.mby{padding:16px 14px 22px}.nn{height:70px}.nic{width:36px;height:36px}.nci{padding:12px}.ni{max-height:320px}}
+@media(max-width:360px){.ti{font-size:calc(15px*var(--fs))}.av{width:38px;height:38px;font-size:15px}.stk{min-width:42px;font-size:11px}.stp{min-width:62px;font-size:11px}.stc{min-width:50px;font-size:10px}}
+@media(min-width:700px){.card{margin:20px 0;height:auto;max-height:calc(100vh - 40px);border-radius:24px}.nn{max-width:480px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}body{animation:none;background:var(--bg2)}}
+</style>
+</head>
+<body>
+<div class="card" id="mainCard">
+<div class="tc">
+<button class="tt" id="themeToggle" onclick="toggleTheme()">🌙</button>
+<button class="fb" data-font="0.85" onclick="setFontScale(this,0.85)">A</button>
+<button class="fb active" data-font="1" onclick="setFontScale(this,1)">A</button>
+<button class="fb" data-font="1.2" onclick="setFontScale(this,1.2)">A</button>
+</div>
+<div class="hd"><div class="av">NC</div><div class="tb"><div class="ti">NEUROCORE</div></div><div class="bd">beta</div></div>
+<div class="ag"><button class="agb" type="button" onclick="inviteToGroup()">👥 <span>Пригласить NeuroCore в группу</span></button></div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">📰</div><span>Главные новости</span></div>
+<div class="ns" id="newsSection"><div class="nld">⏳ Загрузка...</div></div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">⭐</div><span>Шоу-бизнес и звёзды</span></div>
+<div class="ns" id="showbizSection"><div class="nld">⏳ Загрузка...</div></div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">🛡️</div><span>Информационная безопасность</span></div>
+<div class="ns" id="ibNewsSection"><div class="nld">⏳ Загрузка...</div></div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">📱</div><span>Гаджеты и IT</span></div>
+<div class="ns" id="gadgetsSection"><div class="nld">⏳ Загрузка...</div></div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">🚫</div><span>Блокировки Рунета</span></div>
+<div class="ns" id="blocksSection"><div class="nld">⏳ Загрузка...</div></div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">⚽</div><span>Спорт · Россия</span></div>
+<div class="sp" id="sportSection"><div class="nld">⏳ Загрузка...</div></div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">📈</div><span>Акции MOEX</span></div>
+<div class="sts" id="stocksSection"><div class="nld">⏳ Загрузка...</div></div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">🏦</div><span>Курсы ЦБ</span></div>
+<div class="cbrs" id="cbrSection"><div class="nld">⏳ Загрузка...</div></div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">₿</div><span>Крипта</span></div>
+<div class="crs">
+<div class="crt"><span class="crp" id="cryptoPrice">— ₽</span><span id="cryptoChange" style="font-size:12px;color:#10b981">—</span></div>
+<div class="cc">
+<button class="cnb ton active" onclick="setCryptoCoin(event,'ton')">TON</button>
+<button class="cnb btc" onclick="setCryptoCoin(event,'btc')">BTC</button>
+<button class="cnb not" onclick="setCryptoCoin(event,'not')">NOT</button>
+</div>
+<div class="chc"><canvas id="cryptoChart"></canvas></div>
+<div class="tfr">
+<button class="tfb" data-time="1h" onclick="setTimeframe(event,'1h')">1ч</button>
+<button class="tfb" data-time="6h" onclick="setTimeframe(event,'6h')">6ч</button>
+<button class="tfb active" data-time="1d" onclick="setTimeframe(event,'1d')">1д</button>
+<button class="tfb" data-time="7d" onclick="setTimeframe(event,'7d')">7д</button>
+</div>
+</div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">💱</div><span>Крипта → ₽</span></div>
+<div class="curs">
+<div class="cvr">
+<input type="number" class="cvi" id="cryptoAmount" placeholder="1.5" step="any" min="0" value="1" oninput="convertCryptoToRub()">
+<select class="cvs" id="cryptoCoinSelect" onchange="convertCryptoToRub()">
+<option value="ton">TON</option>
+<option value="btc">BTC</option>
+<option value="not">NOT</option>
+</select>
+</div>
+<div class="curc"><canvas id="cryptoConverterChart"></canvas></div>
+<div class="cvrl" id="cryptoRubResult">— ₽</div>
+</div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">💵</div><span>Валюты → ₽</span></div>
+<div class="curs">
+<div class="cvr">
+<input type="number" class="cvi" id="currencyAmount" placeholder="1" step="any" min="0" value="1" oninput="convertCurrency()">
+<select class="cvs" id="currencySelect" onchange="convertCurrency()">
+<option value="usd">USD</option>
+<option value="eur">EUR</option>
+<option value="byn">BYN</option>
+<option value="kzt">KZT</option>
+</select>
+</div>
+<div class="curc"><canvas id="currencyChart"></canvas></div>
+<div class="currl" id="currencyRubResult">— ₽</div>
+</div>
+
+<div class="sd"></div>
+<div class="st"><div class="si">✈️</div><span>Канал разработчика бота</span></div>
+<div class="ns" id="devChannelSection"><div class="nld">⏳ Загрузка...</div></div>
+
+<div class="mb">
+<div class="mbt">SYSTEM</div>
+<div class="mbl">
+<span class="mlk" onclick="openPrivacy()">Политика конфиденциальности</span>
+<span class="mlk" onclick="openInApp('https://t.me/genuis_neo_bot')">Связь с разработчиком</span>
+</div>
+</div>
+</div>
+
+<div class="nw">
+<div class="nn">
+<div class="nit" data-page="social"><div class="nic hs"><span class="iem">🌐</span></div><div>Соцсеть</div></div>
+<div class="nit" data-page="shop"><div class="nic hp"><span class="iem">🛍️</span></div><div>Магазин</div></div>
+<div class="nit active" data-page="home"><div class="nic hh"><span class="iem">🏠</span></div><div>Главная</div></div>
+<div class="nit" data-page="radio"><div class="nic hr"><span class="iem">📻</span></div><div>Радио</div></div>
+<div class="nit" data-page="wallet"><div class="nic hw"><span class="iem">💎</span></div><div>Кошелёк</div></div>
+</div>
+</div>
+
+<div class="mo" id="privacyModal" onclick="closePrivacyOnOverlay(event)">
+<div class="mc" onclick="event.stopPropagation()">
+<div class="mh">
+<div class="mht"><div class="mav">NC</div><span>Политика конфиденциальности</span></div>
+<button class="mcl" onclick="closePrivacy()">✕</button>
+</div>
+<div class="mby">
+<div class="pb"><div class="pbt">NEUROCORE</div><div class="pbm">Политика конфиденциальности · РФ · 152-ФЗ</div></div>
+<h2 class="pmt">Политика конфиденциальности Telegram-бота «NeuroCore»</h2>
+<p class="pin">Описание того, как обрабатываются и защищаются данные пользователей бота.</p>
+
+<h3 class="ph2">1. Общие положения</h3>
+<p class="pp">1.1. Настоящая Политика конфиденциальности (далее – «Политика») определяет порядок и условия обработки персональных данных пользователей Telegram-бота «NeuroCore» (далее – «Бот») и меры по обеспечению их безопасности.</p>
+<p class="pp">1.2. Администратором Бота является физическое лицо – разработчик Бота (далее – «Администратор»).</p>
+<p class="pp">1.3. Политика разработана в соответствии с Федеральным законом РФ от 27.07.2006 № 152-ФЗ «О персональных данных» и иными применимыми нормами законодательства Российской Федерации.</p>
+<p class="pp">1.4. Используя Бота, Пользователь подтверждает, что ознакомился с настоящей Политикой и выражает свое согласие на обработку своих данных на условиях, изложенных в Политике.</p>
+
+<h3 class="ph2">2. Объем обрабатываемых данных</h3>
+<p class="pp">2.1. Администратор получает и обрабатывает только те данные, которые автоматически предоставляет Telegram при использовании Бота, а именно: идентификатор чата (chat_id), отображаемое имя и имя пользователя (username), текст и содержимое отправляемых сообщений, а также техническую информацию (время отправки, тип чата и т.п.).</p>
+<p class="pp">2.2. Администратор не запрашивает и не собирает заведомо избыточные данные, а также специальные категории персональных данных (сведения о здоровье, религиозных убеждениях, политических взглядах и т.п.), за исключением случаев, когда Пользователь добровольно укажет их в тексте сообщений.</p>
+<p class="pp">2.3. Администратор не осуществляет скрытого сбора данных, не использует сторонние трекеры и не объединяет базы данных для несовместимых целей.</p>
+
+<h3 class="ph2">3. Цели обработки данных</h3>
+<p class="pp">3.1. Персональные данные обрабатываются исключительно в следующих целях:</p>
+<ul class="pl">
+<li>обеспечение работы функционала Бота (ответы на вопросы, генерация текстов, обработка команд);</li>
+<li>оказание пользователям информационной и вспомогательной поддержки в рамках образовательной деятельности, включая помощь школьникам, студентам и иным пользователям разных возрастов при подготовке к занятиям, экзаменам, выполнении учебных и творческих задач;</li>
+<li>предоставление развлекательного и познавательного контента в дружелюбных группах, сообществах и переписках, не направленного на причинение вреда кому-либо;</li>
+<li>улучшение качества работы Бота и корректировка его алгоритмов (анализ обезличенной статистики обращений);</li>
+<li>выполнение требований законодательства РФ, в том числе по запросу уполномоченных органов в предусмотренных законом случаях.</li>
+</ul>
+<p class="pp">3.2. Все реализованные в Боте функции и команды предназначены для упрощения взаимодействия пользователей с нейросетями, снижения трудоёмкости творческой, учебной и информационной деятельности и не создаются с целью причинения вреда людям, организациям, обществу или государству.</p>
+<p class="pp">3.3. Данные не используются для навязчивой рекламы, массовых рассылок, профилирования в коммерческих целях и передачи третьим лицам для их собственных маркетинговых задач.</p>
+
+<h3 class="ph2">4. Правовые основания обработки</h3>
+<p class="pp">4.1. Обработка персональных данных осуществляется на основании:</p>
+<ul class="pl">
+<li>согласия Пользователя, выраженного через использование Бота и направление сообщений в его адрес;</li>
+<li>необходимости исполнения соглашения между Пользователем и Администратором по предоставлению функционала Бота;</li>
+<li>требований законодательства Российской Федерации.</li>
+</ul>
+<p class="pp">4.2. Пользователь вправе прекратить использование Бота в любое время, что рассматривается как отзыв согласия на дальнейшую обработку данных, за исключением случаев, когда их хранение требуется в силу закона.</p>
+
+<h3 class="ph2">5. Передача и хранение данных</h3>
+<p class="pp">5.1. Вся передача сообщений между Пользователем и Ботом осуществляется через инфраструктуру Telegram; Администратор не несет ответственности за способы обработки данных самим сервисом Telegram. Пользователь должен дополнительно ознакомиться с Политикой конфиденциальности Telegram.</p>
+<p class="pp">5.2. Если Администратор хранит историю переписки или отдельные запросы Пользователей вне Telegram (например, на сервере или в базе данных), хранение осуществляется в минимально необходимом объеме и только для целей, указанных в разделе 3.</p>
+<p class="pp">5.3. Доступ к таким данным может иметь только Администратор (и/или уполномоченные им лица) при условии соблюдения режима конфиденциальности.</p>
+<p class="pp">5.4. Срок хранения данных ограничен сроком, необходимым для достижения целей обработки, после чего данные подлежат удалению или обезличиванию, если иное не требуется законом.</p>
+
+<h3 class="ph2">6. Защита персональных данных</h3>
+<p class="pp">6.1. Администратор принимает разумные и достаточные организационные и технические меры для защиты персональных данных от неправомерного или случайного доступа, уничтожения, изменения, блокирования, копирования, распространения и иных неправомерных действий третьих лиц.</p>
+<p class="pp">6.2. В том числе могут применяться: ограничение доступа к данным, использование сложных паролей и двухфакторной аутентификации, резервное копирование и регулярное обновление программного обеспечения.</p>
+<p class="pp">6.3. Несмотря на принимаемые меры, Администратор не может гарантировать абсолютную защиту от всех возможных киберугроз и просит Пользователя воздерживаться от передачи в Бот конфиденциальной информации, которая не необходима для использования его функционала.</p>
+
+<h3 class="ph2">7. Права пользователя</h3>
+<p class="pp">7.1. Пользователь имеет право:</p>
+<ul class="pl">
+<li>получать информацию о своих персональных данных, обрабатываемых Администратором;</li>
+<li>требовать уточнения, блокирования или удаления своих персональных данных в случаях, предусмотренных законодательством РФ;</li>
+<li>отозвать согласие на обработку персональных данных путем прекращения использования Бота и (при необходимости) направления соответствующего запроса Администратору.</li>
+</ul>
+<p class="pp">7.2. Для реализации своих прав Пользователь может обратиться к Администратору через контакт, указанный в описании Бота или в настоящей Политике (например, через Telegram-аккаунт разработчика).</p>
+
+<div class="pc">Для связи с Администратором и по вопросам обработки персональных данных можно написать в Telegram: <a onclick="openInApp('https://t.me/genuis_neo_bot')">@genuis_neo_bot</a>.</div>
+
+<h3 class="ph2">8. Недопустимые действия и ограничения</h3>
+<p class="pp">8.1. Пользователь не вправе использовать Бот для любых действий, нарушающих законодательство Российской Федерации, включая, но не ограничиваясь: распространением материалов экстремистского или террористического характера, разжиганием ненависти или вражды, призывами к насилию, совершению противоправных деяний, а также для мошенничества, спама и иных злоупотреблений.</p>
+<p class="pp">8.2. Разработчик и Администратор Бота выступают против любой формы терроризма, экстремизма, разжигания ненависти, дискриминации и иных противоправных действий и не поддерживают подобный контент и поведение.</p>
+<p class="pp">8.3. Все реализованные в Боте функции и команды направлены исключительно на упрощение взаимодействия пользователей с нейросетями, снижение трудоёмкости творческой и информационной деятельности и не предназначены для причинения вреда каким-либо лицам, организациям, обществу или государству.</p>
+<p class="pp">8.4. Любое использование Бота в целях причинения вреда, подготовки, организации или совершения противоправных деяний (в том числе террористической, экстремистской, мошеннической или иной незаконной деятельности) является недопустимым и осуществляется Пользователем по его собственной инициативе и под его личную ответственность.</p>
+
+<h3 class="ph2">9. Ограничение ответственности Администратора</h3>
+<p class="pp">9.1. Администратор не несет ответственность за любые действия Пользователя, совершённые с использованием Бота, включая действия, противоречащие законодательству Российской Федерации, а также за причиненный третьим лицам вред, если такие действия осуществлялись по инициативе Пользователя.</p>
+<p class="pp">9.2. Администратор не несет ответственность за содержание внешних ресурсов и ссылок, которые могут быть указаны, сформированы или рекомендованы в ответах Бота, а также за последствия перехода Пользователя по таким ссылкам. Ответственность за использование внешних сайтов, сервисов и материалов несет сам Пользователь.</p>
+<p class="pp">9.3. Администратор не несет ответственность за размещение и распространение Пользователем материалов, которые могут быть признаны экстремистскими, террористическими, противоправными или вредоносными. Обязанность соблюдения требований законодательства РФ (в том числе законодательства о противодействии экстремистской и террористической деятельности) лежит на Пользователе.</p>
+<p class="pp">9.4. Вся информация, предоставляемая Ботом, носит справочный и рекомендательный характер и не является юридической, медицинской, финансовой или иной профессиональной консультацией.</p>
+
+<h3 class="ph2">10. Изменения Политики</h3>
+<p class="pp">10.1. Администратор вправе в одностороннем порядке вносить изменения в настоящую Политику, если это необходимо для актуализации информации или приведения ее в соответствие с законодательством РФ.</p>
+<p class="pp">10.2. Обновленная редакция Политики вступает в силу с момента ее размещения по ссылке, указанной в описании Бота или в интерфейсе Mini App. Рекомендуется периодически знакомиться с актуальной версией Политики.</p>
+
+<div class="pf"><strong>NeuroCore · Telegram-бот</strong><br>Политика конфиденциальности · версия 1.0<br><a onclick="openInApp('https://t.me/genuis_neo_bot')">Официальный Telegram-канал разработчика</a></div>
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+window.addEventListener('error',function(e){
+var m=e.message||'';
+if(m.indexOf('ResizeObserver')!==-1||m.indexOf('Failed to fetch')!==-1||m.indexOf('DOMException')!==-1||m.indexOf('NetworkError')!==-1||m.indexOf('Load failed')!==-1||m.indexOf('Script error')!==-1){e.stopImmediatePropagation();e.preventDefault();return true}
+},true);
+window.addEventListener('unhandledrejection',function(e){
+var r=e.reason;var n=(r&&r.name)?r.name:'';var m=String(r||'');
+if(m.indexOf('ResizeObserver')!==-1||n==='AbortError'||n==='DOMException'||(typeof DOMException!=='undefined'&&r instanceof DOMException)||m.indexOf('Failed to fetch')!==-1||m.indexOf('NetworkError')!==-1||m.indexOf('timeout')!==-1||m.indexOf('Load failed')!==-1){e.preventDefault()}
+});
+
+var tg=(window.Telegram&&window.Telegram.WebApp)?window.Telegram.WebApp:{};
+
+var TELEGRAM_CHANNEL='genuis_neo_bot';
+var IB_CHANNEL='ib_mirea_news';
+var GADGETS_CHANNEL='Wylsared';
+var BLOCKS_CHANNEL='blokirovki_runeta';
+
+var COINGECKO_IDS={ton:'the-open-network',btc:'bitcoin',not:'notcoin'};
+var COIN_COLORS={ton:'#8b5cf6',btc:'#f59e0b',not:'#06b6d4'};
+var CURRENCY_COLORS={usd:'#10b981',eur:'#3b82f6',byn:'#f59e0b',kzt:'#ef4444'};
+var FALLBACK_CRYPTO={ton:145.99,btc:5246888,not:0.68374};
+var FALLBACK_CHANGES={ton:2.2,btc:1.9,not:7.5};
+var FALLBACK_RATES={usd:80.44,eur:88.00,byn:25.00,kzt:0.18};
+
+var STOCKS=[
+{ticker:'SBER',name:'Сбербанк'},{ticker:'GAZP',name:'Газпром'},{ticker:'LKOH',name:'Лукойл'},
+{ticker:'ROSN',name:'Роснефть'},{ticker:'GMKN',name:'Норникель'},{ticker:'VTBR',name:'ВТБ'},
+{ticker:'MGNT',name:'Магнит'},{ticker:'YDEX',name:'Яндекс'},{ticker:'T',name:'Т-Банк'},
+{ticker:'NLMK',name:'НЛМК'},{ticker:'CHMF',name:'Северсталь'},{ticker:'PLZL',name:'Полюс'}
+];
+
+var MAIN_FEEDS=[
+{url:'https://lenta.ru/rss/news',source:'Lenta.ru'},
+{url:'http://static.feed.rbc.ru/rbc/logical/footer/news.rss',source:'РБК'},
+{url:'https://tass.ru/rss/v2.xml',source:'ТАСС'},
+{url:'https://aif.ru/rss/news.php',source:'АиФ'},
+{url:'https://www.mk.ru/rss/index.xml',source:'МК'}
+];
+var SHOWBIZ_FEEDS=[
+{url:'https://super.ru/rss',source:'Super.ru'},
+{url:'https://www.starhit.ru/rss/',source:'StarHit'},
+{url:'https://7days.ru/rss/',source:'7Дней'},
+{url:'http://eg.ru/rss.xml',source:'EG.ru'},
+{url:'https://www.intermedia.ru/rss.xml',source:'InterMedia'}
+];
+var SPORT_FEEDS=[
+{url:'https://www.sport-express.ru/rss/',source:'Спорт-Экспресс'},
+{url:'https://www.championat.com/rss/news/',source:'Чемпионат.com'},
+{url:'https://sport24.ru/rss/',source:'Sport24.ru'},
+{url:'https://www.sovsport.ru/rss/',source:'Советский спорт'},
+{url:'https://www.sports.ru/rss/all.xml',source:'Sports.ru'},
+{url:'https://matchtv.ru/rss',source:'Матч ТВ'}
+];
+
+var RSS_PROXIES=[
+function(u){return 'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},
+function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u)},
+function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)},
+function(u){return 'https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(u)}
+];
+var TG_PROXIES=[
+function(u){return 'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},
+function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)},
+function(u){return 'https://api.allorigins.win/get?url='+encodeURIComponent(u)},
+function(u){return 'https://thingproxy.freeboard.io/fetch/'+u},
+function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u)},
+function(u){return 'https://proxy.corsfix.com/?'+u}
+];
+
+var usdToRubRate=80.44;
+var cryptoChart=null,currencyChart=null,cryptoConverterChart=null;
+var currentCoin='ton',currentTimeframe='1d';
+var refreshTimer=null,fastRefreshTimer=null;
+
+function $(id){return document.getElementById(id)}
+function safe(el,html){if(el)el.innerHTML=html}
+function fmt(num,digits){if(typeof digits==='undefined')digits=2;if(num===null||num===undefined||isNaN(num))return '—';return Number(num).toLocaleString('ru-RU',{minimumFractionDigits:digits,maximumFractionDigits:digits})}
+function esc(str){if(!str)return '';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+
+function cleanText(str){
+if(!str)return '';
+var s=String(str);
+s=s.replace(/\u200B/g,'');
+s=s.replace(/[ \t]+/g,' ');
+s=s.replace(/\n{4,}/g,'\n\n\n');
+s=s.split('\n').map(function(l){return l.replace(/^\s+|\s+$/g,'')}).join('\n');
+s=s.replace(/^\n+|\n+$/g,'');
+return s;
+}
+
+function formatPost(text){
+if(!text)return '';
+var s=cleanText(text);
+s=esc(s);
+var paras=s.split(/\n{2,}/);
+var html='';
+paras.forEach(function(p){
+var t=p.trim();
+if(!t)return;
+var lines=t.split('\n');
+var lh='';
+lines.forEach(function(line,i){
+if(i>0)lh+='<br>';
+var m=line.match(/^([\-–—•*]|\d+[.)])\s+(.+)$/);
+if(m){lh+='<span class="bi">'+m[1]+' '+m[2]+'</span>'}else{lh+=line}
+});
+html+='<p>'+lh+'</p>';
+});
+return html;
+}
+
+function stripTags(html){
+if(!html)return '';
+var tmp=document.createElement('div');
+tmp.innerHTML=html;
+return cleanText(tmp.textContent||tmp.innerText||'');
+}
+
+function fmtDate(str){
+if(!str)return '';
+try{var d=new Date(str);if(isNaN(d.getTime()))return '';return d.toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}
+}
+
+function openPrivacy(){var m=$('privacyModal');if(m){m.classList.add('active');var b=m.querySelector('.mby');if(b)b.scrollTop=0;try{if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light')}catch(e){}}}
+function closePrivacy(){var m=$('privacyModal');if(m)m.classList.remove('active');try{if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light')}catch(e){}}
+function closePrivacyOnOverlay(e){if(e.target&&e.target.id==='privacyModal')closePrivacy()}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){var m=$('privacyModal');if(m&&m.classList.contains('active'))closePrivacy()}});
+
+function fetchT(url,opts,timeout){
+opts=opts||{};timeout=timeout||8000;
+var timer;
+return Promise.race([
+fetch(url,opts).then(function(r){if(timer)clearTimeout(timer);return r},function(e){if(timer)clearTimeout(timer);throw e}),
+new Promise(function(_,rej){timer=setTimeout(function(){var e=new Error('timeout');e.isTimeout=true;rej(e)},timeout)})
+]);
+}
+
+function firstOK(promises){
+return new Promise(function(resolve){
+var pending=promises.length;var settled=false;
+if(pending===0){resolve(null);return}
+promises.forEach(function(p){
+Promise.resolve(p).then(function(v){
+if(settled)return;
+if(v!==null&&v!==undefined){settled=true;resolve(v)}
+else{pending--;if(pending===0)resolve(null)}
+},function(){pending--;if(pending===0&&!settled)resolve(null)});
+});
+});
+}
+
+function fetchViaProxies(targetUrl,proxies,timeout){
+proxies=proxies||RSS_PROXIES;timeout=timeout||8000;
+var promises=proxies.map(function(fn){
+var u=fn(targetUrl);
+return fetchT(u,{},timeout).then(function(res){
+if(!res||!res.ok)return null;
+return res.text().then(function(text){
+if(!text||text.length<50)return null;
+try{var j=JSON.parse(text);if(j.status==='ok'&&Array.isArray(j.items)){return {text:text,json:j,isRSS:true}}}catch(e){}
+return {text:text,json:null};
+});
+}).catch(function(){return null});
+});
+return firstOK(promises);
+}
+
+function fetchTgHtml(username){
+var url='https://t.me/s/'+username;
+var promises=TG_PROXIES.map(function(fn){
+var u=fn(url);
+return fetchT(u,{},8000).then(function(res){
+if(!res||!res.ok)return null;
+return res.text().then(function(text){
+if(text.indexOf('"contents"')!==-1){try{var j=JSON.parse(text);text=j.contents||''}catch(e){}}
+if(!text||text.indexOf('tgme_widget_message')===-1)return null;
+return text;
+});
+}).catch(function(){return null});
+});
+return firstOK(promises);
+}
+
+function fetchTgViaRssHub(username){
+var rssUrl='https://rsshub.app/telegram/channel/'+username;
+var rssProxies=[
+function(u){return 'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},
+function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)},
+function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u)}
+];
+var promises=rssProxies.map(function(fn){
+return fetchT(fn(rssUrl),{},9000).then(function(res){
+if(!res||!res.ok)return null;
+return res.text().then(function(text){
+if(!text||text.indexOf('<item>')===-1)return null;
+try{
+var doc=new DOMParser().parseFromString(text,'text/xml');
+var items=doc.querySelectorAll('item');
+var posts=[];
+for(var j=0;j<Math.min(items.length,10);j++){
+var it=items[j];
+var title=(it.querySelector('title')||{}).textContent||'';
+var descRaw=(it.querySelector('description')||{}).textContent||'';
+var link=(it.querySelector('link')||{}).textContent||'';
+var pubDate=(it.querySelector('pubDate')||{}).textContent||'';
+var cleanDesc=descRaw.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1');
+var tmp=document.createElement('div');
+tmp.innerHTML=cleanDesc;
+var textContent=cleanText(tmp.textContent||'');
+if(!textContent&&!title)continue;
+var img='';
+var m1=cleanDesc.match(/<img[^>]*\bsrc\s*=\s*["']([^"']+)["']/i);
+if(m1&&m1[1]){img=m1[1]}
+else{var m2=cleanDesc.match(/<img[^>]*\bdata-src\s*=\s*["']([^"']+)["']/i);if(m2&&m2[1])img=m2[1]}
+posts.push({text:textContent||title,time:fmtDate(pubDate),link:link,image:img,author:''});
+}
+return posts.length>0?posts:null;
+}catch(e){return null}
+});
+}).catch(function(){return null});
+});
+return firstOK(promises);
+}
+
+function extractPhoto(msg){
+var wraps=msg.querySelectorAll('.tgme_widget_message_photo_wrap');
+for(var i=0;i<wraps.length;i++){
+var st=wraps[i].getAttribute('style')||'';
+var m=st.match(/background-image\s*:\s*url\(\s*(['"]?)(.+?)\1\s*\)/i);
+if(m&&m[2])return m[2].trim();
+}
+var bgs=msg.querySelectorAll('[style*="background-image"]');
+for(var k=0;k<bgs.length;k++){
+var s2=bgs[k].getAttribute('style')||'';
+var m2=s2.match(/background-image\s*:\s*url\(\s*(['"]?)(.+?)\1\s*\)/i);
+if(m2&&m2[2])return m2[2].trim();
+}
+var img=msg.querySelector('img[src]');
+if(img){var src=img.getAttribute('src')||'';if(src&&src.indexOf('data:')!==0)return src}
+var lazy=msg.querySelector('[data-src]');
+if(lazy){var ds=lazy.getAttribute('data-src')||'';if(ds&&/^https?:/.test(ds))return ds}
+var srcset=msg.querySelector('img[srcset]');
+if(srcset){var ss=srcset.getAttribute('srcset')||'';var f=ss.split(',')[0].trim().split(/\s+/)[0];if(f&&/^https?:/.test(f))return f}
+return '';
+}
+
+function parseTgHtml(html,extractAuthor){
+var doc=new DOMParser().parseFromString(html,'text/html');
+var messages=doc.querySelectorAll('.tgme_widget_message');
+var arr=[];
+var start=Math.max(0,messages.length-10);
+for(var j=messages.length-1;j>=start;j--){
+var msg=messages[j];
+var textEl=msg.querySelector('.tgme_widget_message_text');
+var timeEl=msg.querySelector('time');
+var linkEl=msg.querySelector('.tgme_widget_message_date');
+if(!textEl)continue;
+var raw=textEl.textContent||'';
+var cleaned=cleanText(raw);
+if(!cleaned)continue;
+var author='';
+if(extractAuthor){var am=cleaned.match(/Автор[:\s]+([А-ЯЁ][а-яё]+(?:\s+[А-ЯЁ][а-яё]+)?)/i);if(am)author=am[1]}
+var imageUrl=extractPhoto(msg);
+arr.push({text:cleaned,time:timeEl?fmtDate(timeEl.getAttribute('datetime')||timeEl.textContent):'',link:linkEl?(linkEl.getAttribute('href')||''):'',image:imageUrl,author:author});
+}
+return arr;
+}
+
+function fetchTgPosts(username,extractAuthor){
+return fetchTgHtml(username).then(function(html){
+if(html){
+try{
+var arr=parseTgHtml(html,extractAuthor);
+if(arr.length>0)return arr;
+}catch(e){}
+}
+return fetchTgViaRssHub(username);
+}).then(function(p){return p||null});
+}
+
+function openInApp(url){
+try{
+if(tg.openLink){tg.openLink(url,{tryInstantView:true});return}
+if(tg.openTelegramLink&&url.indexOf('t.me')!==-1){tg.openTelegramLink(url);return}
+}catch(e){}
+window.open(url,'_blank');
+}
+
+function toggleTheme(){
+var h=document.documentElement;
+var c=h.getAttribute('data-theme');
+var n=c==='dark'?'light':'dark';
+h.setAttribute('data-theme',n);
+var b=$('themeToggle');
+if(b)b.textContent=n==='dark'?'🌙':'☀️';
+try{localStorage.setItem('nc_theme',n)}catch(e){}
+}
+
+function setFontScale(btn,scale){
+document.querySelectorAll('.fb').forEach(function(b){b.classList.remove('active')});
+if(btn)btn.classList.add('active');
+document.documentElement.style.setProperty('--fs',scale);
+try{localStorage.setItem('nc_font',String(scale))}catch(e){}
+}
+
+function inviteToGroup(){
+var link='https://t.me/'+TELEGRAM_CHANNEL+'?startgroup=true';
+try{
+if(tg.openLink)tg.openLink(link);
+else if(tg.openTelegramLink)tg.openTelegramLink(link);
+else window.open(link,'_blank');
+}catch(e){window.open(link,'_blank')}
+}
+
+function parseRssItems(result){
+if(result.isRSS&&result.json){
+return result.json.items.map(function(it){return{title:it.title||'',link:it.link||'',description:it.description||it.content||'',pubDate:it.pubDate||''}});
+}
+try{
+var doc=new DOMParser().parseFromString(result.text,'text/xml');
+var items=doc.querySelectorAll('item');
+return Array.from(items).map(function(it){return{title:(it.querySelector('title')||{}).textContent||'',link:(it.querySelector('link')||{}).textContent||'',description:(it.querySelector('description')||{}).textContent||'',pubDate:(it.querySelector('pubDate')||{}).textContent||''}});
+}catch(e){return []}
+}
+
+function loadRssGroup(feeds,cid,maxPer,maxTotal){
+var c=$(cid);if(!c)return Promise.resolve();
+var ck='nc_'+cid;
+try{var cached=localStorage.getItem(ck);if(cached){var p=JSON.parse(cached);if(p.html&&p.html.indexOf('nld')===-1&&p.html.indexOf('недоступ')===-1)c.innerHTML=p.html}}catch(e){}
+var promises=feeds.map(function(feed){
+return fetchViaProxies(feed.url,RSS_PROXIES,7000).then(function(r){
+if(!r)return{source:feed.source,items:[]};
+return{source:feed.source,items:parseRssItems(r)};
+}).catch(function(){return{source:feed.source,items:[]}});
+});
+return Promise.all(promises).then(function(results){
+var all=[];
+results.forEach(function(d){
+var sl=d.items.slice(0,maxPer);
+sl.forEach(function(it){
+var t=stripTags(it.title||'');
+var de=stripTags(it.description||'');
+if(!t)return;
+all.push({title:t,link:it.link||'#',desc:de,source:d.source,date:fmtDate(it.pubDate)});
+});
+});
+if(all.length===0){
+if(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1||c.innerHTML.indexOf('недоступ')!==-1)safe(c,'<div class="ne">Новости временно недоступны</div>');
+return;
+}
+var sel=all.slice(0,maxTotal);
+var html='';
+sel.forEach(function(n){
+html+='<div class="nci">';
+html+='<div class="nsl">'+esc(n.source)+' · © '+esc(n.source)+'</div>';
+html+='<div class="nt">'+esc(n.title)+'</div>';
+if(n.desc)html+='<div class="nd">'+formatPost(n.desc)+'</div>';
+html+='<div class="nm"><span>'+esc(n.date||'')+'</span><span class="nl" onclick="openInApp(\''+n.link.replace(/'/g,"\\'")+'\')">Читать →</span></div>';
+html+='</div>';
+});
+safe(c,html);
+try{localStorage.setItem(ck,JSON.stringify({html:html,time:Date.now()}))}catch(e){}
+});
+}
+
+function loadTgChannel(username,cid,label,ck,extractAuthor){
+var c=$(cid);if(!c)return Promise.resolve();
+try{var cached=localStorage.getItem(ck);if(cached){var p=JSON.parse(cached);if(p.html&&p.html.indexOf('nld')===-1&&p.html.indexOf('недоступ')===-1)c.innerHTML=p.html}}catch(e){}
+return fetchTgPosts(username,extractAuthor).then(function(posts){
+if(!posts||posts.length===0){
+if(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1||c.innerHTML.indexOf('недоступ')!==-1)safe(c,'<div class="ne">Канал временно недоступен</div>');
+return;
+}
+var html='';
+posts.forEach(function(p){
+html+='<div class="nci">';
+if(p.image){
+html+='<div class="niw"><img class="ni" src="'+esc(p.image)+'" alt="" loading="lazy" onerror="this.parentNode.style.display=\'none\'"></div>';
+}
+html+='<div class="nsl">'+esc(label)+' · @'+username+'</div>';
+if(p.author)html+='<div class="na">Автор: '+esc(p.author)+'</div>';
+html+='<div class="nd">'+formatPost(p.text)+'</div>';
+html+='<div class="nm"><span>'+esc(p.time)+'</span>';
+if(p.link)html+='<span class="nl" onclick="openInApp(\''+p.link.replace(/'/g,"\\'")+'\')">Открыть →</span>';
+html+='</div></div>';
+});
+safe(c,html);
+try{localStorage.setItem(ck,JSON.stringify({html:html,time:Date.now()}))}catch(e){}
+});
+}
+
+function loadIbNews(){return loadTgChannel(IB_CHANNEL,'ibNewsSection','ИБ России','nc_ib',false)}
+function loadGadgetsNews(){return loadTgChannel(GADGETS_CHANNEL,'gadgetsSection','Wylsacom Red','nc_gadgets',true)}
+function loadBlocksNews(){return loadTgChannel(BLOCKS_CHANNEL,'blocksSection','Блокировки Рунета','nc_blocks',false)}
+function loadDevChannel(){return loadTgChannel(TELEGRAM_CHANNEL,'devChannelSection','Канал разработчика','nc_dev',false)}
+
+function loadSport(){
+var c=$('sportSection');if(!c)return Promise.resolve();
+var ck='nc_sport';
+try{var cached=localStorage.getItem(ck);if(cached){var p=JSON.parse(cached);if(p.html&&p.html.indexOf('nld')===-1&&p.html.indexOf('недоступ')===-1)c.innerHTML=p.html}}catch(e){}
+var promises=SPORT_FEEDS.map(function(feed){
+return fetchViaProxies(feed.url,RSS_PROXIES,7000).then(function(r){
+if(!r)return{source:feed.source,items:[]};
+return{source:feed.source,items:parseRssItems(r).slice(0,3)};
+}).catch(function(){return{source:feed.source,items:[]}});
+});
+return Promise.all(promises).then(function(results){
+var all=[];
+results.forEach(function(d){
+d.items.forEach(function(it){
+var t=stripTags(it.title||'');
+if(!t)return;
+all.push({title:t,source:d.source,date:fmtDate(it.pubDate),link:it.link||'#'});
+});
+});
+if(all.length===0){
+if(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1||c.innerHTML.indexOf('недоступ')!==-1)safe(c,'<div class="ne">Спорт временно недоступен</div>');
+return;
+}
+var sel=all.slice(0,10);var html='';
+sel.forEach(function(n){
+html+='<div class="spi"><div class="sps">'+esc(n.source)+'</div><div class="spt">'+esc(n.title)+'</div><div class="spd">'+esc(n.date||'')+'</div></div>';
+});
+safe(c,html);
+try{localStorage.setItem(ck,JSON.stringify({html:html,time:Date.now()}))}catch(e){}
+});
+}
+
+function loadStocks(){
+var c=$('stocksSection');if(!c)return Promise.resolve();
+var tickers=STOCKS.map(function(s){return s.ticker}).join(',');
+var url='https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json?iss.meta=off&securities='+tickers;
+return fetchT(url,{},8000).then(function(res){
+if(!res||!res.ok)throw new Error('MOEX');
+return res.json();
+}).then(function(data){
+var sb=data.securities||{};var mb=data.marketdata||{};
+var sc=sb.columns||[];var mc=mb.columns||[];
+var si=sc.indexOf('SECID');var sni=sc.indexOf('SHORTNAME');var pi=sc.indexOf('PREVPRICE');
+var msi=mc.indexOf('SECID');var li=mc.indexOf('LAST');var ci=mc.indexOf('CHANGE');
+var bt={};
+if(sb.data&&si>=0){sb.data.forEach(function(r){var t=r[si];if(!t||tickers.indexOf(t)===-1)return;bt[t]=bt[t]||{};bt[t].name=r[sni];bt[t].prev=r[pi]})}
+if(mb.data&&msi>=0){mb.data.forEach(function(r){var t=r[msi];if(!t||tickers.indexOf(t)===-1)return;bt[t]=bt[t]||{};if(r[li]!==null&&r[li]!==undefined)bt[t].last=r[li];if(r[ci]!==null&&r[ci]!==undefined)bt[t].chg=r[ci]})}
+var html='';
+STOCKS.forEach(function(s){
+var i=bt[s.ticker]||{};
+var p=i.last;var cp=0;var up=true;
+if(p===undefined||p===null)p=i.prev;
+if(i.chg!==undefined&&i.prev){cp=(i.chg/i.prev)*100;up=i.chg>=0}
+else if(p&&i.prev){cp=((p-i.prev)/i.prev)*100;up=cp>=0}
+html+='<div class="str"><span class="stk">'+s.ticker+'</span><span class="stn">'+s.name+'</span><span class="stp">'+(p!==undefined&&p!==null?fmt(p,2)+' ₽':'—')+'</span><span class="stc '+(up?'up':'dn')+'">'+(up?'+':'')+fmt(cp,2)+'%</span></div>';
+});
+html+='<div class="stu">🔄 Обновлено: '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' · задержка ~15 мин</div>';
+safe(c,html);
+}).catch(function(){
+if(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1||c.innerHTML.indexOf('недоступ')!==-1)safe(c,'<div class="ne">Котировки временно недоступны</div>');
+});
+}
+
+function loadCBR(){
+var c=$('cbrSection');if(!c)return Promise.resolve();
+return fetchT('https://www.cbr-xml-daily.ru/daily_json.js',{},7000).then(function(res){
+if(!res||!res.ok)throw new Error('CBR');
+return res.json();
+}).then(function(data){
+var v=data.Valute||{};
+var list=[
+{code:'USD',name:'Доллар США',v:v.USD},
+{code:'EUR',name:'Евро',v:v.EUR},
+{code:'CNY',name:'Китайский юань',v:v.CNY},
+{code:'BYN',name:'Белорусский рубль',v:v.BYN},
+{code:'KZT',name:'Казахстанский тенге',v:v.KZT,div:100}
+];
+var html='';
+list.forEach(function(cc){
+if(!cc.v||!cc.v.Value)return;
+var d=cc.div||1;var val=cc.v.Value/d;var prev=(cc.v.Previous||cc.v.Value)/d;
+var diff=val-prev;var pct=prev?(diff/prev)*100:0;var up=diff>0;
+html+='<div class="cbrr"><span class="cbrc"><strong>'+cc.code+'</strong> · '+cc.name+'</span><span class="cbrrt">'+fmt(val,2)+' ₽</span><span class="cbrch '+(up?'up':'dn')+'">'+(up?'+':'')+fmt(pct,2)+'%</span></div>';
+});
+html+='<div class="stu">🔄 Обновлено: '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+'</div>';
+safe(c,html);
+if(v.USD&&v.USD.Value)usdToRubRate=v.USD.Value;
+}).catch(function(){
+if(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1||c.innerHTML.indexOf('недоступ')!==-1)safe(c,'<div class="ne">Курсы временно недоступны</div>');
+});
+}
+
+function fetchCrypto(coin){
+var id=COINGECKO_IDS[coin];
+var url='https://api.coingecko.com/api/v3/simple/price?ids='+id+'&vs_currencies=rub&include_24hr_change=true';
+return fetchT(url,{},7000).then(function(res){
+if(!res||!res.ok)throw new Error('CG');
+return res.json();
+}).then(function(d){
+if(d[id]&&d[id].rub)return{price:d[id].rub,change:d[id].rub_24h_change||0};
+throw new Error('no data');
+}).catch(function(){
+return{price:FALLBACK_CRYPTO[coin]||1,change:FALLBACK_CHANGES[coin]||0};
+});
+}
+
+function updateCryptoPrice(){
+return fetchCrypto(currentCoin).then(function(d){
+var pe=$('cryptoPrice');var ce=$('cryptoChange');
+if(pe)pe.textContent=fmt(d.price,2)+' ₽';
+if(ce){var up=d.change>0;ce.textContent=(up?'▲ ':'▼ ')+fmt(Math.abs(d.change),2)+'%';ce.style.color=up?'var(--ag)':'var(--ar)'}
+return d;
+});
+}
+
+function createCryptoChart(){
+var cv=$('cryptoChart');if(!cv)return Promise.resolve();
+var ctx=cv.getContext('2d');
+if(cryptoChart){cryptoChart.destroy();cryptoChart=null}
+var days=currentTimeframe==='1h'?1:currentTimeframe==='6h'?2:currentTimeframe==='1d'?7:14;
+var url='https://api.coingecko.com/api/v3/coins/'+COINGECKO_IDS[currentCoin]+'/market_chart?vs_currency=usd&days='+days+'&interval=daily';
+return fetchT(url,{},8000).then(function(res){
+if(!res||!res.ok)throw new Error('chart');
+return res.json();
+}).then(function(data){
+var prices=(data.prices||[]).map(function(p){return p[1]});
+if(prices.length===0)throw new Error('empty');
+drawCryptoChart(ctx,prices);
+}).catch(function(){
+var base={ton:1.795,btc:95432.15,not:0.01234}[currentCoin]||1;
+var arr=[];
+for(var i=0;i<24;i++)arr.push(base*(0.94+Math.sin(i*0.3)*0.08+(Math.random()-0.5)*0.04));
+drawCryptoChart(ctx,arr);
+});
+}
+
+function drawCryptoChart(ctx,prices){
+var color=COIN_COLORS[currentCoin];
+cryptoChart=new Chart(ctx,{
+type:'line',
+data:{labels:prices.map(function(){return ''}),datasets:[{data:prices,borderColor:color,backgroundColor:color+'20',borderWidth:2.5,fill:true,tension:0.4,pointRadius:0}]},
+options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{grid:{color:'rgba(148,163,184,0.15)'},ticks:{color:'#94a3b8',font:{size:10},callback:function(v){if(v>=1000)return '$'+(v/1000).toFixed(1)+'k';return '$'+Number(v).toFixed(2)}}}}}
+});
+}
+
+function setCryptoCoin(e,coin){
+currentCoin=coin;
+document.querySelectorAll('.cnb').forEach(function(b){b.classList.remove('active')});
+if(e&&e.target)e.target.classList.add('active');
+var s=$('cryptoCoinSelect');if(s)s.value=coin;
+updateCryptoPrice().then(createCryptoChart);
+convertCryptoToRub();
+}
+
+function setTimeframe(e,tf){
+currentTimeframe=tf;
+document.querySelectorAll('.tfb').forEach(function(b){b.classList.toggle('active',b.dataset.time===tf)});
+createCryptoChart();
+}
+
+function convertCryptoToRub(){
+var ae=$('cryptoAmount'),ce=$('cryptoCoinSelect'),re=$('cryptoRubResult');
+if(!ae||!ce||!re)return Promise.resolve();
+var amt=parseFloat(ae.value)||0;var coin=ce.value;
+if(amt<=0){re.textContent='0 ₽';return Promise.resolve()}
+return fetchCrypto(coin).then(function(d){
+re.textContent=fmt(amt*d.price,2)+' ₽';
+drawCryptoConverterChart(coin,d.price);
+});
+}
+
+function drawCryptoConverterChart(coin,cp){
+var cv=$('cryptoConverterChart');if(!cv)return;
+var ctx=cv.getContext('2d');
+if(cryptoConverterChart){cryptoConverterChart.destroy();cryptoConverterChart=null}
+var base=cp||FALLBACK_CRYPTO[coin]||1;
+var labels=['6д','5д','4д','3д','2д','Вчера','Сегодня'];
+var data=[];
+for(var i=0;i<7;i++)data.push(base*(0.95+Math.random()*0.10));
+data[6]=base;
+cryptoConverterChart=new Chart(ctx,{
+type:'line',
+data:{labels:labels,datasets:[{data:data,borderColor:'#10b981',backgroundColor:'#10b98120',borderWidth:2,fill:true,tension:0.4,pointRadius:2,pointBackgroundColor:'#10b981'}]},
+options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#94a3b8',font:{size:9}}},y:{grid:{color:'rgba(148,163,184,0.15)'},ticks:{color:'#94a3b8',font:{size:9}}}}}
+});
+}
+
+function convertCurrency(){
+var ae=$('currencyAmount'),se=$('currencySelect'),re=$('currencyRubResult');
+if(!ae||!se||!re)return Promise.resolve();
+var amt=parseFloat(ae.value)||0;var cur=se.value;
+if(amt<=0){re.textContent='0 ₽';return Promise.resolve()}
+var rate=FALLBACK_RATES[cur]||1;
+return fetchT('https://www.cbr-xml-daily.ru/daily_json.js',{},6000).then(function(res){
+if(!res||!res.ok)return null;
+return res.json();
+}).then(function(d){
+if(d&&d.Valute){
+var v=d.Valute;
+if(cur==='usd'&&v.USD)rate=v.USD.Value;
+else if(cur==='eur'&&v.EUR)rate=v.EUR.Value;
+else if(cur==='byn'&&v.BYN)rate=v.BYN.Value;
+else if(cur==='kzt'&&v.KZT)rate=v.KZT.Value/100;
+}
+re.textContent=fmt(amt*rate,2)+' ₽';
+drawCurrencyChart(cur,rate);
+}).catch(function(){
+re.textContent=fmt(amt*rate,2)+' ₽';
+drawCurrencyChart(cur,rate);
+});
+}
+
+function drawCurrencyChart(cur,cr){
+var cv=$('currencyChart');if(!cv)return;
+var ctx=cv.getContext('2d');
+if(currencyChart){currencyChart.destroy();currencyChart=null}
+var color=CURRENCY_COLORS[cur]||'#10b981';
+var base=cr||FALLBACK_RATES[cur]||1;
+var labels=['6д','5д','4д','3д','2д','Вчера','Сегодня'];
+var data=[];
+for(var i=0;i<7;i++)data.push(base*(0.98+Math.random()*0.04));
+data[6]=base;
+currencyChart=new Chart(ctx,{
+type:'line',
+data:{labels:labels,datasets:[{data:data,borderColor:color,backgroundColor:color+'20',borderWidth:2,fill:true,tension:0.4,pointRadius:2,pointBackgroundColor:color}]},
+options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#94a3b8',font:{size:9}}},y:{grid:{color:'rgba(148,163,184,0.15)'},ticks:{color:'#94a3b8',font:{size:9}}}}}
+});
+}
+
+function initApp(){
+var savedTheme='dark';
+try{savedTheme=localStorage.getItem('nc_theme')||'dark'}catch(e){}
+document.documentElement.setAttribute('data-theme',savedTheme);
+var tb=$('themeToggle');if(tb)tb.textContent=savedTheme==='dark'?'🌙':'☀️';
+
+var savedFont='1';
+try{savedFont=localStorage.getItem('nc_font')||'1'}catch(e){}
+document.documentElement.style.setProperty('--fs',savedFont);
+document.querySelectorAll('.fb').forEach(function(b){b.classList.toggle('active',b.dataset.font===savedFont)});
+
+try{
+if(tg.ready)tg.ready();
+if(tg.expand)tg.expand();
+}catch(e){}
+
+document.querySelectorAll('.nit').forEach(function(item){
+item.addEventListener('click',function(){
+var page=item.dataset.page;
+document.querySelectorAll('.nit').forEach(function(b){b.classList.remove('active')});
+item.classList.add('active');
+try{if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light')}catch(e){}
+if(page==='home'){var c=$('mainCard');if(c)c.scrollTo({top:0,behavior:'smooth'})}
+else if(page==='shop'){window.location.href='https://oppennnbox.github.io/neurocore-miniapp/Games.html'}
+else if(page==='wallet'){window.location.href='https://oppennnbox.github.io/neurocore-miniapp/Wallet.html'}
+else if(page==='social'){window.location.href='https://oppennnbox.github.io/neurocore-miniapp/Sloy.html'}
+else if(page==='radio'){window.location.href='https://oppennnbox.github.io/neurocore-miniapp/Radio_norm.html'}
+});
+});
+
+loadRssGroup(MAIN_FEEDS,'newsSection',2,8);
+loadRssGroup(SHOWBIZ_FEEDS,'showbizSection',2,8);
+loadIbNews();
+loadGadgetsNews();
+loadBlocksNews();
+loadDevChannel();
+loadSport();
+loadStocks();
+loadCBR();
+updateCryptoPrice().then(createCryptoChart);
+convertCryptoToRub();
+convertCurrency();
+
+fastRefreshTimer=setInterval(function(){
+loadStocks();
+loadCBR();
+updateCryptoPrice();
+},60000);
+
+refreshTimer=setInterval(function(){
+loadRssGroup(MAIN_FEEDS,'newsSection',2,8);
+loadRssGroup(SHOWBIZ_FEEDS,'showbizSection',2,8);
+loadIbNews();
+loadGadgetsNews();
+loadBlocksNews();
+loadDevChannel();
+loadSport();
+},300000);
+}
+
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initApp)}
+else{setTimeout(initApp,0)}
+
+window.toggleTheme=toggleTheme;
+window.setFontScale=setFontScale;
+window.inviteToGroup=inviteToGroup;
+window.setCryptoCoin=setCryptoCoin;
+window.setTimeframe=setTimeframe;
+window.convertCryptoToRub=convertCryptoToRub;
+window.convertCurrency=convertCurrency;
+window.openInApp=openInApp;
+window.openPrivacy=openPrivacy;
+window.closePrivacy=closePrivacy;
+window.closePrivacyOnOverlay=closePrivacyOnOverlay;
+})();
+</script>
+</body>
+  </html>
