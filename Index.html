@@ -6,79 +6,105 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#0b1220">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Roboto:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
-:root{--fs:1.2;--bg1:radial-gradient(circle at top,#0ea5e9 0,#020617 50%,#000 100%);--bg2:radial-gradient(circle at top,#6366f1 0,#020617 55%,#000 100%);--bg3:radial-gradient(circle at top,#ec4899 0,#020617 50%,#000 100%);--cbg:rgba(15,23,42,.94);--cbd:rgba(59,130,246,.3);--tx:#e5e7eb;--tx2:#9ca3af;--txm:#6b7280;--ab:#3b82f6;--ag:#10b981;--ar:#ef4444;--ay:#f59e0b;--sbg:rgba(17,24,39,.6);--sibg:rgba(15,23,42,.5);--ibg:radial-gradient(circle at top left,#0f172a 0,#020617 60%);--bl:rgba(75,85,99,.6);--nbg:rgba(10,15,30,.98);--nsh:0 0 30px rgba(59,130,246,.45);--shc:0 20px 50px rgba(0,0,0,.8),0 0 0 1px rgba(59,130,246,.3);--cb:rgba(15,23,42,.8);--st:#3b82f6;--obg:rgba(0,0,0,.78);--mbg:#0f172a;--stp:env(safe-area-inset-top,0px);--sbt:env(safe-area-inset-bottom,0px)}
-[data-theme="light"]{--bg1:radial-gradient(circle at top,#bfdbfe 0,#e0f2fe 40%,#fff 100%);--bg2:radial-gradient(circle at top,#c7d2fe 0,#e0f2fe 45%,#fff 100%);--bg3:radial-gradient(circle at top,#fbcfe8 0,#e0f2fe 40%,#fff 100%);--cbg:rgba(255,255,255,.98);--cbd:rgba(59,130,246,.25);--tx:#0f172a;--tx2:#475569;--txm:#94a3b8;--ab:#2563eb;--ag:#059669;--ar:#dc2626;--ay:#d97706;--sbg:rgba(241,245,249,.85);--sibg:rgba(226,232,240,.7);--ibg:#f8fafc;--bl:rgba(203,213,225,.9);--nbg:rgba(255,255,255,.98);--nsh:0 0 30px rgba(59,130,246,.25);--shc:0 10px 30px rgba(0,0,0,.08),0 0 0 1px rgba(59,130,246,.15);--cb:rgba(241,245,249,.8);--obg:rgba(15,23,42,.55);--mbg:#fff}
+:root{
+--fs:1.2;
+--bg1:radial-gradient(circle at top,#0b1e33 0,#030712 60%,#000 100%);
+--bg2:radial-gradient(circle at top,#141a3b 0,#030712 65%,#000 100%);
+--bg3:radial-gradient(circle at top,#2a1030 0,#030712 60%,#000 100%);
+--cbg:rgba(12,18,32,.96);
+--cbd:rgba(71,110,168,.28);
+--tx:#e5e7eb;--tx2:#94a3b8;--txm:#64748b;
+--ab:#3b82f6;--ag:#10b981;--ar:#ef4444;--ay:#f59e0b;
+--sbg:rgba(20,28,44,.65);
+--sibg:rgba(15,23,42,.55);
+--ibg:rgba(15,23,42,.7);
+--bl:rgba(71,85,105,.55);
+--nbg:rgba(10,15,28,.98);
+--nsh:0 6px 20px rgba(0,0,0,.55);
+--shc:0 12px 32px rgba(0,0,0,.65),0 0 0 1px rgba(71,110,168,.18);
+--cb:rgba(15,23,42,.75);
+--obg:rgba(0,0,0,.75);
+--mbg:#0b1220;
+--stp:env(safe-area-inset-top,0px);--sbt:env(safe-area-inset-bottom,0px)
+}
+[data-theme="light"]{
+--bg1:radial-gradient(circle at top,#dbeafe 0,#eef4fb 45%,#fff 100%);
+--bg2:radial-gradient(circle at top,#e0e7ff 0,#eef4fb 45%,#fff 100%);
+--bg3:radial-gradient(circle at top,#fce7f3 0,#eef4fb 45%,#fff 100%);
+--cbg:rgba(255,255,255,.98);
+--cbd:rgba(59,130,246,.18);
+--tx:#0f172a;--tx2:#475569;--txm:#94a3b8;
+--ab:#2563eb;--ag:#059669;--ar:#dc2626;--ay:#d97706;
+--sbg:rgba(241,245,249,.85);
+--sibg:rgba(226,232,240,.7);
+--ibg:#f8fafc;
+--bl:rgba(203,213,225,.9);
+--nbg:rgba(255,255,255,.98);
+--nsh:0 4px 18px rgba(15,23,42,.08);
+--shc:0 8px 26px rgba(15,23,42,.08),0 0 0 1px rgba(59,130,246,.12);
+--cb:rgba(241,245,249,.85);
+--obg:rgba(15,23,42,.55);
+--mbg:#fff
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;width:100%;min-height:100%;font-family:"Roboto",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:calc(14px*var(--fs));overflow-x:hidden;-webkit-text-size-adjust:100%}
-body{display:flex;align-items:flex-start;justify-content:center;background:var(--bg1);color:var(--tx);animation:bgS 20s infinite alternate ease-in-out;min-height:100vh;transition:color .4s;overscroll-behavior-y:none}
-.sp-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#22d3ee,#a855f7,#ec4899);z-index:6000;width:0;transition:width .1s;box-shadow:0 0 12px rgba(168,85,247,.7)}
-.card{width:100%;max-width:540px;background:var(--cbg);border-radius:20px;box-shadow:var(--shc);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;flex-direction:column;height:100dvh;max-height:100dvh;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--st) transparent;padding:calc(14px + var(--stp)) 16px calc(110px + var(--sbt));transition:background .4s;position:relative;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
-.card::-webkit-scrollbar{width:6px}
+body{display:flex;align-items:flex-start;justify-content:center;background:var(--bg1);color:var(--tx);animation:bgS 30s infinite alternate ease-in-out;min-height:100vh;transition:color .4s;overscroll-behavior-y:none}
+.sp-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);z-index:6000;width:0;transition:width .12s;opacity:.85}
+.card{width:100%;max-width:540px;background:var(--cbg);border-radius:20px;box-shadow:var(--shc);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;flex-direction:column;height:100dvh;max-height:100dvh;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--ab) transparent;padding:calc(12px + var(--stp)) 16px calc(108px + var(--sbt));transition:background .4s;position:relative;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+.card::-webkit-scrollbar{width:5px}
 .card::-webkit-scrollbar-track{background:transparent}
-.card::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#22d3ee,#a855f7);border-radius:3px}
-.tc{display:flex;justify-content:flex-start;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.tt,.fb{background:var(--sbg);border:1px solid var(--bl);border-radius:10px;padding:8px 10px;cursor:pointer;color:var(--tx);font-size:12px;font-weight:600;transition:transform .2s,border-color .2s,background .3s;outline:none;min-width:38px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;user-select:none;font-family:inherit}
-.tt:hover,.fb:hover{border-color:var(--ab);transform:translateY(-1px)}
+.card::-webkit-scrollbar-thumb{background:rgba(99,132,180,.5);border-radius:3px}
+.tc{display:flex;justify-content:flex-start;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tt,.fb{background:var(--sbg);border:1px solid var(--bl);border-radius:10px;padding:7px 9px;cursor:pointer;color:var(--tx);font-size:12px;font-weight:600;transition:transform .2s,border-color .2s,background .25s;outline:none;min-width:36px;min-height:34px;display:inline-flex;align-items:center;justify-content:center;user-select:none;font-family:inherit}
+.tt:hover,.fb:hover{border-color:var(--ab)}
 .tt:active,.fb:active{transform:scale(.94)}
 .fb.active{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent}
 .fb[data-font="0.9"]{font-size:11px}
 .fb[data-font="1.1"]{font-size:13px}
 .fb[data-font="1.3"]{font-size:15px}
-.hd{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.logo-wrap{width:56px;height:56px;border-radius:16px;position:relative;flex-shrink:0;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 0 20px rgba(34,211,238,.55)) drop-shadow(0 0 36px rgba(168,85,247,.4));animation:logoPulse 4s ease-in-out infinite}
-.logo-wrap svg{width:100%;height:100%;display:block}
+.hd{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:4px 2px;position:relative}
+.hd::after{content:'';position:absolute;left:2px;bottom:-6px;width:48px;height:2px;border-radius:2px;background:linear-gradient(90deg,#38bdf8,#818cf8,#c084fc);opacity:.85}
 .tb{flex:1;min-width:0}
-.ti{font-size:calc(20px*var(--fs));font-weight:900;letter-spacing:.14em;text-transform:uppercase;background:linear-gradient(135deg,#22d3ee 0,#a855f7 50%,#ec4899 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;animation:titleGlow 6s ease-in-out infinite}
-.tsub{font-size:calc(9.5px*var(--fs));color:var(--tx2);letter-spacing:.3em;text-transform:uppercase;margin-top:2px;font-weight:600}
-.bd{font-size:10px;padding:4px 8px;border-radius:999px;background:linear-gradient(135deg,rgba(34,211,238,.2),rgba(168,85,247,.2));border:1px solid rgba(34,211,238,.5);color:#67e8f9;text-transform:uppercase;letter-spacing:.08em;flex-shrink:0;font-weight:700}
-[data-theme="light"] .bd{color:#0e7490}
-.sd{height:1px;background:linear-gradient(90deg,transparent,var(--cbd),transparent);margin:22px 0}
-.st{display:flex;align-items:center;gap:12px;font-size:calc(16px*var(--fs));font-weight:700;color:var(--tx);margin-bottom:14px}
-.si{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(34,211,238,.15),rgba(168,85,247,.15));border:1px solid var(--bl);font-size:18px;flex-shrink:0;box-shadow:inset 0 0 12px rgba(34,211,238,.1)}
-.ns{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
-.nci{background:var(--sibg);border-radius:12px;padding:13px;margin-bottom:10px;border:1px solid var(--bl);overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s;animation:cA .4s ease both}
-.nci:hover{transform:translateY(-2px);border-color:var(--ab);box-shadow:0 8px 20px rgba(59,130,246,.15)}
+.ti{font-family:'Orbitron','Roboto',sans-serif;font-size:calc(22px*var(--fs));font-weight:900;letter-spacing:.14em;text-transform:uppercase;background:linear-gradient(135deg,#38bdf8 0,#818cf8 45%,#c084fc 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.05}
+.tsub{font-size:calc(9px*var(--fs));color:var(--txm);letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:600}
+.bd{font-size:9.5px;padding:3px 8px;border-radius:999px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35);color:#7dd3fc;text-transform:uppercase;letter-spacing:.1em;flex-shrink:0;font-weight:700}
+[data-theme="light"] .bd{color:#0369a1;background:rgba(3,105,161,.08);border-color:rgba(3,105,161,.25)}
+.sd{height:1px;background:linear-gradient(90deg,transparent,var(--cbd),transparent);margin:20px 0}
+.st{display:flex;align-items:center;gap:11px;font-size:calc(15px*var(--fs));font-weight:700;color:var(--tx);margin-bottom:12px}
+.si{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--sbg);border:1px solid var(--bl);font-size:16px;flex-shrink:0}
+.ns{background:var(--sbg);border-radius:14px;padding:12px;border:1px solid var(--cbd)}
+.nci{background:var(--sibg);border-radius:11px;padding:12px;margin-bottom:9px;border:1px solid var(--bl);overflow:hidden;transition:transform .2s,border-color .2s;animation:cA .3s ease both}
+.nci:hover{transform:translateY(-1px);border-color:var(--cbd)}
 .nci:last-child{margin-bottom:0}
-.nsl{font-size:10px;color:var(--ab);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
-.na{font-size:10px;color:var(--ay);font-weight:600;margin-bottom:6px}
-.nt{font-size:calc(14.5px*var(--fs));font-weight:700;color:var(--tx);margin-bottom:8px;line-height:1.4}
-.nd{font-size:calc(13px*var(--fs));color:var(--tx2);line-height:1.75;margin-bottom:10px;word-break:break-word;overflow-wrap:anywhere;letter-spacing:.005em}
-.nd p{margin:0 0 10px 0}
+.nsl{font-size:9.5px;color:var(--ab);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.nt{font-size:calc(14px*var(--fs));font-weight:700;color:var(--tx);margin-bottom:7px;line-height:1.4}
+.nd{font-size:calc(12.5px*var(--fs));color:var(--tx2);line-height:1.7;margin-bottom:9px;word-break:break-word;overflow-wrap:anywhere}
+.nd p{margin:0 0 9px 0}
 .nd p:last-child{margin-bottom:0}
 .nd strong{color:var(--tx);font-weight:600}
 .nd .bi{display:block;padding-left:6px;margin:4px 0}
-.nm{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:var(--txm);gap:8px;flex-wrap:wrap;margin-top:8px}
-.nl{color:#22d3ee;text-decoration:none;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;padding:6px 11px;border-radius:8px;transition:background .2s,transform .2s;user-select:none;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);display:inline-flex;align-items:center;gap:4px}
-[data-theme="light"] .nl{color:#0e7490;background:rgba(14,116,144,.08);border-color:rgba(14,116,144,.25)}
-.nl:hover{background:rgba(34,211,238,.18);transform:translateX(2px)}
-.nl:active{transform:scale(.95)}
-.ne{text-align:center;color:var(--txm);font-size:12px;padding:20px 0;font-style:italic}
-.nld{text-align:center;color:var(--txm);font-size:12px;padding:20px 0;animation:p 1.6s ease-in-out infinite}
-.niw{width:100%;margin-bottom:10px;border-radius:10px;overflow:hidden;background:rgba(0,0,0,.2)}
-.ni{width:100%;height:auto;max-height:400px;object-fit:cover;display:block}
-.sp{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
-.spi{display:flex;flex-direction:column;gap:6px;padding:12px 0;border-bottom:1px solid var(--bl);transition:padding-left .2s}
+.nm{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--txm);gap:8px;flex-wrap:wrap;margin-top:6px}
+.nl{color:#7dd3fc;text-decoration:none;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;padding:5px 10px;border-radius:8px;transition:background .2s;user-select:none;background:rgba(125,211,252,.08);border:1px solid rgba(125,211,252,.22);display:inline-flex;align-items:center;gap:4px}
+[data-theme="light"] .nl{color:#0369a1;background:rgba(3,105,161,.06);border-color:rgba(3,105,161,.2)}
+.nl:hover{background:rgba(125,211,252,.15)}
+.nl:active{transform:scale(.96)}
+.ne{text-align:center;color:var(--txm);font-size:12px;padding:18px 0;font-style:italic}
+.nld{text-align:center;color:var(--txm);font-size:12px;padding:18px 0;animation:p 1.6s ease-in-out infinite}
+.niw{width:100%;margin-bottom:9px;border-radius:10px;overflow:hidden;background:rgba(0,0,0,.2)}
+.ni{width:100%;height:auto;max-height:380px;object-fit:cover;display:block}
+.sp{background:var(--sbg);border-radius:14px;padding:12px;border:1px solid var(--cbd)}
+.spi{display:flex;flex-direction:column;gap:5px;padding:11px 0;border-bottom:1px solid var(--bl)}
 .spi:last-child{border-bottom:none}
-.spi:hover{padding-left:4px}
-.sps{font-size:10px;color:var(--ab);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-.spt{font-size:calc(13px*var(--fs));color:var(--tx);line-height:1.45;font-weight:500}
-.spd{font-size:10.5px;color:var(--txm);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.sts{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
-.str{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--bl)}
-.str:last-child{border-bottom:none}
-.stk{font-weight:700;font-size:calc(12.5px*var(--fs));color:var(--ab);min-width:52px;flex-shrink:0}
-.stn{flex:1;font-size:calc(11px*var(--fs));color:var(--txm);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.stp{font-weight:700;font-size:calc(12px*var(--fs));color:var(--tx);text-align:right;min-width:76px;flex-shrink:0}
-.stc{font-size:calc(11px*var(--fs));font-weight:700;text-align:right;min-width:62px;flex-shrink:0;padding:3px 6px;border-radius:6px}
-.stc.up{color:var(--ag);background:rgba(16,185,129,.12)}
-.stc.dn{color:var(--ar);background:rgba(239,68,68,.12)}
-.stu{font-size:10.5px;color:var(--txm);text-align:right;margin-top:10px}
-.cbrs{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
+.sps{font-size:9.5px;color:var(--ab);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.spt{font-size:calc(12.5px*var(--fs));color:var(--tx);line-height:1.45;font-weight:500}
+.spd{font-size:10px;color:var(--txm);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.cbrs{background:var(--sbg);border-radius:14px;padding:12px;border:1px solid var(--cbd)}
 .cbrr{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--bl);font-size:calc(12px*var(--fs))}
 .cbrr:last-child{border-bottom:none}
 .cbrc{color:var(--tx2);flex:1;min-width:0}
@@ -87,107 +113,222 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 .cbrch{font-size:calc(10.5px*var(--fs));font-weight:700;min-width:58px;text-align:right;flex-shrink:0;padding:2px 5px;border-radius:5px}
 .cbrch.up{color:var(--ar);background:rgba(239,68,68,.12)}
 .cbrch.dn{color:var(--ag);background:rgba(16,185,129,.12)}
-.crs{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
-.crt{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px;flex-wrap:wrap}
-.crp{font-size:calc(20px*var(--fs));font-weight:800;background:linear-gradient(135deg,#22d3ee,#a855f7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.crs{background:var(--sbg);border-radius:14px;padding:12px;border:1px solid var(--cbd)}
+.crt{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+.crp{font-size:calc(19px*var(--fs));font-weight:800;background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .coin-row{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px;margin:0 -4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .coin-row::-webkit-scrollbar{display:none}
-.coin-chip{flex-shrink:0;padding:8px 14px;border-radius:10px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:11.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .2s,box-shadow .25s,background .25s;letter-spacing:.03em;user-select:none}
-.coin-chip:hover{transform:translateY(-2px)}
-.coin-chip.active{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(124,58,237,.4)}
-.chc{height:130px;position:relative;margin-bottom:12px;background:var(--cb);border-radius:12px;overflow:hidden}
+.coin-chip{flex-shrink:0;padding:7px 13px;border-radius:9px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .2s,background .2s;letter-spacing:.03em;user-select:none}
+.coin-chip:hover{border-color:var(--ab)}
+.coin-chip.active{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent}
+.chc{height:140px;position:relative;margin-bottom:10px;background:var(--cb);border-radius:11px;overflow:hidden}
 #cryptoChart{width:100%!important;height:100%!important;display:block}
 .tfr{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.tfb{padding:9px 4px;border-radius:9px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:11.5px;cursor:pointer;font-family:inherit;min-height:36px;transition:background .25s,border-color .25s;user-select:none;font-weight:600}
-.tfb.active,.tfb:hover{background:linear-gradient(135deg,#2563eb,#7c3aed);border-color:#60a5fa;color:#fff}
+.tfb{padding:8px 4px;border-radius:8px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:11px;cursor:pointer;font-family:inherit;min-height:34px;transition:background .2s,border-color .2s;user-select:none;font-weight:600}
+.tfb.active,.tfb:hover{background:linear-gradient(135deg,#2563eb,#7c3aed);border-color:transparent;color:#fff}
 .cvr{display:flex;gap:8px;align-items:center;margin-bottom:10px}
-.cvi{flex:1;padding:12px;border:1px solid var(--bl);border-radius:10px;background:var(--ibg);color:var(--tx);font-size:15px;outline:none;font-family:inherit;min-width:0;min-height:46px;transition:border-color .2s}
+.cvi{flex:1;padding:11px;border:1px solid var(--bl);border-radius:10px;background:var(--ibg);color:var(--tx);font-size:15px;outline:none;font-family:inherit;min-width:0;min-height:44px;transition:border-color .2s}
 .cvi:focus{border-color:var(--ab)}
-.cvs{padding:12px;border:1px solid var(--bl);border-radius:10px;background:var(--ibg);color:var(--tx);font-size:14px;outline:none;cursor:pointer;font-family:inherit;flex-shrink:0;min-height:46px}
-.cvrl{font-size:calc(17px*var(--fs));font-weight:800;color:var(--ay);text-align:center;padding:13px;background:rgba(245,158,11,.1);border-radius:10px;margin-top:12px}
-.curs{background:var(--sbg);border-radius:16px;padding:14px;border:1px solid var(--cbd)}
-.curc{height:100px;position:relative;margin-bottom:12px;background:var(--cb);border-radius:12px;overflow:hidden}
-.currl{font-size:calc(17px*var(--fs));font-weight:800;color:var(--ag);text-align:center;padding:13px;background:rgba(16,185,129,.1);border-radius:10px}
-.mb{margin-top:24px;padding-top:16px;border-top:1px solid var(--bl);font-size:11px;color:var(--txm);display:flex;flex-direction:column;gap:8px;padding-bottom:10px}
-.mbt{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#a5b4fc;font-weight:800}
+.cvs{padding:11px;border:1px solid var(--bl);border-radius:10px;background:var(--ibg);color:var(--tx);font-size:14px;outline:none;cursor:pointer;font-family:inherit;flex-shrink:0;min-height:44px}
+.cvrl{font-size:calc(17px*var(--fs));font-weight:800;color:var(--ay);text-align:center;padding:12px;background:rgba(245,158,11,.08);border-radius:10px;margin-top:10px;border:1px solid rgba(245,158,11,.18)}
+.curs{background:var(--sbg);border-radius:14px;padding:12px;border:1px solid var(--cbd)}
+.curc{height:110px;position:relative;margin-bottom:10px;background:var(--cb);border-radius:11px;overflow:hidden}
+.currl{font-size:calc(17px*var(--fs));font-weight:800;color:var(--ag);text-align:center;padding:12px;background:rgba(16,185,129,.08);border-radius:10px;border:1px solid rgba(16,185,129,.18)}
+.mb{margin-top:22px;padding-top:14px;border-top:1px solid var(--bl);font-size:11px;color:var(--txm);display:flex;flex-direction:column;gap:8px;padding-bottom:10px}
+.mbt{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#a5b4fc;font-weight:800}
 .mbl{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.mlk{color:#22d3ee;text-decoration:none;font-size:11.5px;cursor:pointer;padding:6px 10px;border-radius:8px;user-select:none;transition:background .2s}
-.mlk:hover{background:rgba(34,211,238,.1)}
-.nw{position:fixed;bottom:0;left:0;right:0;width:100%;z-index:1000;pointer-events:none;padding:0 10px calc(12px + var(--sbt));background:linear-gradient(to top,var(--cbg) 0,transparent 100%)}
-.nn{pointer-events:auto;display:flex;justify-content:space-evenly;align-items:center;background:var(--nbg);border:1px solid rgba(255,255,255,.1);box-shadow:var(--nsh);border-radius:24px;height:74px;backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px);overflow:hidden;margin:0 auto;max-width:440px}
-[data-theme="light"] .nn{border:1px solid rgba(0,0,0,.08)}
-.nit{flex:1;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;color:var(--tx2);font-size:10.5px;font-weight:700;cursor:pointer;transition:color .3s;position:relative;user-select:none;letter-spacing:.03em}
-.nit.active{color:#22d3ee}
-[data-theme="light"] .nit.active{color:#0e7490}
-.nit.active::before{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:32px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#22d3ee,transparent);box-shadow:0 0 10px #22d3ee}
-.nic{width:42px;height:42px;border-radius:13px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:transform .35s cubic-bezier(.34,1.56,.64,1);background:var(--sbg);border:1px solid var(--bl)}
-.iem{font-size:19px;position:relative;z-index:2;filter:drop-shadow(0 0 4px rgba(0,0,0,.5))}
-.nit:hover .nic{transform:translateY(-3px) scale(1.08)}
-.nit:active .nic{transform:scale(.92)}
-.nit.active .nic{background:linear-gradient(135deg,#22d3ee,#a855f7);border-color:transparent;box-shadow:0 6px 18px rgba(168,85,247,.45);animation:iconPulse 3s ease-in-out infinite}
-.mo{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--obg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:12px;animation:fI .28s ease}
+.mlk{color:#7dd3fc;text-decoration:none;font-size:11.5px;cursor:pointer;padding:5px 9px;border-radius:8px;user-select:none;transition:background .2s}
+.mlk:hover{background:rgba(125,211,252,.08)}
+.nw{position:fixed;bottom:0;left:0;right:0;width:100%;z-index:1000;pointer-events:none;padding:0 10px calc(10px + var(--sbt));background:linear-gradient(to top,var(--cbg) 0,transparent 100%)}
+.nn{pointer-events:auto;display:flex;justify-content:space-evenly;align-items:center;background:var(--nbg);border:1px solid rgba(148,163,184,.14);box-shadow:var(--nsh);border-radius:22px;height:68px;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);margin:0 auto;max-width:460px;padding:0 2px}
+[data-theme="light"] .nn{border:1px solid rgba(15,23,42,.08)}
+.nit{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;color:var(--txm);font-size:9.5px;font-weight:700;cursor:pointer;transition:color .25s;position:relative;user-select:none;letter-spacing:.02em;padding:0 2px}
+.nit.active{color:#7dd3fc}
+[data-theme="light"] .nit.active{color:#0369a1}
+.nit.active::before{content:'';position:absolute;top:5px;left:50%;transform:translateX(-50%);width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#7dd3fc,transparent)}
+.nic{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;transition:transform .25s;background:transparent}
+.iem{font-size:17px;filter:grayscale(.2);transition:filter .25s}
+.nit.active .iem{filter:none}
+.nit:active .nic{transform:scale(.9)}
+.nit.active .nic{background:rgba(125,211,252,.1)}
+.mo{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--obg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:12px;animation:fI .25s ease}
 .mo.active{display:flex}
-.mc{background:var(--mbg);border:1px solid var(--cbd);border-radius:20px;width:100%;max-width:520px;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 25px 60px rgba(0,0,0,.8);overflow:hidden;animation:mI .35s cubic-bezier(.34,1.56,.64,1)}
+.mc{background:var(--mbg);border:1px solid var(--cbd);border-radius:18px;width:100%;max-width:520px;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 48px rgba(0,0,0,.7);overflow:hidden;animation:mI .3s cubic-bezier(.34,1.4,.64,1)}
 .mc.reader{max-width:640px;height:92vh}
-.mh{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--bl);background:var(--sbg);flex-shrink:0;gap:8px}
-.mht{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--tx);min-width:0;flex:1}
+.mh{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-bottom:1px solid var(--bl);background:var(--sbg);flex-shrink:0;gap:8px}
+.mht{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:700;color:var(--tx);min-width:0;flex:1}
 .mht span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mav{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#22d3ee,#a855f7);display:flex;align-items:center;justify-content:center;color:#020617;font-weight:900;font-size:14px;flex-shrink:0;box-shadow:0 4px 14px rgba(168,85,247,.4)}
-.mcl{width:36px;height:36px;border-radius:10px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;user-select:none;transition:transform .2s,background .2s,color .2s;flex-shrink:0}
-.mcl:hover{background:var(--ar);color:#fff;border-color:var(--ar);transform:scale(1.05) rotate(90deg)}
-.mby{padding:20px 18px 26px;overflow-y:auto;overflow-x:hidden;color:var(--tx);line-height:1.65;font-size:13px;-webkit-overflow-scrolling:touch}
-.mby::-webkit-scrollbar{width:6px}
-.mby::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#22d3ee,#a855f7);border-radius:3px}
-.info-hero{text-align:center;padding:12px 0 20px;border-bottom:1px solid var(--bl);margin-bottom:20px}
-.info-logo{width:80px;height:80px;margin:0 auto 14px;filter:drop-shadow(0 0 22px rgba(34,211,238,.6)) drop-shadow(0 0 40px rgba(168,85,247,.4));animation:logoPulse 4s ease-in-out infinite}
-.info-title{font-size:24px;font-weight:900;letter-spacing:.14em;background:linear-gradient(135deg,#22d3ee,#a855f7,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.info-ver{font-size:11px;color:var(--txm);margin-top:6px;letter-spacing:.2em}
-.info-card{background:var(--sbg);border:1px solid var(--bl);border-radius:12px;padding:14px;margin-bottom:12px;transition:transform .2s,border-color .2s}
-.info-card:hover{border-color:var(--ab);transform:translateY(-1px)}
-.info-card h4{margin:0 0 8px;font-size:13px;color:#22d3ee;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
-.info-card p{margin:0;font-size:13px;color:var(--tx2);line-height:1.6}
-.info-btn{width:100%;padding:14px;border-radius:12px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px}
-.info-btn:hover{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent;transform:translateY(-1px);box-shadow:0 8px 20px rgba(124,58,237,.35)}
+.mav{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#38bdf8,#818cf8);display:flex;align-items:center;justify-content:center;color:#0b1220;font-weight:900;font-size:13px;flex-shrink:0}
+.mcl{width:34px;height:34px;border-radius:9px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;user-select:none;transition:transform .2s,background .2s,color .2s;flex-shrink:0}
+.mcl:hover{background:var(--ar);color:#fff;border-color:var(--ar)}
+.mby{padding:18px 16px 24px;overflow-y:auto;overflow-x:hidden;color:var(--tx);line-height:1.65;font-size:13px;-webkit-overflow-scrolling:touch}
+.mby::-webkit-scrollbar{width:5px}
+.mby::-webkit-scrollbar-thumb{background:rgba(99,132,180,.5);border-radius:3px}
+.info-hero{text-align:center;padding:8px 0 18px;border-bottom:1px solid var(--bl);margin-bottom:18px}
+.info-title{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:900;letter-spacing:.14em;background:linear-gradient(135deg,#38bdf8,#818cf8,#c084fc);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.info-ver{font-size:10.5px;color:var(--txm);margin-top:8px;letter-spacing:.2em}
+.info-card{background:var(--sbg);border:1px solid var(--bl);border-radius:12px;padding:13px;margin-bottom:10px}
+.info-card h4{margin:0 0 7px;font-size:12.5px;color:#7dd3fc;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.info-card p{margin:0;font-size:12.5px;color:var(--tx2);line-height:1.6}
+.info-btn{width:100%;padding:13px;border-radius:11px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .22s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:9px}
+.info-btn:hover{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent}
 .info-btn:active{transform:scale(.98)}
 .reader-body{padding:0;overflow:hidden;flex:1;display:flex;flex-direction:column;background:var(--mbg);position:relative}
 .reader-frame{width:100%;height:100%;border:0;background:#fff;display:block;flex:1}
 .reader-topbar{padding:8px 12px;background:var(--sbg);border-bottom:1px solid var(--bl);display:flex;align-items:center;gap:8px;flex-shrink:0}
-.reader-url{flex:1;font-size:11px;color:var(--txm);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--sibg);padding:6px 10px;border-radius:8px;border:1px solid var(--bl)}
+.reader-url{flex:1;font-size:11px;color:var(--txm);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--sibg);padding:5px 10px;border-radius:8px;border:1px solid var(--bl)}
 .reader-actions{display:flex;gap:6px;flex-shrink:0}
-.reader-abtn{padding:7px 10px;border-radius:8px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.reader-abtn{padding:6px 10px;border-radius:8px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
 .reader-abtn:hover{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent}
 .reader-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:var(--tx2);gap:16px;flex:1}
-.spinner{width:44px;height:44px;border:3px solid rgba(34,211,238,.2);border-top-color:#22d3ee;border-radius:50%;animation:spin 1s linear infinite}
+.spinner{width:40px;height:40px;border:3px solid rgba(125,211,252,.2);border-top-color:#7dd3fc;border-radius:50%;animation:spin 1s linear infinite}
 .reader-fallback{text-align:center;padding:30px 20px;color:var(--tx2);flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .reader-fallback p{margin:0 0 16px;font-size:13.5px;line-height:1.6;max-width:340px}
-.reader-fallback button{padding:12px 22px;border-radius:12px;border:0;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .2s;margin-bottom:8px;min-width:220px}
+.reader-fallback button{padding:12px 22px;border-radius:11px;border:0;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .2s;margin-bottom:8px;min-width:220px}
 .reader-fallback button:active{transform:scale(.96)}
-.pb{text-align:center;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--bl)}
-.pbt{font-size:20px;font-weight:900;letter-spacing:.14em;background:linear-gradient(135deg,#22d3ee,#a855f7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
-.pbm{font-size:11px;color:var(--ab);font-weight:600}
-.pmt{font-size:15px;font-weight:700;color:var(--tx);margin:0 0 6px}
+.pb{text-align:center;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--bl)}
+.pbt{font-family:'Orbitron',sans-serif;font-size:19px;font-weight:900;letter-spacing:.14em;background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.pbm{font-size:10.5px;color:var(--ab);font-weight:600}
+.pmt{font-size:14.5px;font-weight:700;color:var(--tx);margin:0 0 6px}
 .pin{font-size:12px;color:var(--tx2);margin-bottom:16px;line-height:1.5}
-.ph2{font-size:14px;font-weight:800;color:#22d3ee;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--bl)}
+.ph2{font-size:13.5px;font-weight:800;color:#7dd3fc;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--bl)}
 .pp{font-size:12.5px;color:var(--tx2);margin:0 0 8px;line-height:1.65;text-align:justify}
 .pl{margin:6px 0 10px;padding-left:20px;font-size:12.5px;color:var(--tx2);line-height:1.65}
 .pl li{margin-bottom:5px}
 .pc{background:var(--sbg);border:1px solid var(--bl);border-radius:10px;padding:12px;margin:12px 0;font-size:12.5px;color:var(--tx2);line-height:1.6}
-.pc a{color:#22d3ee;text-decoration:none;font-weight:700;cursor:pointer}
-.pf{text-align:center;margin-top:24px;padding-top:14px;border-top:1px solid var(--bl);font-size:11px;color:var(--txm);line-height:1.6}
-.pf a{color:#22d3ee;text-decoration:none;font-weight:700;cursor:pointer}
+.pc a{color:#7dd3fc;text-decoration:none;font-weight:700;cursor:pointer}
+.pf{text-align:center;margin-top:22px;padding-top:14px;border-top:1px solid var(--bl);font-size:11px;color:var(--txm);line-height:1.6}
+.pf a{color:#7dd3fc;text-decoration:none;font-weight:700;cursor:pointer}
+
+/* ===== PAGE VIEWS ===== */
+.page-view{display:none}
+.page-view.active{display:block;animation:cA .3s ease both}
+
+/* ===== TRADING VIEW (STOCKS PAGE) ===== */
+.tv-hero{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.tv-hero-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.tv-hero-badge{font-size:9.5px;padding:4px 9px;border-radius:999px;background:rgba(16,185,129,.1);color:var(--ag);border:1px solid rgba(16,185,129,.28);font-weight:800;letter-spacing:.12em;display:inline-flex;align-items:center;gap:5px}
+.tv-hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ag);animation:pulseDot 1.8s infinite}
+.tv-indices{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.tv-ichip{background:var(--sbg);border:1px solid var(--cbd);border-radius:12px;padding:11px;cursor:pointer;font-family:inherit;text-align:left;color:var(--tx);transition:border-color .2s,background .2s}
+.tv-ichip:hover{border-color:var(--ab)}
+.tv-ichip.active{border-color:#7dd3fc;background:rgba(125,211,252,.06)}
+.tv-ichip-k{font-size:9.5px;font-weight:800;letter-spacing:.1em;color:var(--txm);text-transform:uppercase;display:block}
+.tv-ichip-v{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:800;margin-top:5px;display:block;font-variant-numeric:tabular-nums}
+.tv-ichip-c{font-size:10.5px;font-weight:700;margin-top:4px;display:inline-block;padding:2px 6px;border-radius:6px}
+.tv-ichip-c.up{color:var(--ag);background:rgba(16,185,129,.1)}
+.tv-ichip-c.dn{color:var(--ar);background:rgba(239,68,68,.1)}
+.tv-ichip-c.flat{color:var(--txm);background:rgba(148,163,184,.1)}
+
+.tv-head{background:var(--sbg);border:1px solid var(--cbd);border-radius:14px;padding:14px;margin-bottom:10px}
+.tv-symbol{font-family:'Orbitron',sans-serif;font-size:19px;font-weight:900;letter-spacing:.14em;color:var(--tx)}
+.tv-name{font-size:11.5px;color:var(--tx2);margin-top:3px}
+.tv-price{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:800;margin-top:10px;font-variant-numeric:tabular-nums;letter-spacing:.03em;line-height:1.05}
+.tv-price small{font-size:14px;color:var(--tx2);font-weight:600;margin-left:4px}
+.tv-change{display:inline-block;font-size:12.5px;font-weight:800;padding:5px 10px;border-radius:8px;margin-top:9px;font-variant-numeric:tabular-nums}
+.tv-change.up{color:var(--ag);background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.24)}
+.tv-change.dn{color:var(--ar);background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.24)}
+.tv-change.flat{color:var(--txm);background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.2)}
+
+.tv-tf{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px;margin:0 -4px;scrollbar-width:none}
+.tv-tf::-webkit-scrollbar{display:none}
+.tv-tfb{flex-shrink:0;padding:7px 13px;border-radius:8px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;letter-spacing:.03em;min-height:32px}
+.tv-tfb:hover{border-color:var(--ab)}
+.tv-tfb.active{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent}
+
+.tv-chart-wrap{background:var(--sbg);border:1px solid var(--cbd);border-radius:14px;padding:12px 8px 8px;margin-bottom:10px;height:360px;position:relative}
+.tv-chart-wrap canvas{width:100%!important;height:100%!important;display:block;touch-action:pan-y}
+.tv-chart-loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,.35);backdrop-filter:blur(2px);border-radius:14px;z-index:3;color:#7dd3fc;font-size:12px;font-weight:700;letter-spacing:.1em}
+[data-theme="light"] .tv-chart-loader{background:rgba(255,255,255,.55);color:#0369a1}
+
+.tv-chart-hint{font-size:10px;color:var(--txm);text-align:center;margin-bottom:8px;padding:0 8px}
+.tv-chart-hint b{color:var(--tx2);font-weight:700}
+
+.tv-reset{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:8px;background:var(--sibg);border:1px solid var(--bl);color:var(--tx2);font-size:10.5px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:12px;transition:all .2s}
+.tv-reset:hover{background:rgba(125,211,252,.08);color:var(--tx);border-color:var(--ab)}
+
+.tv-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:var(--sbg);border:1px solid var(--cbd);border-radius:14px;padding:11px 10px;margin-bottom:14px}
+.tv-stat{text-align:center;min-width:0}
+.tv-stat-k{font-size:9.5px;color:var(--txm);text-transform:uppercase;letter-spacing:.09em;font-weight:700;margin-bottom:5px}
+.tv-stat-v{font-size:12px;font-weight:800;color:var(--tx);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tv-stat-v.up{color:var(--ag)}
+.tv-stat-v.dn{color:var(--ar)}
+
+.tv-section-title{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:800;color:var(--tx);margin:6px 0 10px;display:flex;align-items:center;gap:8px;letter-spacing:.14em;text-transform:uppercase}
+.tv-section-title::before{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--cbd),transparent);order:2}
+
+.tv-watch{background:var(--sbg);border:1px solid var(--cbd);border-radius:14px;overflow:hidden}
+.tv-wrow{display:grid;grid-template-columns:1fr auto auto;align-items:center;padding:11px 12px;border-bottom:1px solid var(--bl);cursor:pointer;gap:10px;transition:background .2s;user-select:none}
+.tv-wrow:last-child{border-bottom:none}
+.tv-wrow:hover{background:rgba(125,211,252,.05)}
+.tv-wrow.active{background:rgba(125,211,252,.09)}
+.tv-wrow.active .tv-wtick{color:#7dd3fc}
+.tv-wtick{font-family:'Orbitron',sans-serif;font-weight:800;font-size:12px;color:var(--tx);letter-spacing:.06em;transition:color .2s}
+.tv-wname{font-size:10px;color:var(--txm);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px}
+.tv-wprice{font-size:12.5px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums;color:var(--tx);white-space:nowrap}
+.tv-wchg{font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:6px;min-width:60px;text-align:center;font-variant-numeric:tabular-nums}
+.tv-wchg.up{color:var(--ag);background:rgba(16,185,129,.1)}
+.tv-wchg.dn{color:var(--ar);background:rgba(239,68,68,.1)}
+.tv-wchg.flat{color:var(--tx2);background:rgba(148,163,184,.1)}
+.tv-foot{font-size:10.5px;color:var(--txm);text-align:right;margin-top:10px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.tv-foot span[onclick]{color:#7dd3fc;font-weight:700;cursor:pointer}
+
+/* ===== RADIO PAGE ===== */
+.radio-player{position:sticky;top:-2px;z-index:15;background:var(--sbg);border:1px solid var(--cbd);border-radius:14px;padding:11px;margin-bottom:12px;display:flex;align-items:center;gap:11px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.radio-player-logo{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;overflow:hidden;color:#fff}
+.radio-player-logo img{width:100%;height:100%;object-fit:cover}
+.radio-player-info{flex:1;min-width:0}
+.radio-player-name{font-size:12.5px;font-weight:800;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.radio-player-status{font-size:10px;color:var(--txm);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.radio-player-status.live{color:var(--ag);font-weight:700}
+.radio-player-actions{display:flex;gap:6px;flex-shrink:0;align-items:center}
+.radio-player-btn{width:40px;height:40px;border-radius:50%;border:0;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;flex-shrink:0;transition:transform .2s;padding:0}
+.radio-player-btn:active{transform:scale(.9)}
+.radio-player-btn.stop{background:var(--sibg);color:var(--tx2);border:1px solid var(--bl);width:34px;height:34px;font-size:12px}
+.radio-search-wrap{position:relative;margin-bottom:10px}
+.radio-search{width:100%;padding:11px 14px 11px 38px;border-radius:11px;border:1px solid var(--bl);background:var(--sibg);color:var(--tx);font-size:13px;font-family:inherit;outline:none;transition:border-color .2s}
+.radio-search:focus{border-color:var(--ab)}
+.radio-search-wrap::before{content:'🔍';position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:12px;opacity:.6;pointer-events:none}
+.radio-tabs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;margin:0 -4px;scrollbar-width:none}
+.radio-tabs::-webkit-scrollbar{display:none}
+.radio-tab{flex-shrink:0;padding:7px 12px;border-radius:9px;border:1px solid var(--bl);background:var(--sbg);color:var(--tx2);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.radio-tab:hover{border-color:var(--ab);color:var(--tx)}
+.radio-tab.active{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent}
+.radio-list{background:var(--sbg);border:1px solid var(--cbd);border-radius:14px;overflow:hidden;max-height:calc(100dvh - 380px);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.radio-list::-webkit-scrollbar{width:5px}
+.radio-list::-webkit-scrollbar-thumb{background:rgba(99,132,180,.5);border-radius:3px}
+.radio-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-bottom:1px solid var(--bl);cursor:pointer;transition:background .2s}
+.radio-item:last-child{border-bottom:none}
+.radio-item:hover{background:rgba(125,211,252,.05)}
+.radio-item.active{background:rgba(125,211,252,.09)}
+.radio-item.active .radio-item-name{color:#7dd3fc}
+.radio-item-logo{width:38px;height:38px;border-radius:10px;background:var(--sibg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;overflow:hidden;border:1px solid var(--bl);color:var(--txm)}
+.radio-item-logo img{width:100%;height:100%;object-fit:cover}
+.radio-item-info{flex:1;min-width:0}
+.radio-item-name{font-size:12.5px;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .2s}
+.radio-item-tags{font-size:10px;color:var(--txm);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.radio-item-play{width:30px;height:30px;border-radius:50%;background:var(--sibg);border:1px solid var(--bl);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--tx2);flex-shrink:0;transition:all .2s}
+.radio-item.active .radio-item-play{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent}
+.radio-note{font-size:10.5px;color:var(--txm);text-align:center;padding:10px 8px;line-height:1.5;border-top:1px solid var(--bl);background:var(--sibg)}
+
+/* ===== RATES PAGE ===== */
+.rates-hero{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.rates-hero-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.rates-hero-badge{font-size:9.5px;padding:4px 9px;border-radius:999px;background:rgba(56,189,248,.1);color:#7dd3fc;border:1px solid rgba(56,189,248,.28);font-weight:800;letter-spacing:.12em}
+.rates-updated{font-size:10.5px;color:var(--txm);text-align:right;margin-top:8px}
+.rates-updated span{color:#7dd3fc;font-weight:700;cursor:pointer}
+
 @keyframes fI{from{opacity:0}to{opacity:1}}
-@keyframes mI{from{opacity:0;transform:translateY(24px) scale(.94)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes cA{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes mI{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes cA{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes p{0%,100%{opacity:.5}50%{opacity:1}}
 @keyframes bgS{0%{background:var(--bg1)}50%{background:var(--bg2)}100%{background:var(--bg3)}}
-@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 14px rgba(34,211,238,.5)) drop-shadow(0 0 28px rgba(168,85,247,.3))}50%{filter:drop-shadow(0 0 24px rgba(34,211,238,.9)) drop-shadow(0 0 48px rgba(168,85,247,.65))}}
-@keyframes titleGlow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.2)}}
-@keyframes iconPulse{0%,100%{box-shadow:0 6px 18px rgba(168,85,247,.35)}50%{box-shadow:0 6px 24px rgba(34,211,238,.65)}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes pulseDot{0%,100%{opacity:1;r:2.5}50%{opacity:.4;r:3.5}}
-@media(max-width:480px){body{padding:0;align-items:stretch}.card{padding:calc(12px + var(--stp)) 13px calc(112px + var(--sbt));border-radius:0;width:100%;max-width:100%}.ti{font-size:calc(18px*var(--fs))}.cvr{flex-wrap:wrap}.cvi{min-width:110px}.mc{max-height:94vh;border-radius:16px}.mc.reader{height:94vh}.mby{padding:16px 14px 22px}.nn{height:72px}.nic{width:40px;height:40px}.nci{padding:12px}.ni{max-height:320px}.logo-wrap{width:48px;height:48px}}
-@media(max-width:360px){.ti{font-size:calc(16px*var(--fs))}.stk{min-width:46px;font-size:11px}.stp{min-width:66px;font-size:11px}.stc{min-width:54px;font-size:10px}}
-@media(min-width:700px){.card{margin:20px 0;height:auto;max-height:calc(100vh - 40px);border-radius:24px}.nn{max-width:480px}}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.35}}
+@media(max-width:480px){body{padding:0;align-items:stretch}.card{padding:calc(11px + var(--stp)) 13px calc(104px + var(--sbt));border-radius:0;width:100%;max-width:100%}.ti{font-size:calc(19px*var(--fs))}.tv-price{font-size:24px}.tv-symbol{font-size:17px}.tv-chart-wrap{height:310px}.tv-stat-v{font-size:11px}.cvr{flex-wrap:wrap}.cvi{min-width:110px}.mc{max-height:94vh;border-radius:16px}.mc.reader{height:94vh}.mby{padding:16px 14px 22px}.nn{height:64px}.nic{width:34px;height:34px}.iem{font-size:16px}.nit{font-size:9px}.radio-list{max-height:calc(100dvh - 360px)}}
+@media(max-width:380px){.ti{font-size:calc(17px*var(--fs))}.tv-wchg{min-width:54px;font-size:10px}.tv-wtick{font-size:11px}.tv-wname{max-width:110px}.tv-stat-v{font-size:10.5px}.nit{font-size:8.5px}.nn{height:60px}.nic{width:32px;height:32px}.iem{font-size:15px}}
+@media(max-width:360px){.ti{font-size:calc(15px*var(--fs))}.tv-chart-wrap{height:290px}}
+@media(min-width:700px){.card{margin:20px 0;height:auto;max-height:calc(100vh - 40px);border-radius:22px}.nn{max-width:480px}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}body{animation:none;background:var(--bg2)}}
 </style>
 </head>
@@ -203,60 +344,15 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 </div>
 
 <div class="hd">
-<div class="logo-wrap">
-<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<linearGradient id="vgrad" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#22d3ee"/>
-<stop offset=".35" stop-color="#60a5fa"/>
-<stop offset=".7" stop-color="#a855f7"/>
-<stop offset="1" stop-color="#ec4899"/>
-</linearGradient>
-<linearGradient id="vbg" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#0b1220"/>
-<stop offset=".5" stop-color="#111827"/>
-<stop offset="1" stop-color="#1e1b4b"/>
-</linearGradient>
-<linearGradient id="vshine" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0" stop-color="#ffffff" stop-opacity=".9"/>
-<stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-</linearGradient>
-<radialGradient id="vglow" cx="50%" cy="30%" r="60%">
-<stop offset="0" stop-color="#22d3ee" stop-opacity=".35"/>
-<stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
-</radialGradient>
-</defs>
-<!-- outer shield -->
-<rect x="1.5" y="1.5" width="61" height="61" rx="17" fill="url(#vbg)" stroke="url(#vgrad)" stroke-width="2"/>
-<!-- inner glow -->
-<rect x="4" y="4" width="56" height="56" rx="14" fill="url(#vglow)"/>
-<!-- corner accents -->
-<path d="M8 18 L8 12 Q8 8 12 8 L18 8" stroke="url(#vgrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
-<path d="M56 18 L56 12 Q56 8 52 8 L46 8" stroke="url(#vgrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
-<path d="M8 46 L8 52 Q8 56 12 56 L18 56" stroke="url(#vgrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
-<path d="M56 46 L56 52 Q56 56 52 56 L46 56" stroke="url(#vgrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
-<!-- V letter -->
-<path d="M17 20 L32 44 L47 20" stroke="url(#vgrad)" stroke-width="5.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M17 20 L32 44" stroke="url(#vshine)" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".85"/>
-<!-- underline swipe -->
-<path d="M22 47 Q32 54 42 47" stroke="url(#vgrad)" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".85"/>
-<!-- top dot -->
-<circle cx="32" cy="11" r="2.5" fill="#22d3ee">
-<animate attributeName="r" values="2.5;3.4;2.5" dur="2.4s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values="1;.5;1" dur="2.4s" repeatCount="indefinite"/>
-</circle>
-<circle cx="32" cy="11" r="4.5" fill="none" stroke="#22d3ee" stroke-width=".8" opacity=".35">
-<animate attributeName="r" values="4.5;7;4.5" dur="2.4s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/>
-</circle>
-</svg>
-</div>
 <div class="tb">
 <div class="ti">VDAILY NEWS</div>
 <div class="tsub">daily · crypto · tech</div>
 </div>
 <div class="bd">live</div>
 </div>
+
+<!-- ============ HOME VIEW (only news) ============ -->
+<div class="page-view active" id="homeView">
 
 <div class="sd"></div>
 <div class="st"><div class="si">📰</div><span>Главные новости</span></div>
@@ -282,17 +378,89 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 <div class="st"><div class="si">⚽</div><span>Спорт · Россия</span></div>
 <div class="sp" id="sportSection"><div class="nld">⏳ Загрузка...</div></div>
 
-<div class="sd"></div>
-<div class="st"><div class="si">📈</div><span>Акции MOEX</span></div>
-<div class="sts" id="stocksSection"><div class="nld">⏳ Загрузка...</div></div>
+<div class="mb">
+<div class="mbt">VDAILY · SYSTEM</div>
+<div class="mbl">
+<span class="mlk" onclick="openPrivacy()">Политика конфиденциальности</span>
+<span class="mlk" onclick="openInApp('https://t.me/genuis_neo_bot')">Связь с разработчиком</span>
+</div>
+</div>
 
-<div class="sd"></div>
-<div class="st"><div class="si">🏦</div><span>Курсы ЦБ</span></div>
-<div class="cbrs" id="cbrSection"><div class="nld">⏳ Загрузка...</div></div>
+</div>
+<!-- ============ /HOME VIEW ============ -->
 
-<div class="sd"></div>
-<div class="st"><div class="si">₿</div><span>Крипта</span></div>
-<div class="crs">
+<!-- ============ STOCKS / TRADING VIEW ============ -->
+<div class="page-view" id="stocksView">
+
+<div class="tv-hero">
+<div class="tv-hero-title">📈 Trading View</div>
+<div class="tv-hero-badge">LIVE · MOEX</div>
+</div>
+
+<div class="tv-indices">
+<button class="tv-ichip" data-ticker="IMOEX" onclick="selectInstrument('IMOEX')">
+<span class="tv-ichip-k">IMOEX · МосБиржа</span>
+<span class="tv-ichip-v" id="idxIMOEXPrice">—</span>
+<span class="tv-ichip-c flat" id="idxIMOEXChange">—</span>
+</button>
+<button class="tv-ichip" data-ticker="RTSI" onclick="selectInstrument('RTSI')">
+<span class="tv-ichip-k">RTSI · РТС</span>
+<span class="tv-ichip-v" id="idxRTSIPrice">—</span>
+<span class="tv-ichip-c flat" id="idxRTSIChange">—</span>
+</button>
+</div>
+
+<div class="tv-head">
+<div class="tv-symbol" id="tvSymbol">IMOEX</div>
+<div class="tv-name" id="tvName">Индекс МосБиржи</div>
+<div class="tv-price" id="tvPrice">—<small></small></div>
+<div><span class="tv-change flat" id="tvChange">—</span></div>
+</div>
+
+<div class="tv-tf">
+<button class="tv-tfb" data-tf="1д" onclick="setStockTimeframe('1д')">1Д</button>
+<button class="tv-tfb" data-tf="1н" onclick="setStockTimeframe('1н')">1Н</button>
+<button class="tv-tfb active" data-tf="1м" onclick="setStockTimeframe('1м')">1М</button>
+<button class="tv-tfb" data-tf="3м" onclick="setStockTimeframe('3м')">3М</button>
+<button class="tv-tfb" data-tf="1г" onclick="setStockTimeframe('1г')">1Г</button>
+<button class="tv-tfb" data-tf="Всё" onclick="setStockTimeframe('Всё')">ВСЁ</button>
+</div>
+
+<div class="tv-chart-wrap">
+<canvas id="tvMainChart"></canvas>
+<div class="tv-chart-loader" id="tvChartLoader">ЗАГРУЗКА…</div>
+</div>
+<div class="tv-chart-hint">🤏 <b>Пинч</b> — масштаб · <b>Drag</b> — прокрутка · <b>Shift+Drag</b> (ПК)</div>
+<button class="tv-reset" onclick="resetStockZoom()">↺ Сбросить масштаб</button>
+
+<div class="tv-stats" id="tvStats">
+<div class="tv-stat"><div class="tv-stat-k">Откр.</div><div class="tv-stat-v">—</div></div>
+<div class="tv-stat"><div class="tv-stat-k">Макс.</div><div class="tv-stat-v">—</div></div>
+<div class="tv-stat"><div class="tv-stat-k">Мин.</div><div class="tv-stat-v">—</div></div>
+<div class="tv-stat"><div class="tv-stat-k">Объём</div><div class="tv-stat-v">—</div></div>
+</div>
+
+<div class="tv-section-title">🔥 Trending · TOP акции</div>
+<div class="tv-watch" id="tvWatchlist">
+<div class="nld">⏳ Загрузка...</div>
+</div>
+<div class="tv-foot">
+<span id="tvLastUpdate">🔄 —</span>
+<span onclick="refreshStocksPage()">Обновить ↻</span>
+</div>
+
+</div>
+<!-- ============ /STOCKS VIEW ============ -->
+
+<!-- ============ CRYPTO VIEW ============ -->
+<div class="page-view" id="cryptoView">
+
+<div class="tv-hero">
+<div class="tv-hero-title">₿ Crypto</div>
+<div class="tv-hero-badge">LIVE · COINGECKO</div>
+</div>
+
+<div class="crs" style="margin-bottom:12px">
 <div class="crt"><span class="crp" id="cryptoPrice">— ₽</span><span id="cryptoChange" style="font-size:12.5px;color:#10b981;font-weight:700">—</span></div>
 <div class="coin-row" id="coinRow">
 <button class="coin-chip active" data-coin="ton">TON</button>
@@ -315,8 +483,7 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 </div>
 </div>
 
-<div class="sd"></div>
-<div class="st"><div class="si">💱</div><span>Крипта → ₽</span></div>
+<div class="st" style="margin-top:16px"><div class="si">💱</div><span>Крипта → ₽</span></div>
 <div class="curs">
 <div class="cvr">
 <input type="number" class="cvi" id="cryptoAmount" placeholder="1.5" step="any" min="0" value="1" oninput="convertCryptoToRub()">
@@ -331,8 +498,65 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 <div class="cvrl" id="cryptoRubResult">— ₽</div>
 </div>
 
-<div class="sd"></div>
-<div class="st"><div class="si">💵</div><span>Валюты → ₽</span></div>
+</div>
+<!-- ============ /CRYPTO VIEW ============ -->
+
+<!-- ============ RADIO VIEW ============ -->
+<div class="page-view" id="radioView">
+
+<div class="tv-hero">
+<div class="tv-hero-title">📻 Радио</div>
+<div class="tv-hero-badge" id="radioBadge">ONLINE</div>
+</div>
+
+<div class="radio-player" id="radioPlayerBlock">
+<div class="radio-player-logo" id="radioPlayerLogo">📻</div>
+<div class="radio-player-info">
+<div class="radio-player-name" id="radioPlayerName">Станция не выбрана</div>
+<div class="radio-player-status" id="radioPlayerStatus">Выберите станцию из списка</div>
+</div>
+<div class="radio-player-actions">
+<button class="radio-player-btn stop" id="radioStopBtn" onclick="stopRadio()" title="Стоп">■</button>
+<button class="radio-player-btn" id="radioPlayBtn" onclick="toggleRadioPlay()">▶</button>
+</div>
+</div>
+
+<div class="radio-search-wrap">
+<input type="text" class="radio-search" id="radioSearch" placeholder="Поиск станции…" oninput="renderRadioStations()">
+</div>
+
+<div class="radio-tabs" id="radioTabs">
+<button class="radio-tab active" data-genre="all" onclick="setRadioGenre('all')">Все</button>
+<button class="radio-tab" data-genre="pop" onclick="setRadioGenre('pop')">Поп</button>
+<button class="radio-tab" data-genre="rock" onclick="setRadioGenre('rock')">Рок</button>
+<button class="radio-tab" data-genre="news" onclick="setRadioGenre('news')">Новости</button>
+<button class="radio-tab" data-genre="retro" onclick="setRadioGenre('retro')">Ретро</button>
+<button class="radio-tab" data-genre="electronic" onclick="setRadioGenre('electronic')">Электроника</button>
+<button class="radio-tab" data-genre="dance" onclick="setRadioGenre('dance')">Танцы</button>
+<button class="radio-tab" data-genre="jazz" onclick="setRadioGenre('jazz')">Jazz</button>
+<button class="radio-tab" data-genre="classic" onclick="setRadioGenre('classic')">Классика</button>
+<button class="radio-tab" data-genre="hiphop" onclick="setRadioGenre('hiphop')">Hip-Hop</button>
+</div>
+
+<div class="radio-list" id="radioStationList">
+<div class="nld">⏳ Загрузка станций…</div>
+</div>
+<div class="radio-note">⚠️ Некоторые станции могут не воспроизводиться из-за HTTPS/HTTP-ограничений Telegram. Если станция не играет — выберите другую.</div>
+
+</div>
+<!-- ============ /RADIO VIEW ============ -->
+
+<!-- ============ RATES VIEW ============ -->
+<div class="page-view" id="ratesView">
+
+<div class="rates-hero">
+<div class="rates-hero-title">🏦 Курсы ЦБ</div>
+<div class="rates-hero-badge">cbr.ru</div>
+</div>
+
+<div class="cbrs" id="cbrSection"><div class="nld">⏳ Загрузка...</div></div>
+
+<div class="st" style="margin-top:16px"><div class="si">💵</div><span>Валюты → ₽</span></div>
 <div class="curs">
 <div class="cvr">
 <input type="number" class="cvi" id="currencyAmount" placeholder="1" step="any" min="0" value="1" oninput="convertCurrency()">
@@ -345,21 +569,19 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 <div class="currl" id="currencyRubResult">— ₽</div>
 </div>
 
-<div class="mb">
-<div class="mbt">VDAILY · SYSTEM</div>
-<div class="mbl">
-<span class="mlk" onclick="openPrivacy()">Политика конфиденциальности</span>
-<span class="mlk" onclick="openInApp('https://t.me/genuis_neo_bot')">Связь с разработчиком</span>
 </div>
-</div>
+<!-- ============ /RATES VIEW ============ -->
 
 </div>
 
 <div class="nw">
 <div class="nn">
 <div class="nit active" data-page="home"><div class="nic"><span class="iem">🏠</span></div><div>Главная</div></div>
+<div class="nit" data-page="stocks"><div class="nic"><span class="iem">📈</span></div><div>Акции</div></div>
+<div class="nit" data-page="crypto"><div class="nic"><span class="iem">₿</span></div><div>Крипта</div></div>
 <div class="nit" data-page="radio"><div class="nic"><span class="iem">📻</span></div><div>Радио</div></div>
-<div class="nit" data-page="info"><div class="nic"><span class="iem">ℹ️</span></div><div>Информация</div></div>
+<div class="nit" data-page="rates"><div class="nic"><span class="iem">🏦</span></div><div>Курсы</div></div>
+<div class="nit" data-page="info"><div class="nic"><span class="iem">ℹ️</span></div><div>Инфо</div></div>
 </div>
 </div>
 
@@ -383,28 +605,8 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 </div>
 <div class="mby">
 <div class="info-hero">
-<div class="info-logo">
-<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<linearGradient id="igrad" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#a855f7"/><stop offset="1" stop-color="#ec4899"/>
-</linearGradient>
-<linearGradient id="ibg2" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#0b1220"/><stop offset="1" stop-color="#1e1b4b"/>
-</linearGradient>
-</defs>
-<rect x="1.5" y="1.5" width="61" height="61" rx="17" fill="url(#ibg2)" stroke="url(#igrad)" stroke-width="2"/>
-<path d="M8 18 L8 12 Q8 8 12 8 L18 8" stroke="url(#igrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
-<path d="M56 18 L56 12 Q56 8 52 8 L46 8" stroke="url(#igrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
-<path d="M8 46 L8 52 Q8 56 12 56 L18 56" stroke="url(#igrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
-<path d="M56 46 L56 52 Q56 56 52 56 L46 56" stroke="url(#igrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
-<path d="M17 20 L32 44 L47 20" stroke="url(#igrad)" stroke-width="5.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M22 47 Q32 54 42 47" stroke="url(#igrad)" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".85"/>
-<circle cx="32" cy="11" r="2.5" fill="#22d3ee"/>
-</svg>
-</div>
 <div class="info-title">VDAILY NEWS</div>
-<div class="info-ver">VERSION 2.1 · TELEGRAM MINI APP</div>
+<div class="info-ver">VERSION 2.3 · TELEGRAM MINI APP</div>
 </div>
 
 <div class="info-card">
@@ -413,8 +615,18 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 </div>
 
 <div class="info-card">
-<h4>⚡ Возможности</h4>
-<p>Главные новости · Шоу-бизнес · Информационная безопасность · Гаджеты и IT · Блокировки Рунета · Спорт · Акции MOEX · Курсы ЦБ · 10 криптовалют · Конвертеры валют</p>
+<h4>⚡ Страницы</h4>
+<p><b>Главная</b> — новости, шоу-бизнес, ИБ, гаджеты, блокировки, спорт.<br><b>Акции</b> — Trading View по MOEX с интерактивным графиком.<br><b>Крипта</b> — 10 монет, график, конвертер.<br><b>Радио</b> — встроенный плеер.<br><b>Курсы</b> — ЦБ РФ + конвертер валют.</p>
+</div>
+
+<div class="info-card">
+<h4>📈 Trading View</h4>
+<p>Интерактивный график акций и индексов Мосбиржи с масштабированием (пинч-зум) и прокруткой. Таймфреймы от 1 дня до 5 лет, статистика по каждому инструменту и watchlist с live-котировками.</p>
+</div>
+
+<div class="info-card">
+<h4>📻 Радио</h4>
+<p>Встроенный плеер с сотнями российских радиостанций. Выбирайте из списка или ищите по названию/жанру прямо в приложении. Внешние приложения не открываются.</p>
 </div>
 
 <div class="info-card">
@@ -431,7 +643,7 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 <button class="info-btn" onclick="openInApp('https://t.me/genuis_neo_bot')">💬 Связь с разработчиком</button>
 
 <div class="pf">
-<strong>VDAILY NEWS · v2.1</strong><br>
+<strong>VDAILY NEWS · v2.3</strong><br>
 Сделано с ❤️ для Telegram<br>
 <a onclick="openInApp('https://t.me/genuis_neo_bot')">@genuis_neo_bot</a>
 </div>
@@ -520,7 +732,7 @@ body{display:flex;align-items:flex-start;justify-content:center;background:var(-
 <p class="pp">10.1. Администратор вправе в одностороннем порядке вносить изменения в настоящую Политику.</p>
 <p class="pp">10.2. Обновленная редакция Политики вступает в силу с момента ее размещения.</p>
 
-<div class="pf"><strong>VDAILY NEWS · Telegram-бот</strong><br>Политика конфиденциальности · версия 2.1<br><a onclick="openInApp('https://t.me/genuis_neo_bot')">Официальный Telegram-канал</a></div>
+<div class="pf"><strong>VDAILY NEWS · Telegram-бот</strong><br>Политика конфиденциальности · версия 2.3<br><a onclick="openInApp('https://t.me/genuis_neo_bot')">Официальный Telegram-канал</a></div>
 </div>
 </div>
 </div>
@@ -540,9 +752,6 @@ if(m.indexOf('ResizeObserver')!==-1||n==='AbortError'||n==='DOMException'||(type
 
 var tg=(window.Telegram&&window.Telegram.WebApp)?window.Telegram.WebApp:{};
 
-var TELEGRAM_CHANNEL='genuis_neo_bot';
-var IB_CHANNEL='ib_mirea_news';
-var GADGETS_CHANNEL='Wylsared';
 var BLOCKS_CHANNEL='blokirovki_runeta';
 
 var COINGECKO_IDS={ton:'the-open-network',btc:'bitcoin',eth:'ethereum',not:'notcoin',sol:'solana',doge:'dogecoin',usdt:'tether',bnb:'binancecoin',xrp:'ripple',ada:'cardano'};
@@ -552,11 +761,21 @@ var FALLBACK_CRYPTO={ton:145.99,btc:5246888,eth:284000,not:0.68,sol:13500,doge:1
 var FALLBACK_CHANGES={ton:2.2,btc:1.9,eth:2.6,not:7.5,sol:3.1,doge:-1.4,usdt:0.01,bnb:1.1,xrp:0.8,ada:-0.5};
 var FALLBACK_RATES={usd:80.44,eur:88.00,cny:11.15,byn:25.00,kzt:0.18};
 
-var STOCKS=[
-{ticker:'SBER',name:'Сбербанк'},{ticker:'GAZP',name:'Газпром'},{ticker:'LKOH',name:'Лукойл'},
-{ticker:'ROSN',name:'Роснефть'},{ticker:'GMKN',name:'Норникель'},{ticker:'VTBR',name:'ВТБ'},
-{ticker:'MGNT',name:'Магнит'},{ticker:'YDEX',name:'Яндекс'},{ticker:'T',name:'Т-Банк'},
-{ticker:'NLMK',name:'НЛМК'},{ticker:'CHMF',name:'Северсталь'},{ticker:'PLZL',name:'Полюс'}
+var INSTRUMENTS=[
+{ticker:'IMOEX',name:'Индекс МосБиржи',type:'index',board:'SNDX'},
+{ticker:'RTSI',name:'Индекс РТС',type:'index',board:'RTSI'},
+{ticker:'SBER',name:'Сбербанк',type:'stock'},
+{ticker:'GAZP',name:'Газпром',type:'stock'},
+{ticker:'LKOH',name:'Лукойл',type:'stock'},
+{ticker:'ROSN',name:'Роснефть',type:'stock'},
+{ticker:'GMKN',name:'Норникель',type:'stock'},
+{ticker:'VTBR',name:'ВТБ',type:'stock'},
+{ticker:'MGNT',name:'Магнит',type:'stock'},
+{ticker:'YDEX',name:'Яндекс',type:'stock'},
+{ticker:'T',name:'Т-Банк',type:'stock'},
+{ticker:'NLMK',name:'НЛМК',type:'stock'},
+{ticker:'CHMF',name:'Северсталь',type:'stock'},
+{ticker:'PLZL',name:'Полюс',type:'stock'}
 ];
 
 var MAIN_FEEDS=[
@@ -616,9 +835,23 @@ var cryptoChart=null,currencyChart=null,cryptoConverterChart=null;
 var currentCoin='ton',currentTimeframe='1d';
 var refreshTimer=null,fastRefreshTimer=null;
 
+var currentInstrument='IMOEX';
+var currentStockTF='1м';
+var stockChart=null;
+var stocksPageLoaded=false;
+
+/* Radio state */
+var radioAudio=null;
+var radioStations=[];
+var radioPlaying=false;
+var currentStation=null;
+var currentGenre='all';
+var radioLoading=false;
+
 function $(id){return document.getElementById(id)}
 function safe(el,html){if(el)el.innerHTML=html}
 function fmt(num,digits){if(typeof digits==='undefined')digits=2;if(num===null||num===undefined||isNaN(num))return '—';return Number(num).toLocaleString('ru-RU',{minimumFractionDigits:digits,maximumFractionDigits:digits})}
+function fmtCompact(n){if(n===null||n===undefined||isNaN(n))return '—';var v=Number(n);var abs=Math.abs(v);if(abs>=1e9)return (v/1e9).toFixed(2)+' млрд';if(abs>=1e6)return (v/1e6).toFixed(2)+' млн';if(abs>=1e3)return (v/1e3).toFixed(1)+' тыс.';return v.toFixed(0)}
 function esc(str){if(!str)return '';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 
 function cleanText(str){
@@ -652,11 +885,7 @@ return html;
 }
 
 function stripTags(html){if(!html)return '';var tmp=document.createElement('div');tmp.innerHTML=html;return cleanText(tmp.textContent||tmp.innerText||'')}
-
-function fmtDate(str){
-if(!str)return '';
-try{var d=new Date(str);if(isNaN(d.getTime()))return '';return d.toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}
-}
+function fmtDate(str){if(!str)return '';try{var d=new Date(str);if(isNaN(d.getTime()))return '';return d.toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}}
 
 function haptic(type){try{if(tg.HapticFeedback){if(type==='light')tg.HapticFeedback.impactOccurred('light');else if(type==='medium')tg.HapticFeedback.impactOccurred('medium')}}catch(e){}}
 
@@ -733,45 +962,6 @@ return text;
 return firstOK(promises);
 }
 
-function fetchTgViaRssHub(username){
-var rssUrl='https://rsshub.app/telegram/channel/'+username;
-var rssProxies=[
-function(u){return 'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},
-function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)},
-function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u)}
-];
-var promises=rssProxies.map(function(fn){
-return fetchT(fn(rssUrl),{},10000).then(function(res){
-if(!res||!res.ok)return null;
-return res.text().then(function(text){
-if(!text||text.indexOf('<item>')===-1)return null;
-try{
-var doc=new DOMParser().parseFromString(text,'text/xml');
-var items=doc.querySelectorAll('item');
-var posts=[];
-for(var j=0;j<Math.min(items.length,10);j++){
-var it=items[j];
-var title=(it.querySelector('title')||{}).textContent||'';
-var descRaw=(it.querySelector('description')||{}).textContent||'';
-var link=(it.querySelector('link')||{}).textContent||'';
-var pubDate=(it.querySelector('pubDate')||{}).textContent||'';
-var cleanDesc=descRaw.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1');
-var tmp=document.createElement('div');tmp.innerHTML=cleanDesc;
-var textContent=cleanText(tmp.textContent||'');
-if(!textContent&&!title)continue;
-var img='';
-var m1=cleanDesc.match(/<img[^>]*\bsrc\s*=\s*["']([^"']+)["']/i);
-if(m1&&m1[1])img=m1[1];
-posts.push({text:textContent||title,time:fmtDate(pubDate),link:link,image:img,author:''});
-}
-return posts.length>0?posts:null;
-}catch(e){return null}
-});
-}).catch(function(){return null});
-});
-return firstOK(promises);
-}
-
 function extractPhoto(msg){
 var wraps=msg.querySelectorAll('.tgme_widget_message_photo_wrap');
 for(var i=0;i<wraps.length;i++){
@@ -785,12 +975,10 @@ var s2=bgs[k].getAttribute('style')||'';
 var m2=s2.match(/background-image\s*:\s*url\(\s*(['"]?)(.+?)\1\s*\)/i);
 if(m2&&m2[2])return m2[2].trim();
 }
-var img=msg.querySelector('img[src]');
-if(img){var src=img.getAttribute('src')||'';if(src&&src.indexOf('data:')!==0)return src}
 return '';
 }
 
-function parseTgHtml(html,extractAuthor){
+function parseTgHtml(html){
 var doc=new DOMParser().parseFromString(html,'text/html');
 var messages=doc.querySelectorAll('.tgme_widget_message');
 var arr=[];
@@ -803,18 +991,16 @@ var linkEl=msg.querySelector('.tgme_widget_message_date');
 if(!textEl)continue;
 var cleaned=cleanText(textEl.textContent||'');
 if(!cleaned)continue;
-var author='';
-if(extractAuthor){var am=cleaned.match(/Автор[:\s]+([А-ЯЁ][а-яё]+(?:\s+[А-ЯЁ][а-яё]+)?)/i);if(am)author=am[1]}
 var imageUrl=extractPhoto(msg);
-arr.push({text:cleaned,time:timeEl?fmtDate(timeEl.getAttribute('datetime')||timeEl.textContent):'',link:linkEl?(linkEl.getAttribute('href')||''):'',image:imageUrl,author:author});
+arr.push({text:cleaned,time:timeEl?fmtDate(timeEl.getAttribute('datetime')||timeEl.textContent):'',link:linkEl?(linkEl.getAttribute('href')||''):'',image:imageUrl});
 }
 return arr;
 }
 
-function fetchTgPosts(username,extractAuthor){
+function fetchTgPosts(username){
 return fetchTgHtml(username).then(function(html){
-if(html){try{var arr=parseTgHtml(html,extractAuthor);if(arr.length>0)return arr}catch(e){}}
-return fetchTgViaRssHub(username);
+if(html){try{var arr=parseTgHtml(html);if(arr.length>0)return arr}catch(e){}}
+return null;
 }).then(function(p){return p||null});
 }
 
@@ -826,7 +1012,6 @@ if(tg.openTelegramLink&&url.indexOf('t.me')!==-1){tg.openTelegramLink(url);retur
 window.open(url,'_blank');
 }
 
-/* ---- READER: iframe-based, Telegram-friendly ---- */
 function getHost(url){try{return new URL(url).hostname.replace(/^www\./,'')}catch(e){return url||''}}
 
 function openArticle(url){
@@ -839,7 +1024,6 @@ function openArticle(url){
   if(titleEl)titleEl.textContent=host||'Чтение';
   haptic('light');
 
-  // Render topbar + iframe
   var html='';
   html+='<div class="reader-topbar">';
   html+='<div class="reader-url">🔒 '+esc(url)+'</div>';
@@ -854,7 +1038,6 @@ function openArticle(url){
 
   var ivBtn=$('readerIv');
   if(ivBtn)ivBtn.onclick=function(){
-    // Telegram Instant View
     var ivUrl='https://t.me/iv?url='+encodeURIComponent(url)+'&rhash=0';
     try{
       if(tg.openLink){tg.openLink(ivUrl);return}
@@ -866,45 +1049,32 @@ function openArticle(url){
   var tgBtn=$('readerTg');
   if(tgBtn)tgBtn.onclick=function(){openInApp(url)};
 
-  // Detect iframe failure (X-Frame-Options / CSP) — check via timeout + load event
   var frame=$('readerFrame');
   if(frame){
     var loaded=false;
     frame.addEventListener('load',function(){
       loaded=true;
-      // try to check if accessible
       try{
         var d=frame.contentDocument;
-        // If blank => likely blocked
         if(!d||!d.body||(d.body.childElementCount===0&&(!d.body.textContent||d.body.textContent.trim().length<10))){
           showReaderBlocked(url,host);
         }
-      }catch(err){
-        // cross-origin is fine (means it actually rendered)
-      }
+      }catch(err){}
     });
     frame.addEventListener('error',function(){
       showReaderBlocked(url,host);
     });
-    // Fallback: if not loaded after 6s — show options but keep iframe
-    setTimeout(function(){
-      if(!loaded){
-        // still allow user; do nothing drastic
-      }
-    },6000);
   }
 }
 
 function showReaderBlocked(url,host){
-  // Show fallback ON TOP of iframe area but keep the iframe hidden
   var body=$('readerBody');if(!body)return;
-  // Only replace once
   if(body.querySelector('.reader-fallback'))return;
   var html='';
   html+='<div class="reader-fallback" style="position:absolute;inset:0;background:var(--mbg);z-index:10">';
   html+='<p>Сайт <strong>'+esc(host)+'</strong> запрещает встраивание в приложение.</p>';
   html+='<p>Откройте статью одним из способов ниже.</p>';
-  html+='<button id="rfIv" style="background:linear-gradient(135deg,#22d3ee,#a855f7)">🚀 Instant View в Telegram</button>';
+  html+='<button id="rfIv" style="background:linear-gradient(135deg,#38bdf8,#818cf8)">🚀 Instant View в Telegram</button>';
   html+='<button id="rfOpen" style="background:var(--sbg);color:var(--tx);border:1px solid var(--bl)">🌐 Открыть в браузере Telegram</button>';
   html+='<button id="rfCopy" style="background:var(--sbg);color:var(--tx);border:1px solid var(--bl)">📋 Скопировать ссылку</button>';
   html+='</div>';
@@ -928,7 +1098,9 @@ var n=c==='dark'?'light':'dark';
 h.setAttribute('data-theme',n);
 var b=$('themeToggle');if(b)b.textContent=n==='dark'?'🌙':'☀️';
 try{localStorage.setItem('nc_theme',n)}catch(e){}
+if(stockChart){try{stockChart.destroy();stockChart=null}catch(e){}}
 haptic('light');
+setTimeout(function(){ if(currentInstrument&&stocksPageLoaded) selectInstrument(currentInstrument); },150);
 }
 
 function setFontScale(btn,scale){
@@ -978,7 +1150,7 @@ all.push({title:t,link:it.link||'#',desc:de,source:d.source,date:fmtDate(it.pubD
 });
 });
 if(all.length===0){
-if(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1||c.innerHTML.indexOf('недоступ')===-1)safe(c,'<div class="ne">Новости временно недоступны</div>');
+if(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1)safe(c,'<div class="ne">Новости временно недоступны</div>');
 return;
 }
 var sel=all.slice(0,maxTotal);var html='';
@@ -992,6 +1164,26 @@ html+='</div>';
 });
 safe(c,html);
 try{localStorage.setItem(ck,JSON.stringify({html:html,time:Date.now()}))}catch(e){}
+});
+}
+
+function fetchAllRss(feeds,maxPer,maxTotal){
+var promises=feeds.map(function(feed){
+return fetchViaProxies(feed.url,RSS_PROXIES,8000).then(function(r){
+if(!r)return{source:feed.source,items:[]};
+return{source:feed.source,items:parseRssItems(r)};
+}).catch(function(){return{source:feed.source,items:[]}});
+});
+return Promise.all(promises).then(function(results){
+var all=[];
+results.forEach(function(d){
+d.items.slice(0,maxPer).forEach(function(it){
+var t=stripTags(it.title||'');
+if(!t)return;
+all.push({title:t,link:it.link||'#',desc:stripTags(it.description||''),source:d.source,date:fmtDate(it.pubDate)});
+});
+});
+return all.slice(0,maxTotal);
 });
 }
 
@@ -1047,7 +1239,7 @@ var ck='nc_blocks';
 try{var cached=localStorage.getItem(ck);if(cached){var p=JSON.parse(cached);if(p.html&&p.html.indexOf('nld')===-1)c.innerHTML=p.html}}catch(e){}
 
 var rssP=fetchAllRss(BLOCKS_FEEDS,3,8);
-var tgP=fetchTgPosts(BLOCKS_CHANNEL,false).then(function(p){return p||[]}).catch(function(){return[]});
+var tgP=fetchTgPosts(BLOCKS_CHANNEL).then(function(p){return p||[]}).catch(function(){return[]});
 
 return Promise.all([rssP,tgP]).then(function(r){
 var rssItems=r[0];var tgPosts=r[1];
@@ -1072,26 +1264,6 @@ safe(c,html);
 try{localStorage.setItem(ck,JSON.stringify({html:html}))}catch(e){}
 }).catch(function(){
 if(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1)safe(c,'<div class="ne">Раздел временно недоступен</div>');
-});
-}
-
-function fetchAllRss(feeds,maxPer,maxTotal){
-var promises=feeds.map(function(feed){
-return fetchViaProxies(feed.url,RSS_PROXIES,8000).then(function(r){
-if(!r)return{source:feed.source,items:[]};
-return{source:feed.source,items:parseRssItems(r)};
-}).catch(function(){return{source:feed.source,items:[]}});
-});
-return Promise.all(promises).then(function(results){
-var all=[];
-results.forEach(function(d){
-d.items.slice(0,maxPer).forEach(function(it){
-var t=stripTags(it.title||'');
-if(!t)return;
-all.push({title:t,link:it.link||'#',desc:stripTags(it.description||''),source:d.source,date:fmtDate(it.pubDate)});
-});
-});
-return all.slice(0,maxTotal);
 });
 }
 
@@ -1130,37 +1302,7 @@ try{localStorage.setItem(ck,JSON.stringify({html:html}))}catch(e){}
 });
 }
 
-function loadStocks(){
-var c=$('stocksSection');if(!c)return Promise.resolve();
-var tickers=STOCKS.map(function(s){return s.ticker}).join(',');
-var url='https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json?iss.meta=off&securities='+tickers;
-return fetchT(url,{},8000).then(function(res){
-if(!res||!res.ok)throw new Error('MOEX');
-return res.json();
-}).then(function(data){
-var sb=data.securities||{};var mb=data.marketdata||{};
-var sc=sb.columns||[];var mc=mb.columns||[];
-var si=sc.indexOf('SECID');var sni=sc.indexOf('SHORTNAME');var pi=sc.indexOf('PREVPRICE');
-var msi=mc.indexOf('SECID');var li=mc.indexOf('LAST');var ci=mc.indexOf('CHANGE');
-var bt={};
-if(sb.data&&si>=0){sb.data.forEach(function(r){var t=r[si];if(!t||tickers.indexOf(t)===-1)return;bt[t]=bt[t]||{};bt[t].name=r[sni];bt[t].prev=r[pi]})}
-if(mb.data&&msi>=0){mb.data.forEach(function(r){var t=r[msi];if(!t||tickers.indexOf(t)===-1)return;bt[t]=bt[t]||{};if(r[li]!==null&&r[li]!==undefined)bt[t].last=r[li];if(r[ci]!==null&&r[ci]!==undefined)bt[t].chg=r[ci]})}
-var html='';
-STOCKS.forEach(function(s){
-var i=bt[s.ticker]||{};
-var p=i.last;var cp=0;var up=true;
-if(p===undefined||p===null)p=i.prev;
-if(i.chg!==undefined&&i.prev){cp=(i.chg/i.prev)*100;up=i.chg>=0}
-else if(p&&i.prev){cp=((p-i.prev)/i.prev)*100;up=cp>=0}
-html+='<div class="str"><span class="stk">'+s.ticker+'</span><span class="stn">'+s.name+'</span><span class="stp">'+(p!==undefined&&p!==null?fmt(p,2)+' ₽':'—')+'</span><span class="stc '+(up?'up':'dn')+'">'+(up?'+':'')+fmt(cp,2)+'%</span></div>';
-});
-html+='<div class="stu">🔄 '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' · задержка ~15 мин</div>';
-safe(c,html);
-}).catch(function(){
-if(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1)safe(c,'<div class="ne">Котировки временно недоступны</div>');
-});
-}
-
+/* ================= CBR ================= */
 function loadCBR(){
 var c=$('cbrSection');if(!c)return Promise.resolve();
 return fetchT('https://www.cbr-xml-daily.ru/daily_json.js',{},7000).then(function(res){
@@ -1182,7 +1324,7 @@ var d=cc.div||1;var val=cc.v.Value/d;var prev=(cc.v.Previous||cc.v.Value)/d;
 var diff=val-prev;var pct=prev?(diff/prev)*100:0;var up=diff>0;
 html+='<div class="cbrr"><span class="cbrc"><strong>'+cc.code+'</strong> · '+cc.name+'</span><span class="cbrrt">'+fmt(val,2)+' ₽</span><span class="cbrch '+(up?'up':'dn')+'">'+(up?'+':'')+fmt(pct,2)+'%</span></div>';
 });
-html+='<div class="stu">🔄 '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+'</div>';
+html+='<div class="rates-updated">🔄 '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' · <span onclick="loadCBR()">Обновить ↻</span></div>';
 safe(c,html);
 if(v.USD&&v.USD.Value)usdToRubRate=v.USD.Value;
 }).catch(function(){
@@ -1190,6 +1332,7 @@ if(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1)safe(c,'<div class="ne">Кур�
 });
 }
 
+/* ================= CRYPTO ================= */
 function fetchCrypto(coin){
 var id=COINGECKO_IDS[coin];
 var url='https://api.coingecko.com/api/v3/simple/price?ids='+id+'&vs_currencies=rub&include_24hr_change=true';
@@ -1235,11 +1378,11 @@ drawCryptoChart(ctx,arr);
 }
 
 function drawCryptoChart(ctx,prices){
-var color=COIN_COLORS[currentCoin]||'#22d3ee';
+var color=COIN_COLORS[currentCoin]||'#38bdf8';
 cryptoChart=new Chart(ctx,{
 type:'line',
 data:{labels:prices.map(function(){return ''}),datasets:[{data:prices,borderColor:color,backgroundColor:color+'20',borderWidth:2.5,fill:true,tension:0.4,pointRadius:0}]},
-options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{grid:{color:'rgba(148,163,184,0.15)'},ticks:{color:'#94a3b8',font:{size:10},callback:function(v){if(v>=1000)return '$'+(v/1000).toFixed(1)+'k';if(v>=1)return '$'+Number(v).toFixed(2);return '$'+Number(v).toFixed(4)}}}}}
+options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{grid:{color:'rgba(148,163,184,0.12)'},ticks:{color:'#94a3b8',font:{size:10},callback:function(v){if(v>=1000)return '$'+(v/1000).toFixed(1)+'k';if(v>=1)return '$'+Number(v).toFixed(2);return '$'+Number(v).toFixed(4)}}}}}
 });
 }
 
@@ -1282,10 +1425,11 @@ data[6]=base;
 cryptoConverterChart=new Chart(ctx,{
 type:'line',
 data:{labels:labels,datasets:[{data:data,borderColor:'#10b981',backgroundColor:'#10b98120',borderWidth:2,fill:true,tension:0.4,pointRadius:2,pointBackgroundColor:'#10b981'}]},
-options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#94a3b8',font:{size:9}}},y:{grid:{color:'rgba(148,163,184,0.15)'},ticks:{color:'#94a3b8',font:{size:9}}}}}
+options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#94a3b8',font:{size:9}}},y:{grid:{color:'rgba(148,163,184,0.12)'},ticks:{color:'#94a3b8',font:{size:9}}}}}
 });
 }
 
+/* ================= CURRENCY ================= */
 function convertCurrency(){
 var ae=$('currencyAmount'),se=$('currencySelect'),re=$('currencyRubResult');
 if(!ae||!se||!re)return Promise.resolve();
@@ -1325,8 +1469,643 @@ data[6]=base;
 currencyChart=new Chart(ctx,{
 type:'line',
 data:{labels:labels,datasets:[{data:data,borderColor:color,backgroundColor:color+'20',borderWidth:2,fill:true,tension:0.4,pointRadius:2,pointBackgroundColor:color}]},
-options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#94a3b8',font:{size:9}}},y:{grid:{color:'rgba(148,163,184,0.15)'},ticks:{color:'#94a3b8',font:{size:9}}}}}
+options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#94a3b8',font:{size:9}}},y:{grid:{color:'rgba(148,163,184,0.12)'},ticks:{color:'#94a3b8',font:{size:9}}}}}
 });
+}
+
+/* ============================================================
+   ============== TRADING VIEW (STOCKS PAGE) ==================
+   ============================================================ */
+
+function getStockTimeframeParams(tf){
+  var today=new Date();
+  var from=new Date(today);
+  var interval=24;
+  if(tf==='1д'){interval=10;from.setDate(today.getDate()-3)}
+  else if(tf==='1н'){interval=60;from.setDate(today.getDate()-10)}
+  else if(tf==='1м'){interval=24;from.setDate(today.getDate()-35)}
+  else if(tf==='3м'){interval=24;from.setDate(today.getDate()-95)}
+  else if(tf==='1г'){interval=7;from.setDate(today.getDate()-400)}
+  else if(tf==='Всё'){interval=31;from.setFullYear(today.getFullYear()-5)}
+  var pad=function(n){return n<10?'0'+n:''+n};
+  var fromStr=from.getFullYear()+'-'+pad(from.getMonth()+1)+'-'+pad(from.getDate());
+  return {interval:interval,from:fromStr};
+}
+
+function getInstrument(ticker){
+  for(var i=0;i<INSTRUMENTS.length;i++){if(INSTRUMENTS[i].ticker===ticker)return INSTRUMENTS[i]}
+  return null;
+}
+
+function loadCandles(ticker){
+  var inst=getInstrument(ticker);
+  if(!inst)return Promise.resolve(null);
+  var p=getStockTimeframeParams(currentStockTF);
+  var market=inst.type==='index'?'index':'shares';
+  var board=inst.board||'TQBR';
+  var url='https://iss.moex.com/iss/engines/stock/markets/'+market+'/boards/'+board+'/securities/'+ticker+'/candles.json?interval='+p.interval+'&from='+p.from+'&iss.meta=off';
+  return fetchT(url,{},10000).then(function(r){
+    if(!r||!r.ok)throw new Error('fetch');
+    return r.json();
+  }).then(function(data){
+    var cd=data.candles||{};
+    var cols=cd.columns||[];
+    var oi=cols.indexOf('open'),ci=cols.indexOf('close'),hi=cols.indexOf('high'),li=cols.indexOf('low'),vi=cols.indexOf('volume'),bi=cols.indexOf('begin');
+    var arr=(cd.data||[]).map(function(row){
+      return {open:row[oi],close:row[ci],high:row[hi],low:row[li],volume:row[vi],time:row[bi]};
+    }).filter(function(c){return c.close!==null&&c.close!==undefined});
+    return arr;
+  });
+}
+
+function setStockTimeframe(tf){
+  currentStockTF=tf;
+  document.querySelectorAll('.tv-tfb').forEach(function(b){
+    b.classList.toggle('active',b.getAttribute('data-tf')===tf);
+  });
+  haptic('light');
+  var loader=$('tvChartLoader');if(loader){loader.style.display='flex';loader.textContent='ЗАГРУЗКА…'}
+  loadCandles(currentInstrument).then(function(candles){
+    var inst=getInstrument(currentInstrument);
+    if(!candles||candles.length===0){
+      if(loader){loader.textContent='Нет данных для этого периода'}
+      setTimeout(function(){if(loader)loader.style.display='none'},1200);
+      return;
+    }
+    renderStockHeader(inst,candles);
+    renderStockStats(candles);
+    drawStockChart(candles);
+    if(loader)loader.style.display='none';
+  }).catch(function(){
+    if(loader){loader.textContent='Ошибка загрузки'}
+    setTimeout(function(){if(loader)loader.style.display='none'},1500);
+  });
+}
+
+function selectInstrument(ticker){
+  var inst=getInstrument(ticker);
+  if(!inst)return;
+  currentInstrument=ticker;
+  haptic('light');
+
+  document.querySelectorAll('.tv-ichip').forEach(function(el){
+    el.classList.toggle('active',el.getAttribute('data-ticker')===ticker);
+  });
+  document.querySelectorAll('.tv-wrow').forEach(function(el){
+    el.classList.toggle('active',el.getAttribute('data-ticker')===ticker);
+  });
+
+  var symEl=$('tvSymbol');if(symEl)symEl.textContent=ticker;
+  var nameEl=$('tvName');if(nameEl)nameEl.textContent=inst.name;
+  var loader=$('tvChartLoader');if(loader){loader.style.display='flex';loader.textContent='ЗАГРУЗКА…'}
+
+  loadCandles(ticker).then(function(candles){
+    if(!candles||candles.length===0){
+      if(loader){loader.textContent='Нет данных'}
+      setTimeout(function(){if(loader)loader.style.display='none'},1200);
+      return;
+    }
+    renderStockHeader(inst,candles);
+    renderStockStats(candles);
+    drawStockChart(candles);
+    if(loader)loader.style.display='none';
+  }).catch(function(){
+    if(loader){loader.textContent='Ошибка загрузки'}
+    setTimeout(function(){if(loader)loader.style.display='none'},1500);
+  });
+}
+
+function renderStockHeader(inst,candles){
+  if(!candles||candles.length===0)return;
+  var last=candles[candles.length-1];
+  var first=candles[0];
+  var change=last.close-first.close;
+  var pct=first.close?(change/first.close*100):0;
+  var isUp=change>=0;
+
+  var pEl=$('tvPrice');
+  if(pEl){
+    var unit=inst.type==='index'?'<small>пт.</small>':'<small>₽</small>';
+    pEl.innerHTML=fmt(last.close,2)+unit;
+  }
+  var cEl=$('tvChange');
+  if(cEl){
+    var sign=isUp?'+':'';
+    cEl.textContent=(isUp?'▲ ':'▼ ')+sign+fmt(change,2)+'  ('+sign+fmt(pct,2)+'%)';
+    cEl.className='tv-change '+(isUp?'up':'dn');
+  }
+}
+
+function renderStockStats(candles){
+  var c=$('tvStats');if(!c)return;
+  if(!candles||candles.length===0){safe(c,'');return}
+  var last=candles[candles.length-1];
+  var lastVol=last.volume||0;
+  var html='';
+  html+='<div class="tv-stat"><div class="tv-stat-k">Откр.</div><div class="tv-stat-v">'+fmt(last.open,2)+'</div></div>';
+  html+='<div class="tv-stat"><div class="tv-stat-k">Макс.</div><div class="tv-stat-v up">'+fmt(last.high,2)+'</div></div>';
+  html+='<div class="tv-stat"><div class="tv-stat-k">Мин.</div><div class="tv-stat-v dn">'+fmt(last.low,2)+'</div></div>';
+  html+='<div class="tv-stat"><div class="tv-stat-k">Объём</div><div class="tv-stat-v">'+fmtCompact(lastVol)+'</div></div>';
+  safe(c,html);
+}
+
+function drawStockChart(candles){
+  var cv=$('tvMainChart');if(!cv)return;
+  var ctx=cv.getContext('2d');
+  if(stockChart){try{stockChart.destroy()}catch(e){}stockChart=null}
+  var closes=candles.map(function(c){return c.close});
+  var volumes=candles.map(function(c){return c.volume||0});
+  var labels=candles.map(function(c){
+    try{
+      var d=new Date(c.time);
+      return d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+    }catch(e){return ''}
+  });
+  var isUp=closes.length>1&&closes[closes.length-1]>=closes[0];
+  var color=isUp?'#10b981':'#ef4444';
+  var grad=ctx.createLinearGradient(0,0,0,340);
+  grad.addColorStop(0,color+'55');
+  grad.addColorStop(1,color+'00');
+
+  var zoomCfg=null;
+  if(window.Chart&&Chart.registry&&Chart.registry.plugins&&Chart.registry.plugins.get('zoom')){
+    zoomCfg={
+      pan:{enabled:true,mode:'x',modifierKey:'shift',threshold:10},
+      zoom:{
+        wheel:{enabled:true,speed:0.08},
+        pinch:{enabled:true},
+        drag:{enabled:false},
+        mode:'x'
+      },
+      limits:{x:{minRange:3},y:{minRange:0.01}}
+    };
+  }
+
+  stockChart=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:labels,
+      datasets:[{
+        label:'Цена',
+        data:closes,
+        borderColor:color,
+        backgroundColor:grad,
+        borderWidth:2,
+        fill:true,
+        tension:0.2,
+        pointRadius:0,
+        pointHoverRadius:5,
+        pointHoverBackgroundColor:color,
+        pointHoverBorderColor:'#fff',
+        pointHoverBorderWidth:2,
+        yAxisID:'y'
+      },{
+        label:'Объём',
+        data:volumes,
+        type:'bar',
+        backgroundColor:color+'22',
+        borderColor:color+'55',
+        borderWidth:0,
+        pointRadius:0,
+        barPercentage:0.9,
+        categoryPercentage:0.9,
+        yAxisID:'yVol'
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      animation:{duration:250},
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'rgba(15,23,42,.96)',
+          borderColor:'rgba(99,132,180,.4)',
+          borderWidth:1,
+          titleColor:'#7dd3fc',
+          bodyColor:'#e5e7eb',
+          titleFont:{size:11,weight:'700'},
+          bodyFont:{size:12,weight:'700'},
+          padding:10,
+          displayColors:false,
+          callbacks:{
+            title:function(items){return labels[items[0].dataIndex]||''},
+            label:function(c){
+              var inst=getInstrument(currentInstrument);
+              var unit=(inst&&inst.type==='index')?' пт.':' ₽';
+              return fmt(c.parsed.y,2)+unit;
+            }
+          }
+        },
+        zoom:zoomCfg||undefined
+      },
+      scales:{
+        x:{
+          display:true,
+          grid:{display:false},
+          ticks:{color:'#94a3b8',font:{size:9},maxRotation:0,autoSkip:true,maxTicksLimit:6}
+        },
+        y:{
+          position:'right',
+          grid:{color:'rgba(148,163,184,0.08)'},
+          ticks:{color:'#94a3b8',font:{size:10},callback:function(v){return fmt(v,2)}}
+        },
+        yVol:{
+          display:false,
+          position:'left',
+          grid:{display:false},
+          max:Math.max.apply(null,volumes.concat([1]))*5
+        }
+      }
+    }
+  });
+}
+
+function resetStockZoom(){
+  if(stockChart&&stockChart.resetZoom){
+    try{stockChart.resetZoom()}catch(e){}
+  }
+  haptic('light');
+}
+
+function loadIndexQuotes(){
+  var url='https://iss.moex.com/iss/engines/stock/markets/index/securities.json?iss.meta=off&iss.only=marketdata,securities&securities=IMOEX,RTSI';
+  return fetchT(url,{},8000).then(function(r){
+    if(!r||!r.ok)throw new Error('idx');
+    return r.json();
+  }).then(function(data){
+    var sb=data.securities||{};var mb=data.marketdata||{};
+    var sc=sb.columns||[];var mc=mb.columns||[];
+    var si=sc.indexOf('SECID');var pi=sc.indexOf('PREVPRICE');
+    var msi=mc.indexOf('SECID');var ci=mc.indexOf('CURRENTVALUE');var lci=mc.indexOf('LASTCHANGEPRCNT');
+    var map={};
+    if(sb.data){sb.data.forEach(function(row){
+      var t=row[si];
+      if(t==='IMOEX'||t==='RTSI'){
+        map[t]=map[t]||{};
+        map[t].prev=row[pi];
+      }
+    })}
+    if(mb.data){mb.data.forEach(function(row){
+      var t=row[msi];
+      if(t==='IMOEX'||t==='RTSI'){
+        map[t]=map[t]||{};
+        if(row[ci]!=null)map[t].price=row[ci];
+        if(row[lci]!=null)map[t].pct=row[lci];
+      }
+    })}
+    renderIndexChip('IMOEX',map.IMOEX);
+    renderIndexChip('RTSI',map.RTSI);
+    return map;
+  }).catch(function(){return null});
+}
+
+function renderIndexChip(ticker,data){
+  var pEl=$('idx'+ticker+'Price');
+  var cEl=$('idx'+ticker+'Change');
+  if(!pEl||!cEl)return;
+  if(!data||data.price==null){
+    if(pEl)pEl.textContent='—';
+    if(cEl){cEl.textContent='—';cEl.className='tv-ichip-c flat'}
+    return;
+  }
+  pEl.textContent=fmt(data.price,2);
+  var pct=data.pct;
+  if(pct==null&&data.prev&&data.price){pct=((data.price-data.prev)/data.prev)*100}
+  if(pct==null){pct=0}
+  var up=pct>=0;
+  cEl.textContent=(up?'+':'')+fmt(pct,2)+'%';
+  cEl.className='tv-ichip-c '+(up?'up':'dn');
+}
+
+function loadWatchlist(){
+  var tickers=INSTRUMENTS.filter(function(i){return i.type==='stock'}).map(function(i){return i.ticker}).join(',');
+  var url='https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json?iss.meta=off&iss.only=securities,marketdata&securities='+tickers;
+  return fetchT(url,{},9000).then(function(r){
+    if(!r||!r.ok)throw new Error('watch');
+    return r.json();
+  }).then(function(data){
+    var sb=data.securities||{};var mb=data.marketdata||{};
+    var sc=sb.columns||[];var mc=mb.columns||[];
+    var si=sc.indexOf('SECID'),sni=sc.indexOf('SHORTNAME'),pi=sc.indexOf('PREVPRICE');
+    var msi=mc.indexOf('SECID'),li=mc.indexOf('LAST'),ci=mc.indexOf('CHANGE');
+    var bt={};
+    if(sb.data){sb.data.forEach(function(row){
+      var t=row[si];if(!t)return;
+      bt[t]={name:row[sni],prev:row[pi]};
+    })}
+    if(mb.data){mb.data.forEach(function(row){
+      var t=row[msi];if(!t)return;
+      bt[t]=bt[t]||{};
+      if(row[li]!=null)bt[t].last=row[li];
+      if(row[ci]!=null)bt[t].chg=row[ci];
+    })}
+    renderWatchlist(bt);
+  }).catch(function(){
+    var c=$('tvWatchlist');
+    if(c&&(!c.innerHTML||c.innerHTML.indexOf('nld')!==-1))safe(c,'<div class="ne">Список недоступен</div>');
+  });
+}
+
+function renderWatchlist(bt){
+  var c=$('tvWatchlist');if(!c)return;
+  var stocks=INSTRUMENTS.filter(function(i){return i.type==='stock'});
+  var html='';
+  stocks.forEach(function(s){
+    var i=bt[s.ticker]||{};
+    var price=(i.last!=null)?i.last:i.prev;
+    var chg=0,up=true;
+    if(i.chg!=null&&i.prev){chg=(i.chg/i.prev)*100;up=i.chg>=0}
+    else if(price&&i.prev){chg=((price-i.prev)/i.prev)*100;up=chg>=0}
+    var active=currentInstrument===s.ticker;
+    var cls=up?'up':(chg<0?'dn':'flat');
+    html+='<div class="tv-wrow '+(active?'active':'')+'" data-ticker="'+s.ticker+'">';
+    html+='<div><div class="tv-wtick">'+s.ticker+'</div><div class="tv-wname">'+esc(s.name)+'</div></div>';
+    html+='<div class="tv-wprice">'+(price!=null?fmt(price,2)+' ₽':'—')+'</div>';
+    html+='<div class="tv-wchg '+cls+'">'+(up?'+':'')+fmt(chg,2)+'%</div>';
+    html+='</div>';
+  });
+  safe(c,html);
+  c.querySelectorAll('.tv-wrow').forEach(function(row){
+    row.onclick=function(){
+      var t=row.getAttribute('data-ticker');
+      if(t)selectInstrument(t);
+    };
+  });
+}
+
+function updateStocksTimestamp(){
+  var el=$('tvLastUpdate');
+  if(el)el.textContent='🔄 '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+function refreshStocksPage(){
+  haptic('light');
+  loadIndexQuotes();
+  loadWatchlist();
+  setStockTimeframe(currentStockTF);
+  updateStocksTimestamp();
+}
+
+function initStocksPage(){
+  if(!stocksPageLoaded){
+    stocksPageLoaded=true;
+    loadIndexQuotes();
+    loadWatchlist();
+    setStockTimeframe(currentStockTF);
+    updateStocksTimestamp();
+  }
+  setTimeout(function(){
+    if(stockChart){try{stockChart.resize()}catch(e){}}
+    else{selectInstrument(currentInstrument)}
+  },60);
+}
+
+/* ============================================================
+   ============== RADIO ======================================
+   ============================================================ */
+
+function initAudio(){
+  if(!radioAudio){
+    radioAudio=new Audio();
+    radioAudio.preload='none';
+    radioAudio.volume=0.75;
+    radioAudio.addEventListener('playing',function(){
+      radioPlaying=true;updatePlayerUI();
+      var st=$('radioPlayerStatus');if(st){st.textContent='● Играет';st.classList.add('live')}
+    });
+    radioAudio.addEventListener('pause',function(){
+      radioPlaying=false;updatePlayerUI();
+      var st=$('radioPlayerStatus');if(st){st.textContent='Пауза';st.classList.remove('live')}
+    });
+    radioAudio.addEventListener('error',function(){
+      radioPlaying=false;updatePlayerUI();
+      var st=$('radioPlayerStatus');if(st){st.textContent='⚠ Ошибка потока (попробуйте другую)';st.classList.remove('live')}
+    });
+    radioAudio.addEventListener('waiting',function(){
+      var st=$('radioPlayerStatus');if(st){st.textContent='Буферизация…';st.classList.remove('live')}
+    });
+    radioAudio.addEventListener('canplay',function(){
+      var st=$('radioPlayerStatus');if(st){st.textContent='Подключение…';st.classList.remove('live')}
+    });
+    radioAudio.addEventListener('stalled',function(){
+      var st=$('radioPlayerStatus');if(st){st.textContent='Поток прерван';st.classList.remove('live')}
+    });
+  }
+}
+
+function playStation(station){
+  if(!station)return;
+  initAudio();
+  currentStation=station;
+  var url=station.url_resolved||station.url;
+  if(!url)return;
+  try{
+    radioAudio.src=url;
+    radioAudio.load();
+    var p=radioAudio.play();
+    if(p&&p.catch){p.catch(function(e){})}
+  }catch(e){}
+  updatePlayerUI();
+  highlightCurrentStation();
+  haptic('light');
+}
+
+function toggleRadioPlay(){
+  if(!radioAudio||!currentStation){
+    var first=document.querySelector('.radio-item');
+    if(first){first.click()}
+    return;
+  }
+  if(radioPlaying){
+    try{radioAudio.pause()}catch(e){}
+  }else{
+    try{
+      var p=radioAudio.play();
+      if(p&&p.catch){p.catch(function(e){})}
+    }catch(e){}
+  }
+}
+
+function stopRadio(){
+  if(radioAudio){
+    try{radioAudio.pause();radioAudio.src=''}catch(e){}
+  }
+  radioPlaying=false;
+  currentStation=null;
+  var nm=$('radioPlayerName');if(nm)nm.textContent='Станция не выбрана';
+  var st=$('radioPlayerStatus');if(st){st.textContent='Выберите станцию из списка';st.classList.remove('live')}
+  var logo=$('radioPlayerLogo');if(logo)logo.textContent='📻';
+  updatePlayerUI();
+  highlightCurrentStation();
+  haptic('light');
+}
+
+function updatePlayerUI(){
+  var btn=$('radioPlayBtn');
+  if(btn)btn.textContent=radioPlaying?'❚❚':'▶';
+  var nm=$('radioPlayerName');
+  if(nm&&currentStation)nm.textContent=currentStation.name||'Станция';
+  var logo=$('radioPlayerLogo');
+  if(logo){
+    if(currentStation&&currentStation.favicon){
+      logo.innerHTML='<img src="'+esc(currentStation.favicon)+'" onerror="this.style.display=\'none\';this.parentNode.textContent=\'📻\'" loading="lazy">';
+    }else{
+      logo.textContent='📻';
+    }
+  }
+}
+
+function highlightCurrentStation(){
+  document.querySelectorAll('.radio-item').forEach(function(el){
+    var i=parseInt(el.getAttribute('data-idx'),10);
+    var s=radioStations[i];
+    var match=currentStation&&s&&s.stationuuid===currentStation.stationuuid;
+    el.classList.toggle('active',match);
+  });
+}
+
+function setRadioGenre(genre){
+  currentGenre=genre;
+  document.querySelectorAll('.radio-tab').forEach(function(b){
+    b.classList.toggle('active',b.getAttribute('data-genre')===genre);
+  });
+  renderRadioStations();
+  haptic('light');
+}
+
+function renderRadioStations(){
+  var list=$('radioStationList');
+  if(!list)return;
+  if(radioStations.length===0){
+    safe(list,'<div class="nld">⏳ Загрузка станций…</div>');
+    return;
+  }
+  var q=($('radioSearch')&&$('radioSearch').value||'').toLowerCase().trim();
+  var filtered=radioStations;
+  if(currentGenre&&currentGenre!=='all'){
+    var g=currentGenre.toLowerCase();
+    filtered=filtered.filter(function(s){
+      var t=(s.tags||'').toLowerCase();
+      return t.indexOf(g)!==-1;
+    });
+  }
+  if(q){
+    filtered=filtered.filter(function(s){
+      return (s.name||'').toLowerCase().indexOf(q)!==-1||
+             (s.tags||'').toLowerCase().indexOf(q)!==-1;
+    });
+  }
+  if(filtered.length===0){
+    safe(list,'<div class="ne">Ничего не найдено</div>');
+    return;
+  }
+  var html='';
+  filtered.slice(0,120).forEach(function(s){
+    var idx=radioStations.indexOf(s);
+    var isHttps=(s.url_resolved||'').indexOf('https://')===0;
+    var tagHtml=isHttps?'':' <span style="color:var(--ay);font-size:9px">http</span>';
+    var tags=(s.tags||'').split(',').slice(0,3).join(' · ');
+    html+='<div class="radio-item" data-idx="'+idx+'">';
+    if(s.favicon){
+      html+='<div class="radio-item-logo"><img src="'+esc(s.favicon)+'" onerror="this.style.display=\'none\';this.parentNode.textContent=\'📻\'" loading="lazy"></div>';
+    }else{
+      html+='<div class="radio-item-logo">📻</div>';
+    }
+    html+='<div class="radio-item-info">';
+    html+='<div class="radio-item-name">'+esc(s.name)+tagHtml+'</div>';
+    html+='<div class="radio-item-tags">'+esc(tags||s.country||'')+'</div>';
+    html+='</div>';
+    html+='<div class="radio-item-play">▶</div>';
+    html+='</div>';
+  });
+  safe(list,html);
+  list.querySelectorAll('.radio-item').forEach(function(el){
+    el.addEventListener('click',function(){
+      var i=parseInt(el.getAttribute('data-idx'),10);
+      if(!isNaN(i)&&radioStations[i])playStation(radioStations[i]);
+    });
+  });
+  highlightCurrentStation();
+}
+
+function loadRadioStations(){
+  if(radioLoading)return;
+  radioLoading=true;
+  var list=$('radioStationList');
+  if(!list)return;
+
+  try{
+    var cached=localStorage.getItem('nc_radio_stations');
+    if(cached){
+      var parsed=JSON.parse(cached);
+      if(parsed&&parsed.data&&parsed.data.length>0&&(Date.now()-(parsed.t||0))<86400000){
+        radioStations=parsed.data;
+        renderRadioStations();
+        radioLoading=false;
+        return;
+      }
+    }
+  }catch(e){}
+
+  safe(list,'<div class="nld">⏳ Загрузка станций…</div>');
+
+  var servers=[
+    'https://de1.api.radio-browser.info',
+    'https://nl1.api.radio-browser.info',
+    'https://at1.api.radio-browser.info',
+    'https://fi1.api.radio-browser.info'
+  ];
+  var urlPath='/json/stations/bycountrycodeexact/RU?limit=250&hidebroken=true&order=clickcount&reverse=true';
+
+  function tryServer(i){
+    if(i>=servers.length){
+      safe(list,'<div class="ne">Станции недоступны. Попробуйте позже.</div>');
+      radioLoading=false;
+      return;
+    }
+    var url=servers[i]+urlPath;
+    fetchT(url,{},9000).then(function(r){
+      if(!r||!r.ok)throw new Error('fail');
+      return r.json();
+    }).then(function(data){
+      if(!Array.isArray(data)||data.length===0)throw new Error('empty');
+      radioStations=data.filter(function(s){
+        if(!s||!s.url_resolved||!s.name)return false;
+        var u=s.url_resolved.toLowerCase();
+        if(u.indexOf('.m3u8')!==-1)return false;
+        if(u.indexOf('hls')!==-1)return false;
+        return true;
+      });
+      try{localStorage.setItem('nc_radio_stations',JSON.stringify({t:Date.now(),data:radioStations.slice(0,250)}))}catch(e){}
+      renderRadioStations();
+      radioLoading=false;
+    }).catch(function(){
+      tryServer(i+1);
+    });
+  }
+  tryServer(0);
+}
+
+/* ============================================================
+   ============== VIEW SWITCHER ==============================
+   ============================================================ */
+
+function switchView(name){
+  document.querySelectorAll('.page-view').forEach(function(v){
+    v.classList.toggle('active',v.id===name+'View');
+  });
+  document.querySelectorAll('.nit').forEach(function(n){
+    n.classList.toggle('active',n.dataset.page===name);
+  });
+  var card=$('mainCard');
+  if(card)card.scrollTop=0;
+  if(name==='stocks'){initStocksPage()}
+  if(name==='radio'){loadRadioStations()}
+  if(name==='rates'){loadCBR();convertCurrency()}
+  if(name==='crypto'){updateCryptoPrice().then(createCryptoChart);convertCryptoToRub()}
+  haptic('light');
 }
 
 document.addEventListener('click',function(e){
@@ -1346,11 +2125,7 @@ function bindNav(){
 document.querySelectorAll('.nit').forEach(function(item){
 item.addEventListener('click',function(){
 var page=item.dataset.page;
-document.querySelectorAll('.nit').forEach(function(b){b.classList.remove('active')});
-item.classList.add('active');
-haptic('light');
-if(page==='home'){var c=$('mainCard');if(c)c.scrollTo({top:0,behavior:'smooth'})}
-else if(page==='radio'){window.location.href='https://oppennnbox.github.io/neurocore-miniapp/Radio_norm.html'}
+if(page==='home'||page==='stocks'||page==='crypto'||page==='radio'||page==='rates'){switchView(page)}
 else if(page==='info'){openInfo()}
 });
 });
@@ -1399,16 +2174,19 @@ try{loadIbNews()}catch(e){}
 try{loadGadgetsNews()}catch(e){}
 try{loadBlocksNews()}catch(e){}
 try{loadSport()}catch(e){}
-try{loadStocks()}catch(e){}
 try{loadCBR()}catch(e){}
 try{updateCryptoPrice().then(createCryptoChart)}catch(e){}
 try{convertCryptoToRub()}catch(e){}
 try{convertCurrency()}catch(e){}
 
 fastRefreshTimer=setInterval(function(){
-try{loadStocks()}catch(e){}
 try{loadCBR()}catch(e){}
 try{updateCryptoPrice()}catch(e){}
+if(stocksPageLoaded){
+  try{loadIndexQuotes()}catch(e){}
+  try{loadWatchlist()}catch(e){}
+  try{updateStocksTimestamp()}catch(e){}
+}
 },60000);
 
 refreshTimer=setInterval(function(){
@@ -1437,7 +2215,18 @@ window.closePrivacy=closePrivacy;
 window.openInfo=openInfo;
 window.closeInfo=closeInfo;
 window.closeReader=closeReader;
+window.switchView=switchView;
+window.selectInstrument=selectInstrument;
+window.setStockTimeframe=setStockTimeframe;
+window.refreshStocksPage=refreshStocksPage;
+window.resetStockZoom=resetStockZoom;
+window.loadCBR=loadCBR;
+window.toggleRadioPlay=toggleRadioPlay;
+window.stopRadio=stopRadio;
+window.setRadioGenre=setRadioGenre;
+window.renderRadioStations=renderRadioStations;
+window.loadRadioStations=loadRadioStations;
 })();
 </script>
 </body>
-  </html>
+                                                                         </html>
